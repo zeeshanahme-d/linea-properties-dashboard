@@ -71,7 +71,7 @@ function AuthInit({ children }: IProps) {
   const { auth, logout, setCurrentUser } = useAuth();
   const didRequest = useRef(false);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const [isVerifying, setIsVerifying] = useState(false);
+  const [_, setIsVerifying] = useState(false);
 
   // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
   useEffect(() => {
