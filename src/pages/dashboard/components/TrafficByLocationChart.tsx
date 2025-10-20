@@ -1,0 +1,74 @@
+// src/components/TrafficByLocation.tsx
+import React from 'react';
+import { Card } from 'antd';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+
+// src/data/locationData.ts
+export const trafficData = [
+    { name: 'Douala', value: 35, color: '#FF8056' },
+    { name: 'Yaoundé', value: 25, color: '#255D8D' },
+    { name: 'Buea', value: 20, color: '#BFBFFF' },
+    { name: 'Limbe', value: 12, color: '#F59E0B' },
+    { name: 'Others', value: 8, color: '#4D4D4D' },
+];
+
+
+const TrafficByLocationChart: React.FC = () => {
+    const COLORS = ['#FF8056', '#255D8D', '#BFBFFF', '#F59E0B', '#4D4D4D'];
+
+
+    const CustomTooltip = ({ active, payload }: any) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="custom-tooltip bg-white p-2 rounded-md shadow-md border flex">
+                    <p className="text-gray-700">{payload[0].name}: </p>
+                    <p className="text-gray-700"> {payload[0].value}%</p>
+                </div>
+            );
+        }
+        return null;
+    };
+
+    return (
+        <Card
+            title={<p className="font-normal text-lg">Traffic by Location</p>}
+            className="w-full border xl:max-w-lg circleChartCard"
+        >
+            <div className="flex flex-row items-center">
+                <PieChart width={300} height={300}>
+                    <Pie
+                        data={trafficData}
+                        paddingAngle={2}
+                        dataKey="value"
+                        labelLine={false}
+                        label={false}
+                        isAnimationActive={true}
+                    >
+                        {trafficData.map((_, index) => (
+                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    {/* Tooltip must be a direct child of the chart, not the Pie */}
+                    <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+
+                <ul className="w-full px-4 mt-4 space-y-2">
+                    {trafficData.map((item, index) => (
+                        <li key={index} className="flex justify-between items-center">
+                            <div className="flex items-center">
+                                <span
+                                    className="w-3 h-3 rounded-full mr-2"
+                                    style={{ backgroundColor: item.color }}
+                                ></span>
+                                <span className="text-gray-700">{item.name}</span>
+                            </div>
+                            <span className="text-gray-700 font-semibold">{item.value}%</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </Card>
+    );
+};
+
+export default TrafficByLocationChart;
