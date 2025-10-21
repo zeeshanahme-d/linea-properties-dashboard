@@ -7,7 +7,7 @@ import { useAuth } from './core/auth-context';
 // import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 // import useVerifyToken from './core/hooks/use-verify-token';
 // import Container from 'components/core-ui/container/container';
-
+import LogoIcon from 'assets/icons/dashboard-logo.svg?react'
 function SignIn() {
   // const { signInMutate, isLoading } = useSignIn();
   // const { mutateVerifyToken, isLoading: verifyTokenLoding } = useVerifyToken();
@@ -64,16 +64,16 @@ function SignIn() {
   }, [currentUser, navigate]);
 
   return (
-    <div className={`h-screen flex relative items-center justify-center gap-x-5 lg:gap-x-10 xl:gap-x-20`}>
-      <div className='h-full 2xl:h-full w-[700px] hidden lg:block'>
-        <img src="/images/sidebar-image.png" alt="logo" className="mb-4 w-full h-full object-cover 2xl:object-contain" />
+    <div className={`overflow-hidden h-screen flex relative items-center justify-evenly 2xl:justify-center 2xl:gap-x-20`}>
+      <div className='hidden lg:block py-10 w-1/2 2xl:w-auto items-center text-center'>
+        <img src="/images/sidebar-image.png" alt="logo" className="w-[700px] h-fuautoll object-cover 2xl:object-contain" />
       </div>
 
-      <div className='flex flex-col items-center text-center mr-10'>
+      <div className='flex flex-col items-center text-center mr-10 w-1/2 2xl:w-auto'>
         <div className="mb-10 flex flex-col items-center">
-          <img src="/images/logo.png" alt="logo" className="mb-4 object-contain" />
+          <LogoIcon className='w-[150px] h-[70px]' />
           <h1 className="text-[40px] font-bold tracking-wide">Welcome back</h1>
-          <h2 className="text-xl font-normal text-medium-gray">Enter your credentials to securely access the management panel.</h2>
+          <h2 className="text-lg font-normal text-medium-gray md:max-w-md">Enter your credentials to securely access the management panel.</h2>
         </div>
         <div className="w-full max-w-sm">
           <Form name="sign-in" onFinish={onFinish} initialValues={{ email: '', password: '' }} autoComplete="off" layout="vertical">
