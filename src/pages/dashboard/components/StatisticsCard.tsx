@@ -16,7 +16,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
     className = ''
 }) => {
     return (
-        <div className={`rounded-2xl bg-white h-40 border relative ${className} p-5 flex flex-col`}>
+        <div className={`rounded-2xl bg-white h-40 border relative ${className} p-3 xl:p-5 flex flex-col`}>
             {/* Title */}
             <div className="text-sm text-medium-gray font-normal mb-3 flex items-center justify-between">
                 {title}
@@ -31,7 +31,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
             </div>
 
             {/* Data */}
-            <div className="text-2xl font-bold text-black leading-tight">
+            <div className="text-xl xl:text-2xl font-bold text-black leading-tight">
                 {data}
             </div>
 

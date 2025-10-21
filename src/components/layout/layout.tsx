@@ -14,7 +14,7 @@ function Layout() {
         </aside>
 
         {/* Main Content Area */}
-        <div className="flex flex-col w-full ml-64">
+        <div className="flex flex-col ml-64" style={{ width: 'calc(100% - 256px)' }}>
           {/* Header */}
           <header className="fixed top-0 right-0 left-64 h-20 border-b bg-background z-40 flex items-center px-6">
             <Header />

@@ -40,6 +40,7 @@ html {
   margin: 0;
   padding: 0;
   letter-spacing: .5px;
+  height: 100vh;
 }
 
 .ant-pagination .ant-pagination-item-active a {
@@ -70,6 +71,10 @@ html {
 
 .aiFlaggedTableCard .ant-card-body {
   padding: 8px !important;
+}
+
+.activeListingsCard .ant-card-body {
+  padding-inline: 2px !important;
 }
 
 

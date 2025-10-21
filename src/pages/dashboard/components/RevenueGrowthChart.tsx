@@ -10,12 +10,12 @@ import {
 } from "recharts";
 
 const data = [
-    { name: "Jan", Revenue: 850000 },
-    { name: "Feb", Revenue: 100000 },
+    { name: "Jan", Revenue: 80500 },
+    { name: "Feb", Revenue: 1000 },
     { name: "Mar", Revenue: 9800 },
-    { name: "Apr", Revenue: 120000 },
-    { name: "May", Revenue: 80000 },
-    { name: "Jun", Revenue: 13000 },
+    { name: "Apr", Revenue: 120 },
+    { name: "May", Revenue: 800 },
+    { name: "Jun", Revenue: 4242525 },
     { name: "Jul", Revenue: 1250000 },
     { name: "Aug", Revenue: 15000 },
     { name: "Sep", Revenue: 135000 },

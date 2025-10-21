@@ -176,7 +176,7 @@ function Users() {
             </div>
 
             <div className='mt-10 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
-                <div className="max-h-[800px] min-w-[1092px] w-full">
+                <div className="max-h-[800px] min-w-[900px] w-full">
                     <table className="border-separate border-spacing-y-2 w-full">
                         <thead>
                             <tr>

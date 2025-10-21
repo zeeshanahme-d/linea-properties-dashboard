@@ -28,7 +28,7 @@ function ActiveListingsChart() {
     return (
         <Card
             title={<p className="font-normal text-lg">Active Listings by Month</p>}
-            className=""
+            className="activeListingsCard"
         >
             <div className="w-full h-80">
                 <ResponsiveContainer>
