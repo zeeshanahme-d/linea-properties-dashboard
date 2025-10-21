@@ -75,7 +75,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                             </div>
                         </div>
                         <p className="text-medium-gray mb-1">{user.email}</p>
-                        <div className="flex items-center gap-4 text-sm text-medium-gray">
+                        <div className="flex items-center gap-1 text-sm text-medium-gray">
                             <p className="flex items-center gap-1 text-medium-gray">
                                 <CiCalendar size={18} /> <span>Joined {userDetails.joinDate}</span>
                             </p>
