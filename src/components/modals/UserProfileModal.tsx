@@ -88,25 +88,25 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
                 {/* Statistics */}
                 <div className="grid grid-cols-4 gap-4 mb-6">
-                    <div className="text-center p-4  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-primary mb-1">
                             {userStats.listings}
                         </div>
                         <div className="text-sm text-medium-gray">Listings</div>
                     </div>
-                    <div className="text-center p-4  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-success mb-1">
                             {userStats.revenue}
                         </div>
                         <div className="text-sm text-medium-gray">Revenue</div>
                     </div>
-                    <div className="text-center p-4  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-[#1B279E] mb-1">
                             {userStats.bookings}
                         </div>
                         <div className="text-sm text-medium-gray">Bookings</div>
                     </div>
-                    <div className="text-center p-4 rounded-xl border">
+                    <div className="text-center py-5 px-2rounded-xl border">
                         <div className="flex-centered gap-3 text-2xl h-3/4 font-bold mb-1">
                             <RatingIcon /> {userStats.rating}
                         </div>

@@ -79,8 +79,7 @@ const AiFlaggedListingsTable: React.FC = () => {
             <div className="hidden md:block max-h-[270px] overflow-x-auto">
                 <table className="w-full">
                     <thead>
-
-                        <tr className="border-b border-gray-200">
+                        <tr className="text-nowrap border-b border-gray-200">
                             {headers.map((header) => (
                                 <th
                                     key={header.label}
