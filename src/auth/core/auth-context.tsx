@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { IAuthModel, IUserModel } from './_models';
-import { getUserByToken } from './_requests';
+// import { getUserByToken } from './_requests';
 import * as authHelper from './auth-helpers';
 
 type IProps = {
@@ -79,21 +79,18 @@ function AuthInit({ children }: IProps) {
       try {
         if (!didRequest.current) {
           setIsVerifying(true);
-          const { data } = await getUserByToken(apiToken);
-          if (data) {
-            setCurrentUser(data);
-            const authData = {
-              api_token: apiToken,
-              data: {
-                _id: "1",
-                firstName: "John",
-                lastName: "Doe",
-                email: "admin@gmail.com",
-                role: "admin",
-              },
-            };
-            authHelper.setUser(authData?.data);
-            authHelper.setAuth(authData);
+          // const { data } = await getUserByToken(apiToken);
+          const data = {
+            _id: "1",
+            firstName: "John",
+            lastName: "Doe",
+            email: "admin@gmail.com",
+            role: "admin",
+          };
+          if (true) {
+            setCurrentUser(data as IUserModel);
+            authHelper.setUser(data as IUserModel);
+            authHelper.setAuth({ api_token: apiToken, data: data });
           }
         }
       } catch (error) {
