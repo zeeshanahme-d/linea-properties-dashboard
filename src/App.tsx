@@ -36,8 +36,8 @@ function App() {
               },
               components: {
                 Input: {
-                  paddingBlock: 15,
-                  fontSize: 16,
+                  paddingBlock: 10,
+                  fontSize: 18,
                   colorBgContainer: 'var(--color-light-gray)',
                 },
                 Button: {
@@ -58,7 +58,8 @@ function App() {
                   wrapperMarginInlineEnd: 24,
                 },
                 Select: {
-                  borderRadius: 8,
+                  fontSize: 16,
+                  colorBgContainer: 'var(--color-light-gray)',
                 },
                 Popconfirm: {
                   fontSize: 16,

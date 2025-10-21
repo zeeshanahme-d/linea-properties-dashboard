@@ -1,8 +1,8 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 //icons
 
 // Helpers
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LogoutModal from 'auth/logout-modal';
 
 //icons
@@ -21,7 +21,7 @@ function SidebarRoutes() {
 
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [activeRoute, setActiveRoute] = useState('dashboard');
-
+  const location = useLocation();
 
   // Define the routes along with the roles that can access them
   const routes = [
@@ -62,6 +62,22 @@ function SidebarRoutes() {
       icon: <DisputesIcon />,
     },
   ];
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    // Find the matching route based on the current path
+    const matchingRoute = routes.find(route => {
+      if (route.path === '/') {
+        return currentPath === '/' || currentPath === '';
+      }
+      return currentPath.startsWith(route.path);
+    });
+
+    if (matchingRoute) {
+      setActiveRoute(matchingRoute.key);
+    }
+  }, [location.pathname]);
 
   const navigate = useNavigate();
 

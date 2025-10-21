@@ -1,13 +1,262 @@
+import { useEffect, useState } from 'react'
+import { Input, Select } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
-import { useEffect } from 'react'
+import DeleteModal from 'components/modals/DeleteModal';
+import UserProfileModal from 'components/modals/UserProfileModal';
+//icons
+import SearchIcon from 'assets/icons/search-icon.svg?react';
+import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
+import EyeIcon from "assets/icons/view-icon.svg?react";
+import DeleteIcon from "assets/icons/delete-icon.svg?react";
+
+
+const statusOptions = [
+    { label: 'All Status', value: 'all' },
+    { label: 'Active', value: 'active' },
+    { label: 'Banned', value: 'banned' },
+]
+
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    status: 'active' | 'banned';
+    joinDate: string;
+}
+
+const users: User[] = [
+    {
+        id: '1',
+        name: 'Annette Black',
+        email: 'annette.black@email.com',
+        status: 'active',
+        joinDate: '2024/01/15',
+    },
+    {
+        id: '2',
+        name: 'John Smith',
+        email: 'john.smith@email.com',
+        status: 'active',
+        joinDate: '2024/02/20',
+    },
+    {
+        id: '3',
+        name: 'Sarah Johnson',
+        email: 'sarah.johnson@email.com',
+        status: 'banned',
+        joinDate: '2024/01/10',
+    },
+    {
+        id: '4',
+        name: 'Michael Brown',
+        email: 'michael.brown@email.com',
+        status: 'active',
+        joinDate: '2024/03/05',
+    },
+    {
+        id: '5',
+        name: 'Emily Davis',
+        email: 'emily.davis@email.com',
+        status: 'active',
+        joinDate: '2024/02/28',
+    },
+    {
+        id: '6',
+        name: 'David Wilson',
+        email: 'david.wilson@email.com',
+        status: 'banned',
+        joinDate: '2024/01/05',
+    },
+    {
+        id: '7',
+        name: 'Olivia Martinez',
+        email: 'olivia.martinez@email.com',
+        status: 'active',
+        joinDate: '2024/03/15',
+    },
+    {
+        id: '8',
+        name: 'James Lee',
+        email: 'james.lee@email.com',
+        status: 'banned',
+        joinDate: '2024/02/10',
+    },
+    {
+        id: '9',
+        name: 'Sophia Harris',
+        email: 'sophia.harris@email.com',
+        status: 'active',
+        joinDate: '2024/01/25',
+    },
+    {
+        id: '10',
+        name: 'William Clark',
+        email: 'william.clark@email.com',
+        status: 'banned',
+        joinDate: '2024/03/20',
+    },
+];
+
+const headers = [
+    { label: "Name", className: "text-left" },
+    { label: "Email", className: "text-left" },
+    { label: "Status", className: "text-left" },
+    { label: "Join Date", className: "text-left" },
+    { label: "Actions", className: "text-center" },
+]
 
 function Users() {
     const { setTitle } = useHeaderProps();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [userToDelete, setUserToDelete] = useState<User | null>(null);
+    const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
     useEffect(() => setTitle("Users"), [setTitle]);
 
+    const handleView = (user: User) => {
+        setSelectedUser(user);
+        setIsUserProfileModalOpen(true);
+    };
+
+    const handleDeleteClick = (user: User) => {
+        setUserToDelete(user);
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleDeleteConfirm = () => {
+        if (userToDelete) {
+            console.log('Delete user:', userToDelete.id);
+            // Here you would typically make an API call to delete the user
+            // For now, we'll just close the modal
+            setIsDeleteModalOpen(false);
+            setUserToDelete(null);
+        }
+    };
+
+    const handleDeleteCancel = () => {
+        setIsDeleteModalOpen(false);
+        setUserToDelete(null);
+    };
+
+    const handleBanUser = (userId: string) => {
+        console.log('Ban user:', userId);
+        // Here you would typically make an API call to ban the user
+        setIsUserProfileModalOpen(false);
+        setSelectedUser(null);
+    };
+
+    const handleDeleteUserFromProfile = (userId: string) => {
+        console.log('Delete user from profile:', userId);
+        // Here you would typically make an API call to delete the user
+        setIsUserProfileModalOpen(false);
+        setSelectedUser(null);
+    };
+
+    const handleCloseUserProfile = () => {
+        setIsUserProfileModalOpen(false);
+        setSelectedUser(null);
+    };
+
     return (
-        <div>Users</div>
+        <section>
+            <div className='flex items-center gap-4'>
+                <Input
+                    placeholder="Search User"
+                    prefix={<SearchIcon className='mr-2' />}
+                    className='w-full min-w-[300px]'
+                />
+                <Select
+                    options={statusOptions}
+                    placeholder="Select Status"
+                    className='w-72 h-12 rounded-xl'
+                    suffixIcon={<ArrowDownIcon />}
+                />
+            </div>
+
+            <div className='mt-10 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
+                <div className="max-h-[800px] min-w-[1092px] w-full">
+                    <table className="border-separate border-spacing-y-2 w-full">
+                        <thead>
+                            <tr>
+                                {headers.map((header) => (
+                                    <th
+                                        key={header.label}
+                                        className={`px-4 py-3 ${header.className} text-base font-medium`}
+                                    >
+                                        {header.label}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((user) => (
+                                <tr
+                                    onDoubleClick={() => handleView(user)}
+                                    key={user.id}
+                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
+                                >
+                                    <td className="p-3 text-gray-900">
+                                        {user.name}
+                                    </td>
+                                    <td className="p-3 text-gray-700">
+                                        {user.email}
+                                    </td>
+                                    <td className="p-3">
+                                        <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${user.status === 'active'
+                                            ? 'bg-[#EAF6ED] text-[#166C3B]'
+                                            : 'bg-[#FFF0EE] text-danger'
+                                            }`}>
+                                            {user.status}
+                                        </div>
+                                    </td>
+                                    <td className="p-3 text-gray-700">
+                                        {user.joinDate}
+                                    </td>
+                                    <td className="p-3">
+                                        <div className="flex items-center justify-center gap-3">
+                                            <button
+                                                onClick={() => handleView(user)}
+                                                className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
+                                                title="View"
+                                            >
+                                                <EyeIcon />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteClick(user)}
+                                                className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                title="Delete"
+                                            >
+                                                <DeleteIcon />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Delete Confirmation Modal */}
+            <DeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={handleDeleteCancel}
+                onConfirm={handleDeleteConfirm}
+                description={`Are you sure you want Delete this user "${userToDelete?.name}"?`}
+            />
+
+            {/* User Profile Modal */}
+            <UserProfileModal
+                isOpen={isUserProfileModalOpen}
+                onClose={handleCloseUserProfile}
+                user={selectedUser}
+                onBanUser={handleBanUser}
+                onDeleteUser={handleDeleteUserFromProfile}
+            />
+
+        </section>
     )
 }
 

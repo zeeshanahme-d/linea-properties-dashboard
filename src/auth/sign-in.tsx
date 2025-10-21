@@ -65,11 +65,11 @@ function SignIn() {
 
   return (
     <div className={`min-h-screen flex relative items-center justify-center gap-x-5 lg:gap-x-10 xl:gap-x-20`}>
-      <div className='h-full hidden lg:block'>
-        <img src="/images/sidebar-image.png" alt="logo" className="mb-4 h-full object-contain" />
+      <div className='h-[95vh] w-[700px] hidden lg:block'>
+        <img src="/images/sidebar-image.png" alt="logo" className="mb-4 w-full h-full object-contain" />
       </div>
 
-      <div className='flex flex-col items-center text-center'>
+      <div className='flex flex-col items-center text-center mr-10'>
         <div className="mb-10 flex flex-col items-center">
           <img src="/images/logo.png" alt="logo" className="mb-4 object-contain" />
           <h1 className="text-[40px] font-bold tracking-wide">Welcome back</h1>
