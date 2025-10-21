@@ -21,8 +21,8 @@ const TrafficByLocationChart: React.FC = () => {
         if (active && payload && payload.length) {
             return (
                 <div className="custom-tooltip bg-white p-2 rounded-md shadow-md border flex">
-                    <p className="text-gray-700">{payload[0].name}: </p>
-                    <p className="text-gray-700"> {payload[0].value}%</p>
+                    <p className="text-medium-gray">{payload[0].name}: </p>
+                    <p className="text-medium-gray"> {payload[0].value}%</p>
                 </div>
             );
         }
@@ -60,9 +60,9 @@ const TrafficByLocationChart: React.FC = () => {
                                     className="w-3 h-3 rounded-full mr-2"
                                     style={{ backgroundColor: item.color }}
                                 ></span>
-                                <span className="text-gray-700">{item.name}</span>
+                                <span className="text-[#8C97A7]">{item.name}</span>
                             </div>
-                            <span className="text-gray-700 font-semibold">{item.value}%</span>
+                            <span className="font-medium">{item.value}%</span>
                         </li>
                     ))}
                 </ul>
