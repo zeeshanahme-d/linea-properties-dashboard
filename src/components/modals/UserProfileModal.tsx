@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, Modal } from 'antd';
+import { Button, Divider, Modal, Popconfirm } from 'antd';
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
@@ -106,7 +106,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         </div>
                         <div className="text-sm text-medium-gray">Bookings</div>
                     </div>
-                    <div className="text-center py-5 px-2rounded-xl border">
+                    <div className="text-center py-5 px-2 rounded-xl border">
                         <div className="flex-centered gap-3 text-2xl h-3/4 font-bold mb-1">
                             <RatingIcon /> {userStats.rating}
                         </div>
@@ -145,14 +145,17 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     >
                         {user.status === 'active' ? "Ban User" : "Unban User"}
                     </Button>
-                    <Button
-                        type="default"
-                        danger
-                        onClick={() => onDeleteUser?.(user.id)}
-                        className="h-12 w-full"
-                    >
-                        Delete User
-                    </Button>
+                    <Popconfirm
+                        title="Are you sure you want to delete this user?"
+                        onConfirm={() => onDeleteUser?.(user.id)}                                           >
+                        <Button
+                            type="default"
+                            danger
+                            className="h-12 w-full"
+                        >
+                            Delete User
+                        </Button>
+                    </Popconfirm>
                 </div>
             </div>
         </Modal>

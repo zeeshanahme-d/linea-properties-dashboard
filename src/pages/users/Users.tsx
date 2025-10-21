@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Input, Select } from 'antd';
+import { Input, Popconfirm, Select } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 import DeleteModal from 'components/modals/DeleteModal';
 import UserProfileModal from 'components/modals/UserProfileModal';
@@ -8,6 +8,7 @@ import SearchIcon from 'assets/icons/search-icon.svg?react';
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
 import EyeIcon from "assets/icons/view-icon.svg?react";
 import DeleteIcon from "assets/icons/delete-icon.svg?react";
+import DoneModal from 'components/modals/DoneModal';
 
 
 const statusOptions = [
@@ -112,17 +113,15 @@ function Users() {
     const [userToDelete, setUserToDelete] = useState<User | null>(null);
     const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
+
+
 
     useEffect(() => setTitle("Users"), [setTitle]);
 
     const handleView = (user: User) => {
         setSelectedUser(user);
         setIsUserProfileModalOpen(true);
-    };
-
-    const handleDeleteClick = (user: User) => {
-        setUserToDelete(user);
-        setIsDeleteModalOpen(true);
     };
 
     const handleDeleteConfirm = () => {
@@ -152,6 +151,10 @@ function Users() {
         // Here you would typically make an API call to delete the user
         setIsUserProfileModalOpen(false);
         setSelectedUser(null);
+        setIsDoneModalOpen(true);
+        setTimeout(() => {
+            setIsDoneModalOpen(false);
+        }, 1000);
     };
 
     const handleCloseUserProfile = () => {
@@ -223,13 +226,16 @@ function Users() {
                                             >
                                                 <EyeIcon />
                                             </button>
-                                            <button
-                                                onClick={() => handleDeleteClick(user)}
-                                                className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                title="Delete"
-                                            >
-                                                <DeleteIcon />
-                                            </button>
+                                            <Popconfirm
+                                                title="Are you sure you want to delete this user?"
+                                                onConfirm={() => handleDeleteUserFromProfile(user.id)}                                            >
+                                                <button
+                                                    className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                    title="Delete"
+                                                >
+                                                    <DeleteIcon />
+                                                </button>
+                                            </Popconfirm>
                                         </div>
                                     </td>
                                 </tr>
@@ -254,6 +260,12 @@ function Users() {
                 user={selectedUser}
                 onBanUser={handleBanUser}
                 onDeleteUser={handleDeleteUserFromProfile}
+            />
+
+            {/* Done Modal */}
+            <DoneModal
+                isOpen={isDoneModalOpen}
+                description="User Deleted"
             />
 
         </section>
