@@ -8,6 +8,8 @@ import { useAuth } from './core/auth-context';
 // import useVerifyToken from './core/hooks/use-verify-token';
 // import Container from 'components/core-ui/container/container';
 import LogoIcon from 'assets/icons/dashboard-logo.svg?react'
+import EyeOpenIcon from 'assets/icons/eye-open-icon.svg?react'
+import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
 function SignIn() {
   // const { signInMutate, isLoading } = useSignIn();
   // const { mutateVerifyToken, isLoading: verifyTokenLoding } = useVerifyToken();
@@ -64,12 +66,12 @@ function SignIn() {
   }, [currentUser, navigate]);
 
   return (
-    <div className={`overflow-hidden h-screen flex relative items-center justify-evenly 2xl:justify-center 2xl:gap-x-20`}>
-      <div className='hidden lg:block py-10 w-1/2 2xl:w-auto items-center text-center'>
-        <img src="/images/sidebar-image.png" alt="logo" className="w-[700px] h-fuautoll object-cover 2xl:object-contain" />
+    <div className={`overflow-hidden h-screen flex relative items-center 2xl:gap-x-20`}>
+      <div className='hidden lg:block w-1/2 items-center py-4 pl-4 text-center h-full'>
+        <img src="/images/sidebar-image.png" alt="logo" className="w-full h-full rounded-xl object-cover" />
       </div>
 
-      <div className='flex flex-col items-center text-center mr-10 w-1/2 2xl:w-auto'>
+      <div className='flex flex-col items-center text-center w-full lg:w-1/2 '>
         <div className="mb-10 flex flex-col items-center">
           <LogoIcon className='w-[150px] h-[70px]' />
           <h1 className="text-[40px] font-bold tracking-wide">Welcome back</h1>
@@ -106,6 +108,7 @@ function SignIn() {
               <Input.Password
                 placeholder="Enter your password"
                 className="h-[52px] w-[410px]"
+                iconRender={visible => visible ? <span ><EyeOpenIcon className='cursor-pointer' /></span> : <span><EyeClosedIcon className='cursor-pointer' /></span>}
               />
             </Form.Item>
 
