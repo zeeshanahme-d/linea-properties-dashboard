@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Input, Popconfirm, Select } from 'antd';
+import { Input, Select } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 import DeleteModal from 'components/modals/DeleteModal';
 import UserProfileModal from 'components/modals/UserProfileModal';
@@ -131,6 +131,10 @@ function Users() {
             // For now, we'll just close the modal
             setIsDeleteModalOpen(false);
             setUserToDelete(null);
+            setIsDoneModalOpen(true);
+            setTimeout(() => {
+                setIsDoneModalOpen(false);
+            }, 1000);
         }
     };
 
@@ -149,12 +153,9 @@ function Users() {
     const handleDeleteUserFromProfile = (userId: string) => {
         console.log('Delete user from profile:', userId);
         // Here you would typically make an API call to delete the user
+        setIsDeleteModalOpen(true);
         setIsUserProfileModalOpen(false);
-        setSelectedUser(null);
-        setIsDoneModalOpen(true);
-        setTimeout(() => {
-            setIsDoneModalOpen(false);
-        }, 1000);
+        setUserToDelete(users.find(user => user.id === userId) || null);
     };
 
     const handleCloseUserProfile = () => {
@@ -230,16 +231,13 @@ function Users() {
                                             >
                                                 <EyeIcon />
                                             </button>
-                                            <Popconfirm
-                                                title="Are you sure you want to delete this user?"
-                                                onConfirm={() => handleDeleteUserFromProfile(user.id)}                                            >
-                                                <button
-                                                    className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                    title="Delete"
-                                                >
-                                                    <DeleteIcon />
-                                                </button>
-                                            </Popconfirm>
+                                            <button
+                                                onClick={() => handleDeleteUserFromProfile(user.id)}
+                                                className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                title="Delete"
+                                            >
+                                                <DeleteIcon />
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

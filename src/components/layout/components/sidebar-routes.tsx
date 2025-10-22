@@ -87,7 +87,7 @@ function SidebarRoutes() {
   };
 
   return (
-    <section className='font-medium flex flex-col h-full w-64 py-5 bg-white'>
+    <section className='flex flex-col h-full w-64 py-5 bg-white'>
       <div className='flex flex-col h-full relative'>
         <button className='flex items-center justify-start px-4' onClick={navigateToDashboard}>
           <LogoIcon />
@@ -101,7 +101,7 @@ function SidebarRoutes() {
                 to={path}
                 onClick={() => setActiveRoute(key)}
               >
-                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} py-2 px-4 rounded-xl relative w-[100%] flex items-center my-2 justify-start gap-4 font-normal text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
+                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} py-2 px-4 rounded-xl relative w-[100%] flex items-center my-2 justify-start gap-4 text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
                   {icon}
                   <span>{label}</span>
                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, Modal, Popconfirm } from 'antd';
+import { Button, Divider, Modal } from 'antd';
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
@@ -145,17 +145,14 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     >
                         {user.status === 'active' ? "Ban User" : "Unban User"}
                     </Button>
-                    <Popconfirm
-                        title="Are you sure you want to delete this user?"
-                        onConfirm={() => onDeleteUser?.(user.id)}                                           >
-                        <Button
-                            type="default"
-                            danger
-                            className="h-12 w-full"
-                        >
-                            Delete User
-                        </Button>
-                    </Popconfirm>
+                    <Button
+                        type="default"
+                        danger
+                        className="h-12 w-full"
+                        onClick={() => onDeleteUser?.(user.id)}
+                    >
+                        Delete User
+                    </Button>
                 </div>
             </div>
         </Modal>
