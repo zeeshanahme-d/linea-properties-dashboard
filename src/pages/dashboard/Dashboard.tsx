@@ -45,11 +45,11 @@ function Dashboard() {
                     iconColor="#22C55E1A"
                 />
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 xl:gap-6 mt-8">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 xl:gap-6 mt-5">
                 <RevenueGrowthChart />
                 <ActiveListingsChart />
             </div>
-            <div className="flex flex-col xl:flex-row gap-3 xl:gap-6 mt-8">
+            <div className="flex flex-col xl:flex-row gap-3 xl:gap-6 mt-5">
                 <TrafficByLocationChart />
                 <AiFlaggedListingsTable />
             </div>

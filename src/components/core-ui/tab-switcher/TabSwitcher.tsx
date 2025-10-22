@@ -14,12 +14,13 @@ type TabSwitcherProps = {
 function TabSwitcher({ selectedTab, onSelectTab, tabs, }: TabSwitcherProps) {
 
     return (
-        <div className='flex justify-between relative text-center border-b border-border-gray'>
+        <div className='flex justify-between items-center relative text-center border-b border-border-gray'>
             {tabs.map((tab, index) => (
                 <div key={index} className='flex-1 relative'>
                     <Button
-                        variant='text'
-                        className={`h-11 gap-3 px-3 transition font-medium text-lg relative justify-center ${selectedTab === index ? 'text-primary' : 'text-dark-gray'}`}
+                        variant="text"
+                        type="default"
+                        className={`h-12 w-72 bg-transparent border-none gap-3 px-3 transition font-medium text-lg relative justify-center ${selectedTab === index ? 'text-primary' : 'text-dark-gray'}`}
                         onClick={() => onSelectTab(index)}
                     >
                         {tab.label}
