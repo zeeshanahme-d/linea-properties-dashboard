@@ -31,7 +31,7 @@ function App() {
             theme={{
               token: {
                 colorPrimary: '#D4502F',
-                fontFamily: 'SF Pro Display Regular',
+                fontFamily: 'var(--family-primary)',
                 borderRadius: 16,
               },
               components: {
@@ -42,7 +42,7 @@ function App() {
                 },
                 Button: {
                   fontSize: 18,
-                  fontWeight: 'normal',
+                  fontFamily: 'var(--family-primary)',
                   borderRadius: 12
                 },
                 Form: {

@@ -162,6 +162,12 @@ function Users() {
         setSelectedUser(null);
     };
 
+    const getStatusClass = (status: string) => {
+        if (status === 'active') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA]';
+        if (status === 'banned') return 'bg-[#FFF0EE] text-danger border border-[#FFE1DE]';
+        return '';
+    };
+
     return (
         <section>
             <div className='flex items-center gap-4'>
@@ -175,6 +181,7 @@ function Users() {
                     placeholder="Select Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
+                    defaultValue="All Status"
                 />
             </div>
 
@@ -200,24 +207,21 @@ function Users() {
                                     key={user.id}
                                     className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
                                 >
-                                    <td className="p-3 text-gray-900">
+                                    <td className="px-4 py-3 text-gray-900">
                                         {user.name}
                                     </td>
-                                    <td className="p-3 text-gray-700">
+                                    <td className="px-4 py-3 text-gray-700">
                                         {user.email}
                                     </td>
-                                    <td className="p-3">
-                                        <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${user.status === 'active'
-                                            ? 'bg-[#EAF6ED] text-[#166C3B]'
-                                            : 'bg-[#FFF0EE] text-danger'
-                                            }`}>
+                                    <td className="px-4 py-3">
+                                        <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(user.status)}`}>
                                             {user.status}
                                         </div>
                                     </td>
-                                    <td className="p-3 text-gray-700">
+                                    <td className="px-4 py-3 text-gray-700">
                                         {user.joinDate}
                                     </td>
-                                    <td className="p-3">
+                                    <td className="px-4 py-3">
                                         <div className="flex items-center justify-center gap-3">
                                             <button
                                                 onClick={() => handleView(user)}

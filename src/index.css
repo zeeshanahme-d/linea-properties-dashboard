@@ -9,6 +9,8 @@
 :root {
 
   --family-primary: 'SF Pro Display Regular', sans-serif;
+  --family-medium: 'SF Pro Display Medium', sans-serif;
+  --family-bold: 'SF Pro Display Bold', sans-serif;
 
   --color-background: #F9FAFB;
   --color-primary: #D4502F;

@@ -54,7 +54,9 @@ export default {
         'black': 'var(--color-black)',
       },
       fontFamily: {
-        primary: 'SF Pro Display Regular',
+        primary: 'var(--family-primary)',
+        medium: 'var(--family-medium)',
+        bold: 'var(--family-bold)',
       },
       screens: {
         xsm: '375px',
