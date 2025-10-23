@@ -62,7 +62,7 @@ function Configurations() {
                                 type="number"
                                 value={serviceFeePercentage}
                                 onChange={handleInputChange}
-                                className="w-full h-12 px-4"
+                                className="w-full h-12 px-4 text-medium-gray"
                                 min={0}
                                 max={20}
                             />
