@@ -126,11 +126,11 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <h3 className="text-lg font-medium mb-3">User Information</h3>
                     <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 bg-orange-200 rounded-full flex items-center justify-center">
+                            <div className="w-[100px] h-[100px] bg-orange-200 rounded-full flex items-center justify-center">
                                 <img
                                     src={withdrawalRequestData.listerInfo.profilePicture}
                                     alt={withdrawalRequestData.listerInfo.name}
-                                    className="w-14 h-14 rounded-full object-cover"
+                                    className="w-[100px] h-[100px] rounded-full object-cover"
                                 />
                             </div>
                             <div className="flex-1">
