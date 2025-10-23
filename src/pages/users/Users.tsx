@@ -194,7 +194,7 @@ function Users() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} text-sm font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -206,7 +206,7 @@ function Users() {
                                 <tr
                                     onDoubleClick={() => handleView(user)}
                                     key={user.id}
-                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm"
+                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
                                 >
                                     <td className="xl:px-4 px-2 py-2 text-gray-900">
                                         {user.name}

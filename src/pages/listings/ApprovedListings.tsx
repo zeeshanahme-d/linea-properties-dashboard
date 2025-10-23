@@ -160,7 +160,7 @@ function ApprovedListings() {
     };
 
     const getStatusClass = (status: string) => {
-        if (status === 'Approved') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA]';
+        if (status === 'Approved') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
         return '';
     };
 

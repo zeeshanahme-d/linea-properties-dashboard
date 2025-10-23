@@ -130,7 +130,7 @@ function AiFlagListings() {
     };
 
     const getStatusClass = (status: string) => {
-        if (status === 'AI Flagged') return 'bg-[#F59E0B1A] text-[#F59E0B] border border-[#F59E0B1A]';
+        if (status === 'AI Flagged') return 'bg-[#F59E0B1A] text-[#F59E0B] border border-[#F59E0B1A] shadow-[0px_0px_10px_#0000000A]';
         return '';
     };
 
