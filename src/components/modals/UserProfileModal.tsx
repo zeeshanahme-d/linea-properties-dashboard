@@ -29,7 +29,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
     // Mock user statistics - in real app, this would come from API
     const userStats = {
         listings: 12,
-        revenue: '50,000 CFA',
+        revenue: '50,00CFA',
         bookings: 24,
         rating: 4.9,
     };
@@ -41,40 +41,46 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
         joinDate: '2024-01-15',
     };
 
+    const getStatusClass = (status: string) => {
+        if (status === 'active') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
+        if (status === 'banned') return 'bg-[#FFF0EE] text-[#BB032A] border border-[#FFE1DE] shadow-[0px_0px_10px_#0000000A]';
+        return '';
+    };
+
     return (
         <Modal
             open={isOpen}
             onCancel={onClose}
             footer={null}
-            width={700}
+            width={670}
+            height={665}
             className="user-profile-modal"
             centered
-            closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
+            closeIcon={<CloseOutlined />}
             title={<p className='font-normal text-2xl'>User Profile</p>}
         >
             <Divider />
             <div className="py-2">
                 {/* User Information */}
-                <div className="flex items-start gap-4 mb-6 border rounded-2xl p-4">
+                <div className="flex items-start gap-4 mb-6 border rounded-2xl px-4 py-6">
                     {/* Profile Picture */}
-                    <div className="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center">
-                        <span className="text-2xl font-bold text-orange-600">
-                            {user.name.charAt(0)}
-                        </span>
+                    <div className="w-[100px] h-[100px] rounded-full flex items-center justify-center">
+                        <img
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+                            alt="user profile"
+                            className="w-[100px] h-[100px] rounded-full object-cover"
+                        />
                     </div>
 
                     {/* User Details */}
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                             <h3 className="text-xl font-medium">{user.name}</h3>
-                            <div className={`px-2 py-1 capitalize w-20 text-center rounded-md ${user.status === 'active'
-                                ? 'bg-[#EAF6ED] text-[#166C3B]'
-                                : 'bg-[#FFF0EE] text-danger'
-                                }`}>
+                            <div className={`px-2 py-1 capitalize w-14 h-6 flex-centered rounded ${getStatusClass(user.status)}`}>
                                 {user.status}
                             </div>
                         </div>
-                        <p className="text-medium-gray mb-1">{user.email}</p>
+                        <p className="text-medium-gray mb-1 text-base">{user.email}</p>
                         <div className="flex items-center gap-1 text-sm text-medium-gray">
                             <p className="flex items-center gap-1 text-medium-gray">
                                 <CiCalendar size={18} /> <span>Joined {userDetails.joinDate}</span>
@@ -116,7 +122,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
                 {/* Contact Information */}
                 <div className="mb-6 border rounded-2xl p-4">
-                    <h4 className="text-lg mb-2 font-medium">Contact Information</h4>
+                    <h4 className="text-lg mb-4 font-medium">Contact Information</h4>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="text-sm block mb-2">Email</label>
@@ -139,7 +145,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <div className="flex gap-3 justify-end">
                     <Button
                         onClick={() => onBanUser?.(user.id)}
-                        className="h-12 w-full"
+                        className="h-[52px] w-full rounded-2xl font-normal"
                         type="default"
                         danger
                     >
@@ -148,7 +154,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     <Button
                         type="default"
                         danger
-                        className="h-12 w-full"
+                        className="h-[52px] w-full rounded-2xl font-normal"
                         onClick={() => onDeleteUser?.(user.id)}
                     >
                         Delete User

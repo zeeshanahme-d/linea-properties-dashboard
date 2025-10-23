@@ -164,8 +164,8 @@ function Users() {
     };
 
     const getStatusClass = (status: string) => {
-        if (status === 'active') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA]';
-        if (status === 'banned') return 'bg-[#FFF0EE] text-danger border border-[#FFE1DE]';
+        if (status === 'active') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
+        if (status === 'banned') return 'bg-[#FFF0EE] text-[#BB032A] border border-[#FFE1DE] shadow-[0px_0px_10px_#0000000A]';
         return '';
     };
 
@@ -175,7 +175,7 @@ function Users() {
                 <Input
                     placeholder="Search User"
                     prefix={<SearchIcon className='mr-2' />}
-                    className='w-full min-w-[300px]'
+                    className='w-full min-w-[300px] h-12'
                 />
                 <Select
                     options={statusOptions}
@@ -194,7 +194,7 @@ function Users() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} text-sm font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -206,23 +206,23 @@ function Users() {
                                 <tr
                                     onDoubleClick={() => handleView(user)}
                                     key={user.id}
-                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
+                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm"
                                 >
-                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-2 text-gray-900">
                                         {user.name}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-2 text-gray-700">
                                         {user.email}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3">
+                                    <td className="xl:px-4 px-2 py-2">
                                         <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(user.status)}`}>
                                             {user.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-2 text-gray-700">
                                         {user.joinDate}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3">
+                                    <td className="xl:px-4 px-2 py-2">
                                         <div className="flex items-center justify-center gap-1">
                                             <button
                                                 onClick={() => handleView(user)}

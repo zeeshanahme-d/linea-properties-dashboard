@@ -14,7 +14,8 @@ const DoneModal: React.FC<DoneModalProps> = ({
         <Modal
             open={isOpen}
             centered
-            width={350}
+            width={360}
+            height={210}
             className="done-modal"
             footer={null}
             closeIcon={false}
@@ -22,11 +23,11 @@ const DoneModal: React.FC<DoneModalProps> = ({
             <div className="text-center py-3">
                 {/* Done Icon */}
                 <div className="flex justify-center mb-4">
-                    <img src="/images/check-animation-icon.gif" alt="done" />
+                    <img src="/images/check-animation-icon.gif" alt="done" className='w-[200px] h-[110px]' />
                 </div>
 
                 {/* Modal Content */}
-                <p className="text-gray-900 text-lg font-medium">
+                <p className="text-black text-xl font-medium">
                     {description}
                 </p>
             </div>

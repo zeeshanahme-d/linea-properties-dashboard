@@ -91,7 +91,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         <div className="flex-1 flex items-center justify-between">
                             <div className="flex items-center gap-3 mb-2">
                                 <h2 className="text-2xl font-medium text-gray-800">{listingData.title}</h2>
-                                <div className="px-3 py-1 bg-primary text-white text-sm rounded-full">
+                                <div className="px-3 h-6 bg-primary flex-centered text-white text-xs rounded-full">
                                     {listingData.status}
                                 </div>
                             </div>
@@ -104,20 +104,20 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                     </div>
 
                     {/* Key Attributes */}
-                    <div className="flex items-center gap-4 mb-3">
-                        <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-3 mb-3">
+                        <div className="flex items-center gap-1 text-medium-gray">
                             <IoLocationOutline size={16} />
                             <span>{listingData.location}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-1 text-medium-gray">
                             <BedroomIcon />
                             <span>{listingData.bedrooms} Bedrooms</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-1 text-medium-gray">
                             <BathroomIcon />
                             <span>{listingData.bathrooms} Bathrooms</span>
                         </div>
-                        <div className="flex items-center gap-2 text-gray-600">
+                        <div className="flex items-center gap-1 text-medium-gray">
                             <AreaIcon />
                             <span>{listingData.area}</span>
                         </div>
@@ -143,7 +143,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {listingData.amenities.map((amenity: any, index: number) => {
                             const IconComponent = amenity.icon;
                             return (
-                                <div key={index} className="flex items-center gap-2 py-4 px-4 border border-border-gray rounded-2xl">
+                                <div key={index} className="flex items-center gap-2 p-3 border border-border-gray rounded-xl">
                                     <IconComponent />
                                     <span className="text-base font-normal">{amenity.name}</span>
                                 </div>
@@ -155,17 +155,17 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 {/* Listed By Section */}
                 <div className="mb-6">
                     <h3 className="text-lg font-medium mb-3">Listed by</h3>
-                    <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
+                    <div className="bg-white border border-border-gray rounded-2xl py-6 px-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 bg-orange-200 rounded-full flex items-center justify-center">
+                            <div className="w-[100px] h-[100px] bg-orange-200 rounded-full flex items-center justify-center">
                                 <img
                                     src={listingData.listerInfo.profilePicture}
                                     alt={listingData.listerInfo.name}
-                                    className="w-14 h-14 rounded-full object-cover"
+                                    className="w-[100px] h-[100px] rounded-full object-cover"
                                 />
                             </div>
                             <div className="flex-1">
-                                <h4 className="font-medium text-lg text-black">{listingData.listerInfo.name}</h4>
+                                <h4 className="font-normal text-lg text-black">{listingData.listerInfo.name}</h4>
                                 <p className="text-medium-gray text-base">{listingData.listerInfo.email}</p>
                                 <div className="flex items-center gap-2 mt-1">
                                     <div className="flex items-center gap-1 text-sm text-medium-gray">
@@ -198,14 +198,14 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                     <div className="flex gap-3">
                         <Button
                             onClick={() => onReject?.(listing.id)}
-                            className="h-12 flex-1 border-red-500 text-red-500 hover:bg-red-50"
+                            className="h-[52px] flex-1 border-red-500 text-red-500 font-normal hover:bg-red-50 rounded-2xl"
                             type="default"
                         >
                             Reject
                         </Button>
                         <Button
                             onClick={() => onApprove?.(listing.id)}
-                            className="h-12 flex-1 border-green-500 text-green-500 hover:bg-green-50"
+                            className="h-[52px] flex-1 border-green-500 text-green-500 font-normal hover:bg-green-50 rounded-2xl"
                             type="default"
                         >
                             Approve
