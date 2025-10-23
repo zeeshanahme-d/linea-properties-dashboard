@@ -67,29 +67,20 @@ html {
   margin: 17px 0;
 }
 
-.circleChartCard .ant-card-body {
-  padding: 8px !important;
+.ant-card-body {
+  padding: 0px !important;
+  padding-inline: 20px !important;
+  padding-block: 14px !important;
+  height: calc(100% - 56px) !important;
 }
 
-.aiFlaggedTableCard .ant-card-body {
-  padding: 8px !important;
+.ant-card-body::before {
+  display: none !important;
 }
 
-.activeListingsCard .ant-card-body {
-  padding-inline: 2px !important;
+.ant-card-body::after {
+  display: none !important;
 }
-
-
-
-/* .no-arrows input[type='number']::-webkit-outer-spin-button,
-.no-arrows input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.no-arrows input[type='number'] {
-    -moz-appearance: textfield;
-} */
 
 /* Remove arrows for all input[type="number"] in WebKit browsers */
 input[type='number']::-webkit-outer-spin-button,
@@ -118,36 +109,9 @@ input[type='number'] {
   margin-left: 8px;
 }
 
-.template-tags-input .ant-select-selector {
-  padding: 12px !important;
-  padding-inline-end: 24px !important;
-}
-
-.template-tags-input .ant-select-selector .ant-tag {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-.template-tags-input .ant-select-selector .ant-tag .anticon {
-  color: var(--color-white);
-  font-size: 14px;
-  margin-inline-end: 8px;
-}
-
-.tags-input-selector .ant-select-selector {
-  padding: 4px !important;
-  padding-inline-end: 24px !important;
-  border-radius: 3px !important;
-}
-
 .ant-checkbox-label {
   margin-left: 8px !important;
 }
-
-/* .phases-selecter>.ant-select>.ant-select-selector {
-  padding: 0px !important;
-} */
 
 .recharts-wrapper:focus,
 .recharts-surface:focus,
@@ -158,6 +122,11 @@ path:focus,
 rect:focus,
 circle:focus {
   outline: none !important;
+}
+
+.recharts-wrapper {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .ant-select-selector {

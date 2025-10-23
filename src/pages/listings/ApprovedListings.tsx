@@ -182,14 +182,14 @@ function ApprovedListings() {
             </div>
 
             <div className='mt-5 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
-                <div className="max-h-[800px] h-[800px] min-w-[900px] w-full">
+                <div className="max-h-[800px] min-w-[900px] w-full">
                     <table className="border-separate border-spacing-y-2 w-full">
                         <thead>
                             <tr>
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`px-4 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -203,24 +203,24 @@ function ApprovedListings() {
                                     key={listing.id}
                                     className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
                                 >
-                                    <td className="px-4 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
                                         {listing.title}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {listing.listerName}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {listing.location}
                                     </td>
-                                    <td className="px-4 py-3">
+                                    <td className="xl:px-4 px-2 py-3">
                                         <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(listing.status)}`}>
                                             {listing.status}
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {listing.price}
                                     </td>
-                                    <td className="px-4 py-3">
+                                    <td className="xl:px-4 px-2 py-3">
                                         <div className="flex items-center justify-center gap-3">
                                             <button
                                                 onClick={() => handleView(listing)}

@@ -194,7 +194,7 @@ function Users() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`px-4 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -208,22 +208,22 @@ function Users() {
                                     key={user.id}
                                     className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
                                 >
-                                    <td className="px-4 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
                                         {user.name}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {user.email}
                                     </td>
-                                    <td className="px-4 py-3">
+                                    <td className="xl:px-4 px-2 py-3">
                                         <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(user.status)}`}>
                                             {user.status}
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {user.joinDate}
                                     </td>
-                                    <td className="px-4 py-3">
-                                        <div className="flex items-center justify-center gap-3">
+                                    <td className="xl:px-4 px-2 py-3">
+                                        <div className="flex items-center justify-center gap-1">
                                             <button
                                                 onClick={() => handleView(user)}
                                                 className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"

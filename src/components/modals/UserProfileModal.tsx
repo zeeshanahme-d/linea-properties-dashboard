@@ -53,9 +53,9 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
             title={<p className='font-normal text-2xl'>User Profile</p>}
         >
             <Divider />
-            <div className="py-3">
+            <div className="py-2">
                 {/* User Information */}
-                <div className="flex items-start gap-4 mb-6 border rounded-xl p-4">
+                <div className="flex items-start gap-4 mb-6 border rounded-2xl p-4">
                     {/* Profile Picture */}
                     <div className="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center">
                         <span className="text-2xl font-bold text-orange-600">
@@ -88,25 +88,25 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
                 {/* Statistics */}
                 <div className="grid grid-cols-4 gap-4 mb-6">
-                    <div className="text-center py-5 px-2  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-2xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-primary mb-1">
                             {userStats.listings}
                         </div>
                         <div className="text-sm text-medium-gray">Listings</div>
                     </div>
-                    <div className="text-center py-5 px-2  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-2xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-success mb-1">
                             {userStats.revenue}
                         </div>
                         <div className="text-sm text-medium-gray">Revenue</div>
                     </div>
-                    <div className="text-center py-5 px-2  rounded-xl border">
+                    <div className="text-center py-5 px-2  rounded-2xl border">
                         <div className="flex-centered text-2xl h-3/4 font-bold text-[#1B279E] mb-1">
                             {userStats.bookings}
                         </div>
                         <div className="text-sm text-medium-gray">Bookings</div>
                     </div>
-                    <div className="text-center py-5 px-2 rounded-xl border">
+                    <div className="text-center py-5 px-2 rounded-2xl border">
                         <div className="flex-centered gap-3 text-2xl h-3/4 font-bold mb-1">
                             <RatingIcon /> {userStats.rating}
                         </div>
@@ -115,7 +115,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
 
                 {/* Contact Information */}
-                <div className="mb-6 border rounded-xl p-4">
+                <div className="mb-6 border rounded-2xl p-4">
                     <h4 className="text-lg mb-2 font-medium">Contact Information</h4>
                     <div className="grid grid-cols-2 gap-4">
                         <div>

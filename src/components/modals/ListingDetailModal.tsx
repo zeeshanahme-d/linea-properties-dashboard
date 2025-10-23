@@ -143,7 +143,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {listingData.amenities.map((amenity: any, index: number) => {
                             const IconComponent = amenity.icon;
                             return (
-                                <div key={index} className="flex items-center gap-2 py-4 px-4 border border-border-gray rounded-xl">
+                                <div key={index} className="flex items-center gap-2 py-4 px-4 border border-border-gray rounded-2xl">
                                     <IconComponent />
                                     <span className="text-base font-normal">{amenity.name}</span>
                                 </div>
@@ -155,7 +155,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 {/* Listed By Section */}
                 <div className="mb-6">
                     <h3 className="text-lg font-medium mb-3">Listed by</h3>
-                    <div className="bg-white border border-border-gray rounded-xl py-5 px-4">
+                    <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
                         <div className="flex items-center gap-4">
                             <div className="w-14 h-14 bg-orange-200 rounded-full flex items-center justify-center">
                                 <img
@@ -168,11 +168,11 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                 <h4 className="font-medium text-lg text-black">{listingData.listerInfo.name}</h4>
                                 <p className="text-medium-gray text-base">{listingData.listerInfo.email}</p>
                                 <div className="flex items-center gap-2 mt-1">
-                                    <div className="flex items-center gap-1 text-base text-medium-gray">
+                                    <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <CiCalendar size={16} />
                                         <span>Joined {listingData.listerInfo.joinedDate}</span>
                                     </div>
-                                    <div className="flex items-center gap-1 text-base text-medium-gray">
+                                    <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <IoLocationOutline size={16} />
                                         <span>{listingData.listerInfo.location}</span>
                                     </div>

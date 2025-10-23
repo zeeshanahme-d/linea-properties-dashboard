@@ -32,13 +32,13 @@ const TrafficByLocationChart: React.FC = () => {
     return (
         <Card
             title={<p className="font-normal text-lg">Traffic by Location</p>}
-            className="w-full border xl:max-w-sm 3xl:max-w-md circleChartCard"
+            className="w-full border xl:max-w-sm 3xl:max-w-md circleChartCard h-[300px]"
         >
-            <div className="flex flex-row items-center">
-                <PieChart width={300} height={300}>
+            <div className="flex flex-row items-center h-[220px]">
+                <PieChart width={400} height={400}>
                     <Pie
                         data={trafficData}
-                        paddingAngle={2}
+                        paddingAngle={0}
                         dataKey="value"
                         labelLine={false}
                         label={false}
@@ -52,7 +52,7 @@ const TrafficByLocationChart: React.FC = () => {
                     <Tooltip content={<CustomTooltip />} />
                 </PieChart>
 
-                <ul className="w-full px-4 mt-4 space-y-2">
+                <ul className="w-full px-2 mt-0 space-y-1">
                     {trafficData.map((item, index) => (
                         <li key={index} className="flex justify-between items-center">
                             <div className="flex items-center">

@@ -21,7 +21,7 @@ function Layout() {
           </header>
 
           {/* Page body scrollable */}
-          <main className="mt-24 h-[calc(100vh-6rem)] overflow-y-auto px-6 pb-10">
+          <main className="mt-24 h-[calc(100vh-6rem)] overflow-y-auto px-6 pb-2">
             <Outlet />
           </main>
         </div>

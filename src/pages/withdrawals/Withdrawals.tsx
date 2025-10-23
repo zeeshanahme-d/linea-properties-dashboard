@@ -7,7 +7,7 @@ import EyeIcon from "assets/icons/view-icon.svg?react";
 import CheckIcon from "assets/icons/check-icon.svg?react";
 import XIcon from "assets/icons/cross-icon.svg?react";
 import DoneModal from 'components/modals/DoneModal';
-import ListingDetailModal from 'components/modals/ListingDetailModal';
+import WithdrawalRequestDetailModal from 'components/modals/WithdrawalRequestDetailModal';
 
 type WithdrawalStatus = 'Panding' | 'Approved' | 'Rejected';
 
@@ -115,8 +115,8 @@ const headers = [
 
 function Withdrawals() {
     const { setTitle } = useHeaderProps();
-    const [isListingProfileModalOpen, setIsListingProfileModalOpen] = useState(false);
-    const [selectedListing, setSelectedListing] = useState<Withdrawals | null>(null);
+    const [isWithdrawalRequestDetailModalOpen, setIsWithdrawalRequestDetailModalOpen] = useState(false);
+    const [selectedWithdrawalRequest, setSelectedWithdrawalRequest] = useState<Withdrawals | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
 
@@ -125,15 +125,15 @@ function Withdrawals() {
     useEffect(() => setTitle("Withdrawals"), [setTitle]);
 
     const handleView = (listing: Withdrawals) => {
-        setSelectedListing(listing);
-        setIsListingProfileModalOpen(true);
+        setSelectedWithdrawalRequest(listing);
+        setIsWithdrawalRequestDetailModalOpen(true);
     };
 
     const handleApprove = (listingId: string) => {
         console.log('Approve listing:', listingId);
         setStatusMessage('Withdrawal Request Approved');
         setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
+        setIsWithdrawalRequestDetailModalOpen(false);
         setTimeout(() => {
             setIsDoneModalOpen(false);
             setStatusMessage('');
@@ -144,16 +144,16 @@ function Withdrawals() {
         console.log('Reject listing:', listingId);
         setStatusMessage('Withdrawal Request Rejected');
         setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
+        setIsWithdrawalRequestDetailModalOpen(false);
         setTimeout(() => {
             setIsDoneModalOpen(false);
             setStatusMessage('');
         }, 1000);
     };
 
-    const handleCloseListingDetail = () => {
-        setIsListingProfileModalOpen(false);
-        setSelectedListing(null);
+    const handleCloseWithdrawalRequestDetail = () => {
+        setIsWithdrawalRequestDetailModalOpen(false);
+        setSelectedWithdrawalRequest(null);
     };
 
     const getStatusClass = (status: string) => {
@@ -183,7 +183,7 @@ function Withdrawals() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`px-4 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -197,28 +197,28 @@ function Withdrawals() {
                                     key={withdrawal.id}
                                     className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer`}
                                 >
-                                    <td className="px-4 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
                                         {withdrawal.id}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {withdrawal.user}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {withdrawal.amount}
                                     </td>
-                                    <td className="px-4 py-3">
+                                    <td className="xl:px-4 px-2 py-3">
                                         <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(withdrawal.status)}`}>
                                             {withdrawal.status}
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {withdrawal.date}
                                     </td>
-                                    <td className="px-4 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
                                         {withdrawal.method}
                                     </td>
-                                    <td className="px-4 py-3">
-                                        <div className="flex items-center justify-center gap-3">
+                                    <td className="xl:px-4 px-2 py-3">
+                                        <div className="flex items-center justify-center gap-1">
                                             <button
                                                 onClick={() => handleView(withdrawal)}
                                                 className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
@@ -254,10 +254,10 @@ function Withdrawals() {
             </div>
 
             {/* Listing Detail Modal */}
-            <ListingDetailModal
-                isOpen={isListingProfileModalOpen}
-                onClose={handleCloseListingDetail}
-                listing={selectedListing}
+            <WithdrawalRequestDetailModal
+                isOpen={isWithdrawalRequestDetailModalOpen}
+                onClose={handleCloseWithdrawalRequestDetail}
+                withdrawalRequest={selectedWithdrawalRequest}
                 onApprove={handleApprove}
                 onReject={handleReject}
             />

@@ -47,7 +47,7 @@ function RevenueGrowthChart() {
                             type="monotone"
                             dataKey="Revenue"
                             stroke="#e56b5d"
-                            strokeWidth={2}
+                            strokeWidth={1}
                             fillOpacity={1}
                             fill="url(#colorRevenue)"
                         />

@@ -16,13 +16,13 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
     className = ''
 }) => {
     return (
-        <div className={`rounded-2xl bg-white h-40 border relative ${className} p-3 xl:p-5 flex flex-col`}>
+        <div className={`rounded-2xl bg-white border relative ${className} py-3 px-5 flex flex-col`}>
             {/* Title */}
-            <div className="text-sm text-medium-gray font-normal mb-3 flex items-center justify-between">
+            <div className="text-sm text-medium-gray font-normal mb-2 flex items-center justify-between">
                 {title}
                 {icon && (
                     <div
-                        className="w-[50px] h-[50px] rounded-lg flex items-center justify-center text-white"
+                        className="w-[40px] h-[40px] rounded-lg flex items-center justify-center text-white"
                         style={{ backgroundColor: iconColor }}
                     >
                         {icon}
