@@ -31,10 +31,18 @@ function ActiveListingsChart() {
         >
             <div className="w-full h-80">
                 <ResponsiveContainer>
-                    <BarChart data={data} barSize={35}>
+                    <BarChart
+                        data={data}
+                        // barSize={45}
+                        margin={{ top: 0, right: 10, left: -20, bottom: 0 }}
+                    >
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="name" tick={{ fill: "#9ca3af" }} />
-                        <YAxis tick={{ fill: "#9ca3af" }} />
+                        <YAxis
+                            tick={{ fill: "#9ca3af" }}
+                            domain={[0, 200]}
+                            ticks={[0, 50, 100, 150, 200]}
+                        />
                         <Tooltip />
                         <Bar dataKey="Listings" fill="#FDAF9B" />
                     </BarChart>

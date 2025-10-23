@@ -176,14 +176,14 @@ function Withdrawals() {
             </div>
 
             <div className='mt-5 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
-                <div className="max-h-[800px] min-w-[900px] w-full">
+                <div className="max-h-[800px] min-w-[1000px] w-full">
                     <table className="border-separate border-spacing-y-2 w-full">
                         <thead>
                             <tr>
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} text-base font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -218,32 +218,34 @@ function Withdrawals() {
                                         {withdrawal.method}
                                     </td>
                                     <td className="xl:px-4 px-2 py-3">
-                                        <div className="flex items-center justify-center gap-1">
-                                            <button
-                                                onClick={() => handleView(withdrawal)}
-                                                className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
-                                                title="View"
-                                            >
-                                                <EyeIcon />
-                                            </button>
-                                            {withdrawal.status === 'Panding' &&
-                                                <>
-                                                    <button
-                                                        onClick={() => handleApprove(withdrawal.id)}
-                                                        className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
-                                                        title="Approve"
-                                                    >
-                                                        <CheckIcon />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleReject(withdrawal.id)}
-                                                        className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                        title="Reject"
-                                                    >
-                                                        <XIcon />
-                                                    </button>
-                                                </>
-                                            }
+                                        <div className='flex-centered'>
+                                            <div className="w-[130px] flex items-center justify-start gap-1">
+                                                <button
+                                                    onClick={() => handleView(withdrawal)}
+                                                    className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
+                                                    title="View"
+                                                >
+                                                    <EyeIcon />
+                                                </button>
+                                                {withdrawal.status === 'Panding' &&
+                                                    <>
+                                                        <button
+                                                            onClick={() => handleApprove(withdrawal.id)}
+                                                            className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
+                                                            title="Approve"
+                                                        >
+                                                            <CheckIcon />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleReject(withdrawal.id)}
+                                                            className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                            title="Reject"
+                                                        >
+                                                            <XIcon />
+                                                        </button>
+                                                    </>
+                                                }
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

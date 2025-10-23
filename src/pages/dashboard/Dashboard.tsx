@@ -19,7 +19,7 @@ function Dashboard() {
 
     return (
         <section className=''>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg1180:grid-cols-4 gap-3 xl:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg1180:grid-cols-4 gap-3 xl:gap-4">
                 <StatisticsCard
                     title="Total Users"
                     data="2,412"
@@ -45,11 +45,11 @@ function Dashboard() {
                     iconColor="#22C55E1A"
                 />
             </div>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 xl:gap-6 mt-4">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 xl:gap-4 mt-4">
                 <RevenueGrowthChart />
                 <ActiveListingsChart />
             </div>
-            <div className="flex flex-col xl:flex-row gap-3 xl:gap-6 mt-4">
+            <div className="flex flex-col xl:flex-row gap-3 xl:gap-4 mt-4">
                 <TrafficByLocationChart />
                 <AiFlaggedListingsTable />
             </div>

@@ -33,7 +33,7 @@ function Configurations() {
                     {/* Service Fee Percentage Slider */}
                     <div className="mb-1">
                         <div className="relative">
-                            <p className="text-sm text-medium-gray">
+                            <p className="text-sm text-black">
                                 Service Fee Percentage
                             </p>
                             <Slider
@@ -75,7 +75,7 @@ function Configurations() {
                     {/* Save Changes Button */}
                 </div>
             </Card>
-            <div className=" mt-4 ml-[13.5rem]">
+            <div className=" mt-5 ml-[13.5rem]">
                 <Button
                     type="primary"
                     onClick={handleSaveChanges}

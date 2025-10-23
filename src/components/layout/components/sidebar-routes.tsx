@@ -109,9 +109,13 @@ function SidebarRoutes() {
             ))}
           </div>
         </div>
-        <button onClick={() => setLogoutModalOpen(true)} className={'flex w-full absolute bottom-0 text-lg ps-10 text-primary p-2 items-center justify-start gap-4 mt-auto'}>
-          <LogoutIcon />
-          <span>Logout</span>
+        <button
+          className={`flex items-center gap-5 px-4 absolute bottom-0`}
+          onClick={() => setLogoutModalOpen(true)}              >
+          <div className={`h-[48px] px-4 rounded-xl relative w-full gap-4 flex items-center my-2`} >
+            <LogoutIcon />
+            <span className='text-[#EF4444]'>Logout</span>
+          </div>
         </button>
       </div>
       <LogoutModal open={logoutModalOpen} onClose={() => setLogoutModalOpen(false)} />

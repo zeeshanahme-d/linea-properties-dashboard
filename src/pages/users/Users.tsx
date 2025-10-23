@@ -102,8 +102,8 @@ const users: User[] = [
 const headers = [
     { label: "Name", className: "text-left" },
     { label: "Email", className: "text-left" },
-    { label: "Status", className: "text-left" },
-    { label: "Join Date", className: "text-left" },
+    { label: "Status", className: "text-center" },
+    { label: "Join Date", className: "text-center" },
     { label: "Actions", className: "text-center" },
 ]
 
@@ -214,12 +214,12 @@ function Users() {
                                     <td className="xl:px-4 px-2 py-2 text-gray-700">
                                         {user.email}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-2">
+                                    <td className="xl:px-4 px-2 py-2 text-center flex-centered">
                                         <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(user.status)}`}>
                                             {user.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-2 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-2 text-gray-700 text-center">
                                         {user.joinDate}
                                     </td>
                                     <td className="xl:px-4 px-2 py-2">
