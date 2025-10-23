@@ -156,14 +156,14 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <div className="flex gap-3">
                         <Button
                             onClick={() => onReject?.(withdrawalRequest.id)}
-                            className="h-12 flex-1 border-red-500 text-red-500 hover:bg-red-50"
+                            className="h-[52px] rounded-2xl flex-1 border-red-500 text-red-500 hover:bg-red-50"
                             type="default"
                         >
                             Reject
                         </Button>
                         <Button
                             onClick={() => onApprove?.(withdrawalRequest.id)}
-                            className="h-12 flex-1 border-green-500 text-green-500 hover:bg-green-50"
+                            className="h-[52px] rounded-2xl flex-1 border-green-500 text-green-500 hover:bg-green-50"
                             type="default"
                         >
                             Approve
