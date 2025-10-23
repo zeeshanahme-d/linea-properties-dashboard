@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Modal } from 'antd';
 import DeleteIcon from 'assets/icons/delete-modal-icon.svg?react';
-import { CloseOutlined } from '@ant-design/icons';
 
 interface DeleteUserModalProps {
     isOpen: boolean;

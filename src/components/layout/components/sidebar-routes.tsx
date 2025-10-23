@@ -101,7 +101,7 @@ function SidebarRoutes() {
                 to={path}
                 onClick={() => setActiveRoute(key)}
               >
-                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} py-2 px-4 rounded-xl relative w-[100%] flex items-center my-2 justify-start gap-4 text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
+                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} h-[48px] px-4 rounded-xl relative w-[100%] flex items-center my-2 justify-start gap-4 text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
                   {icon}
                   <span>{label}</span>
                 </div>

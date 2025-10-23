@@ -36,7 +36,7 @@ function ActiveListingsChart() {
                         <XAxis dataKey="name" tick={{ fill: "#9ca3af" }} />
                         <YAxis tick={{ fill: "#9ca3af" }} />
                         <Tooltip />
-                        <Bar dataKey="Listings" fill="#f4a497" />
+                        <Bar dataKey="Listings" fill="#FDAF9B" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
