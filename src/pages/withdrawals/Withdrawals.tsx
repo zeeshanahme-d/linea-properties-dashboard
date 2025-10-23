@@ -157,9 +157,9 @@ function Withdrawals() {
     };
 
     const getStatusClass = (status: string) => {
-        if (status === 'Approved') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA]';
-        if (status === 'Panding') return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6]';
-        if (status === 'Rejected') return 'bg-[#FFF0EE] text-danger border border-[#FFE1DE]';
+        if (status === 'Approved') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
+        if (status === 'Panding') return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6] shadow-[0px_0px_10px_#0000000A]';
+        if (status === 'Rejected') return 'bg-[#FFF0EE] text-danger border border-[#FFE1DE] shadow-[0px_0px_10px_#0000000A]';
         return '';
     };
 
