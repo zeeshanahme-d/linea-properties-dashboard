@@ -112,8 +112,16 @@ html {
   display: none !important;
 }
 
+.password-input.ant-input-affix-wrapper {
+  padding-inline: 0 !important;
+}
+
 .ant-card-body::after {
   display: none !important;
+}
+
+.ant-input-suffix {
+  margin-left: 0 !important;
 }
 
 .ant-modal-content {

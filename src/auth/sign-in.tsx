@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, InputRef } from 'antd';
 
 // import useSignIn from './core/hooks/use-sign-in';
 import { useAuth } from './core/auth-context';
@@ -15,6 +15,10 @@ function SignIn() {
   // const { mutateVerifyToken, isLoading: verifyTokenLoding } = useVerifyToken();
   const { currentUser, saveAuth, setCurrentUser } = useAuth();
   const navigate = useNavigate();
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const passwordInputRef = useRef<InputRef>(null);
+  const passwordSpanRef = useRef<HTMLSpanElement>(null);
+
 
   const onFinish = async (values: any) => {
     // const payload = {
@@ -77,7 +81,7 @@ function SignIn() {
           <h1 className="text-[40px] font-bold tracking-wide">Welcome back</h1>
           <h2 className="text-lg font-normal text-medium-gray md:max-w-md">Enter your credentials to securely access the management panel.</h2>
         </div>
-        <div className="w-full max-w-sm">
+        <div className="w-full max-w-sm text-start">
           <Form name="sign-in" onFinish={onFinish} initialValues={{ email: '', password: '' }} autoComplete="off" layout="vertical">
             <Form.Item
               label="Email"
@@ -89,7 +93,7 @@ function SignIn() {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="h-[52px] w-[410px] "
+                className="h-[52px] w-[410px] focus:bg-white bg-light-gray"
               />
             </Form.Item>
 
@@ -105,10 +109,40 @@ function SignIn() {
               },
               ]}
             >
-              <Input.Password
+              <Input
+                ref={passwordInputRef}
+                type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
-                className="h-[52px] w-[410px]"
-                iconRender={visible => visible ? <span ><EyeOpenIcon className='cursor-pointer' /></span> : <span><EyeClosedIcon className='cursor-pointer' /></span>}
+                className="h-[52px] w-[410px] py-0 bg-light-gray password-input"
+                styles={{
+                  input: {
+                    backgroundColor: '#EFEFEF',
+                    borderRadius: '16px 0px 0px 16px',
+                    paddingLeft: "12px"
+                  }
+                }}
+                onFocus={(e) => {
+                  e.target.style.backgroundColor = 'white';
+                  if (passwordSpanRef.current) {
+                    passwordSpanRef.current.className += ' bg-white transition-all duration-200';
+                  }
+                }}
+                onBlur={(e) => {
+                  e.target.style.backgroundColor = '';
+                  if (passwordSpanRef.current) {
+                    passwordSpanRef.current.className = ' cursor-pointer flex-centered h-full w-10 transition-all duration-200';
+                  }
+                }}
+                suffix={
+                  <span
+                    ref={passwordSpanRef}
+                    style={{ borderRadius: '0px 16px 16px 0px' }}
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                    className={`cursor-pointer flex-centered h-full w-10`}
+                  >
+                    {passwordVisible ? <EyeOpenIcon className='cursor-pointer -mt-1' /> : <EyeClosedIcon className='cursor-pointer' />}
+                  </span>
+                }
               />
             </Form.Item>
 
@@ -118,7 +152,7 @@ function SignIn() {
               type="primary"
               htmlType="submit"
               block
-              className="h-[52px] w-[410px]"
+              className="h-[52px] w-[410px] mt-5"
             >
               Login
             </Button>
