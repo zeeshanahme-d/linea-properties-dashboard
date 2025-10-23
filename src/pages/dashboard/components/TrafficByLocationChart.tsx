@@ -31,8 +31,8 @@ const TrafficByLocationChart: React.FC = () => {
 
     return (
         <Card
-            title={<p className="font-normal text-lg">Traffic by Location</p>}
-            className="w-full border xl:max-w-sm 3xl:max-w-md circleChartCard h-[300px]"
+            title="Traffic by Location"
+            className="w-full xl:max-w-sm 3xl:max-w-md h-[300px]"
         >
             <div className="flex flex-row items-center h-[220px]">
                 <PieChart width={400} height={400}>

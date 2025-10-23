@@ -27,8 +27,7 @@ const data = [
 function ActiveListingsChart() {
     return (
         <Card
-            title={<p className="font-normal text-lg">Active Listings by Month</p>}
-            className="activeListingsCard"
+            title="Active Listings by Month"
         >
             <div className="w-full h-80">
                 <ResponsiveContainer>

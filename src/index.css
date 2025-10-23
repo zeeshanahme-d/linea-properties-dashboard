@@ -67,11 +67,45 @@ html {
   margin: 17px 0;
 }
 
-.ant-card-body {
+.ant-card .ant-card-body {
   padding: 0px !important;
   padding-inline: 20px !important;
   padding-block: 14px !important;
   height: calc(100% - 56px) !important;
+}
+
+.ant-card .ant-card-head {
+  border-bottom: none !important;
+  font-weight: 500 !important;
+  font-family: var(--family-medium) !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+}
+
+.ant-slider-track {
+  background-color: #D4502F !important;
+  height: 10px !important;
+  border-radius: 8px !important;
+}
+
+.ant-slider-rail {
+  height: 10px !important;
+  border-radius: 8px !important;
+}
+
+.ant-slider-handle {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.ant-slider-handle::before {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.ant-slider-handle::after {
+  width: 16px !important;
+  height: 16px !important;
 }
 
 .ant-card-body::before {
@@ -139,22 +173,6 @@ circle:focus {
 
 .ant-select-selection-overflow {
   overflow-y: auto !important;
-}
-
-/* Ellipsis for AntD Select selected value and dropdown items */
-.select-ellipsis .ant-select-selection-item,
-.select-ellipsis .ant-select-selection-placeholder {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.select-ellipsis .ant-select-item-option-content {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .ant-form-item-label label {

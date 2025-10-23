@@ -10,25 +10,24 @@ import {
 } from "recharts";
 
 const data = [
-    { name: "Jan", Revenue: 80500 },
-    { name: "Feb", Revenue: 1000 },
-    { name: "Mar", Revenue: 9800 },
-    { name: "Apr", Revenue: 120 },
-    { name: "May", Revenue: 800 },
-    { name: "Jun", Revenue: 4242525 },
-    { name: "Jul", Revenue: 1250000 },
-    { name: "Aug", Revenue: 15000 },
-    { name: "Sep", Revenue: 135000 },
-    { name: "Oct", Revenue: 160000 },
-    { name: "Nov", Revenue: 0 },
-    { name: "Dec", Revenue: 0 },
+    { name: "Jan", Revenue: 500000 },
+    { name: "Feb", Revenue: 900000 },
+    { name: "Mar", Revenue: 1200000 },
+    { name: "Apr", Revenue: 1500000 },
+    { name: "May", Revenue: 1200000 },
+    { name: "Jun", Revenue: 800000 },
+    { name: "Jul", Revenue: 1600000 },
+    { name: "Aug", Revenue: 1500000 },
+    { name: "Sep", Revenue: 1800000 },
+    { name: "Oct", Revenue: 2000000 },
+    { name: "Nov", Revenue: 1400000 },
+    { name: "Dec", Revenue: 1800000 },
 ];
 
 function RevenueGrowthChart() {
     return (
         <Card
-            title={<p className="font-normal text-lg">Revenue Growth</p>}
-            className=""
+            title="Revenue Growth"
         >
             <div className="w-full h-80">
                 <ResponsiveContainer>
@@ -41,14 +40,19 @@ function RevenueGrowthChart() {
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis dataKey="name" tick={{ fill: "#9ca3af" }} />
-                        <YAxis tick={{ fill: "#9ca3af" }} />
+                        <YAxis
+                            tick={{ fill: "#9ca3af" }}
+                            domain={[0, 2000000]}
+                            ticks={[0, 500000, 1000000, 1500000, 2000000]}
+                        />
                         <Tooltip />
                         <Area
                             type="monotone"
                             dataKey="Revenue"
                             stroke="#e56b5d"
-                            strokeWidth={1}
-                            fillOpacity={1}
+                            strokeWidth={2}
+                            strokeDasharray="4 4"
+                            fillOpacity={0.8}
                             fill="url(#colorRevenue)"
                         />
                     </AreaChart>

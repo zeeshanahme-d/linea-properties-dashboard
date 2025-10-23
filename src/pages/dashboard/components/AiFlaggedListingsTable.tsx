@@ -73,8 +73,8 @@ const AiFlaggedListingsTable: React.FC = () => {
 
     return (
         <Card
-            title={<p className="font-normal text-lg"> Recent AI Flagged Listing</p>}
-            className="w-full border aiFlaggedTableCard h-[300px]"
+            title=" Recent AI Flagged Listing"
+            className="w-full h-[300px]"
         >
             <div className="hidden md:block h-[220px] overflow-x-auto">
                 <table className="w-full">
