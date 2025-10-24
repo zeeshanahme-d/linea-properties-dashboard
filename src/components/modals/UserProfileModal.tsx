@@ -144,7 +144,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <div className="flex gap-3 justify-end">
                     <Button
                         onClick={() => onBanUser?.(user.id)}
-                        className="h-[52px] w-full rounded-2xl font-normal"
+                        className="h-[52px] w-full rounded-2xl font-normal hover:bg-red-50"
                         type="default"
                         danger
                     >
@@ -153,7 +153,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     <Button
                         type="default"
                         danger
-                        className="h-[52px] w-full rounded-2xl font-normal"
+                        className="h-[52px] w-full rounded-2xl font-normal hover:bg-red-50"
                         onClick={() => onDeleteUser?.(user.id)}
                     >
                         Delete User

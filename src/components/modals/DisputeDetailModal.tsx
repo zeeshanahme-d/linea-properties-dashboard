@@ -184,15 +184,17 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                     <Button
                         variant='text'
                         onClick={() => onReleaseToSeeker?.(dispute.id)}
-                        className="h-10 rounded-2xl flex-1 border-primary text-primary hover:bg-primary hover:text-white"
+                        className="h-12 rounded-2xl flex-1 border-primary text-primary hover:bg-red-50"
                         type="default"
+                        danger
                     >
                         Release Funds to Property Seeker
                     </Button>
                     <Button
                         onClick={() => onReleaseToLister?.(dispute.id)}
-                        className="flex-1 h-10 rounded-2xl border-primary text-primary hover:bg-primary hover:text-white"
+                        className="flex-1 h-12 rounded-2xl border-primary text-primary hover:bg-red-50"
                         type="default"
+                        danger
                     >
                         Release Funds to Lister
                     </Button>
