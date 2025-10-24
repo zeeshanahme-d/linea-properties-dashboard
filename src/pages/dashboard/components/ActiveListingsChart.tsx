@@ -37,9 +37,9 @@ function ActiveListingsChart() {
                         margin={{ top: 0, right: 10, left: -20, bottom: 0 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                        <XAxis dataKey="name" tick={{ fill: "#9ca3af" }} />
+                        <XAxis dataKey="name" tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: 400 }} />
                         <YAxis
-                            tick={{ fill: "#9ca3af" }}
+                            tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: 400 }}
                             domain={[0, 200]}
                             ticks={[0, 50, 100, 150, 200]}
                         />

@@ -39,9 +39,9 @@ function RevenueGrowthChart() {
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                        <XAxis dataKey="name" tick={{ fill: "#9ca3af" }} />
+                        <XAxis dataKey="name" tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: 400 }} />
                         <YAxis
-                            tick={{ fill: "#9ca3af" }}
+                            tick={{ fill: "#9ca3af", fontSize: 12, fontWeight: 400 }}
                             domain={[0, 2000000]}
                             ticks={[0, 500000, 1000000, 1500000, 2000000]}
                         />
