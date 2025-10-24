@@ -105,7 +105,7 @@ function SignIn() {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="h-[52px] w-[410px] focus:bg-white bg-light-gray"
+                className="h-[52px] w-[410px] focus:bg-[#ffffff] bg-light-gray"
               />
             </Form.Item>
 
@@ -136,7 +136,7 @@ function SignIn() {
                 onFocus={(e) => {
                   e.target.style.backgroundColor = 'white';
                   if (passwordSpanRef.current) {
-                    passwordSpanRef.current.className += ' bg-white transition-all duration-200';
+                    passwordSpanRef.current.className += ' bg-[#ffffff] transition-all duration-200';
                   }
                 }}
                 onBlur={(e) => {
