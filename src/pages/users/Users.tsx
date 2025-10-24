@@ -194,7 +194,7 @@ function Users() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} font-medium text-sm`}
                                     >
                                         {header.label}
                                     </th>
@@ -206,12 +206,12 @@ function Users() {
                                 <tr
                                     onDoubleClick={() => handleView(user)}
                                     key={user.id}
-                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer"
+                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm"
                                 >
-                                    <td className="xl:px-4 px-2 py-2 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-2 ">
                                         {user.name}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-2 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-2 ">
                                         {user.email}
                                     </td>
                                     <td className="xl:px-4 px-2 py-2 text-center flex-centered">
@@ -219,7 +219,7 @@ function Users() {
                                             {user.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-2 text-gray-700 text-center">
+                                    <td className="xl:px-4 px-2 py-2  text-center">
                                         {user.joinDate}
                                     </td>
                                     <td className="xl:px-4 px-2 py-2">

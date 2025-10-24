@@ -75,7 +75,7 @@ html {
 }
 
 .ant-card .ant-card-head {
-  border-bottom: none !important;
+  /* border-bottom: none !important; */
   font-weight: 500 !important;
   font-family: var(--family-medium) !important;
   font-size: 18px !important;
@@ -178,6 +178,8 @@ circle:focus {
 
 .ant-select-selector {
   font-size: var(--base-font-size) !important;
+  /* border: none !important; */
+  padding-inline: 16px !important;
 }
 
 .ant-select-selection-wrap {

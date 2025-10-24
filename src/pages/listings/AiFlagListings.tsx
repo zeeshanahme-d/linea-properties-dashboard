@@ -140,7 +140,7 @@ function AiFlagListings() {
                 <Input
                     placeholder="Search Listing"
                     prefix={<SearchIcon className='mr-2' />}
-                    className='w-full min-w-[300px]'
+                    className='w-full min-w-[300px] h-12'
                 />
                 <Select
                     options={saleStatusOptions}
@@ -159,7 +159,7 @@ function AiFlagListings() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 ${header.className} text-sm font-medium`}
                                     >
                                         {header.label}
                                     </th>
@@ -171,15 +171,15 @@ function AiFlagListings() {
                                 <tr
                                     onDoubleClick={() => handleView(listing)}
                                     key={listing.id}
-                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF]transition-colors duration-300 cursor-pointer"
+                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF]transition-colors duration-300 cursor-pointer text-sm"
                                 >
-                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {listing.title}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {listing.listerName}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {listing.location}
                                     </td>
                                     <td className="xl:px-4 px-2 py-3">
@@ -187,7 +187,7 @@ function AiFlagListings() {
                                             {listing.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {listing.price}
                                     </td>
                                     <td className="xl:px-4 px-2  py-3">

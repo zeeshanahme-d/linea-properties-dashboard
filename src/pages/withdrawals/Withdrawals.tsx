@@ -183,7 +183,7 @@ function Withdrawals() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} font-medium text-sm`}
                                     >
                                         {header.label}
                                     </th>
@@ -195,15 +195,15 @@ function Withdrawals() {
                                 <tr
                                     onDoubleClick={() => handleView(withdrawal)}
                                     key={withdrawal.id}
-                                    className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer`}
+                                    className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
                                 >
-                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {withdrawal.id}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {withdrawal.user}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {withdrawal.amount}
                                     </td>
                                     <td className="xl:px-4 px-2 py-3">
@@ -211,10 +211,10 @@ function Withdrawals() {
                                             {withdrawal.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {withdrawal.date}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {withdrawal.method}
                                     </td>
                                     <td className="xl:px-4 px-2 py-3">

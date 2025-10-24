@@ -179,7 +179,7 @@ function Disputes() {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} text-base font-medium`}
+                                        className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} font-medium text-sm`}
                                     >
                                         {header.label}
                                     </th>
@@ -191,18 +191,18 @@ function Disputes() {
                                 <tr
                                     onDoubleClick={() => handleView(dispute)}
                                     key={dispute.disputeId}
-                                    className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer`}
+                                    className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
                                 >
-                                    <td className="xl:px-4 px-2 py-3 text-gray-900">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {dispute.disputeId}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {dispute.user}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {dispute.listing}
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {dispute.reason}
                                     </td>
                                     <td className="xl:px-4 px-2 py-3">
@@ -210,7 +210,7 @@ function Disputes() {
                                             {dispute.status}
                                         </div>
                                     </td>
-                                    <td className="xl:px-4 px-2 py-3 text-gray-700">
+                                    <td className="xl:px-4 px-2 py-3 ">
                                         {dispute.date}
                                     </td>
 

@@ -110,7 +110,7 @@ const AiFlaggedListingsTable: React.FC = () => {
                                 {headers.map((header) => (
                                     <th
                                         key={header.label}
-                                        className={`px-4 py-3 ${header.className} text-base font-medium`}
+                                        className={`px-4 py-3 ${header.className} text-base font-medium `}
                                     >
                                         {header.label}
                                     </th>
@@ -123,16 +123,16 @@ const AiFlaggedListingsTable: React.FC = () => {
                                     key={listing.id}
                                     className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                                 >
-                                    <td className="px-4 py-4 text-sm text-gray-900">
+                                    <td className="px-4 py-4 text-sm ">
                                         {listing.title}
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-700">
+                                    <td className="px-4 py-4 text-sm">
                                         {listing.listerName}
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-700">
+                                    <td className="px-4 py-4 text-sm">
                                         {listing.location}
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-900 font-medium">
+                                    <td className="px-4 py-4 text-sm font-medium">
                                         {listing.price}
                                     </td>
                                     <td className="px-4 py-4">
