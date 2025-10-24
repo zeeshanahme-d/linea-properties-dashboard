@@ -57,13 +57,13 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
             onCancel={onClose}
             footer={null}
             width={650}
-            className="listing-detail-modal"
+            className="withdrawal-request-detail-modal"
             centered
-            closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
+            closeIcon={<CloseOutlined />}
             title={<p className='font-medium text-2xl'>Withdrawals Request Detail</p>}
         >
             <Divider />
-            <div className='py-'>
+            <div className='py-2'>
                 {/* Listing Overview */}
                 <div className="mb-6">
                     <div className="flex items-start justify-between">

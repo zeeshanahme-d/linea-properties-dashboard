@@ -57,7 +57,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
             className="user-profile-modal"
             centered
             closeIcon={<CloseOutlined />}
-            title={<p className='font-normal text-2xl'>User Profile</p>}
+            title={<p className='font-medium text-2xl'>User Profile</p>}
         >
             <Divider />
             <div className="py-2">

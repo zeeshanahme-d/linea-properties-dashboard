@@ -6,6 +6,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import ImageIcon from 'assets/icons/image-icon.svg?react';
 import FileViewIcon from 'assets/icons/file-view-icon.svg?react';
 import FileDownloadIcon from 'assets/icons/download-icon.svg?react';
+import VsIcon from 'assets/icons/vs-icon.svg?react';
 
 
 interface DisputeDetailModalProps {
@@ -72,11 +73,11 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
             width={670}
             className="dispute-detail-modal"
             centered
-            closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
-            title={<p className='font-bold text-2xl'>Dispute Detail</p>}
+            closeIcon={<CloseOutlined />}
+            title={<p className='font-medium text-2xl'>Dispute Detail</p>}
         >
             <Divider />
-            <div className='py-3'>
+            <div className='py-2'>
                 {/* Dispute Information Card */}
                 <div className="mb-6">
                     <div className="bg-[#EFF4FE] rounded-2xl p-4">
@@ -110,7 +111,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                 {/* Parties Involved Section */}
                 <div className="mb-6">
                     <h3 className="text-base font-medium mb-2">Parties Involved</h3>
-                    <div className="flex items-center justify-center gap-8">
+                    <div className="flex items-center justify-center gap-3">
                         {/* Dispute Initiator */}
                         <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
                             <img
@@ -125,7 +126,9 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                         </div>
 
                         {/* VS Text */}
-                        <div className="text-2xl font-bold text-[#e56b5d]">VS</div>
+                        <div className="flex-centered">
+                            <VsIcon />
+                        </div>
 
                         {/* Property Lister */}
                         <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
@@ -145,9 +148,9 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                 {/* Evidence & Documents Section */}
                 <div className="mb-6">
                     <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
-                    <div className="space-y-3">
+                    <div className="space-y-[6px] border border-border-gray rounded-2xl px-5 py-6">
                         {disputeData.evidence.map((doc, index) => (
-                            <div key={index} className="bg-[#EEEEEE] rounded-xl px-4 py-3 flex items-center justify-between">
+                            <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <ImageIcon />
                                     <div>
@@ -158,14 +161,14 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                 <div className="flex gap-2">
                                     <Button
                                         icon={<FileViewIcon className='mt-1' />}
-                                        className="text-medium-gray px-2 py-4 text-sm rounded-lg"
+                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg"
                                         size="small"
                                     >
                                         View
                                     </Button>
                                     <Button
                                         icon={<FileDownloadIcon className='mt-1' />}
-                                        className="text-medium-gray px-2 py-4 text-sm rounded-lg flex-centered"
+                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg flex-centered"
                                         size="small"
                                     >
                                         Download

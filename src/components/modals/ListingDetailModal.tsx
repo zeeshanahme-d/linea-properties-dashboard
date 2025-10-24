@@ -80,11 +80,11 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
             width={800}
             className="listing-detail-modal"
             centered
-            closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
+            closeIcon={<CloseOutlined />}
             title={<p className='font-medium text-2xl'>Listing Detail</p>}
         >
             <Divider />
-            <div>
+            <div className='py-2'>
                 {/* Listing Overview */}
                 <div className="mb-6">
                     <div className="flex items-start justify-between mb-2">

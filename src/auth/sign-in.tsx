@@ -7,9 +7,17 @@ import { useAuth } from './core/auth-context';
 // import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 // import useVerifyToken from './core/hooks/use-verify-token';
 // import Container from 'components/core-ui/container/container';
+
+
+
 import LogoIcon from 'assets/icons/dashboard-logo.svg?react'
 import EyeOpenIcon from 'assets/icons/eye-open-icon.svg?react'
 import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
+import LeftHandImage from '.../../../../public/images/lefthand-image.svg?react'
+import RightHandImage from '.../../../../public/images/righthand-image.svg?react'
+
+
+
 function SignIn() {
   // const { signInMutate, isLoading } = useSignIn();
   // const { mutateVerifyToken, isLoading: verifyTokenLoding } = useVerifyToken();
@@ -70,9 +78,13 @@ function SignIn() {
   }, [currentUser, navigate]);
 
   return (
-    <div className={`overflow-hidden h-screen flex relative items-center 2xl:gap-x-20`}>
-      <div className='hidden lg:block w-1/2 items-center py-4 pl-4 text-center h-full'>
-        <img src="/images/sidebar-image.png" alt="logo" className="w-full h-full rounded-xl object-cover" />
+    <div className={`overflow-hidden h-screen flex relative items-center 2xl:gap-x-10`}>
+      <div className='hidden lg:block w-1/2 py-4 pl-4 h-full'>
+        <div className='relative w-full h-full'>
+          <img src="/images/bg-sidebar-image.png" alt="logo" className="w-full h-full rounded-xl object-cover" />
+          <LeftHandImage className='absolute top-1/2 -translate-y-1/2 left-0 w-[200px]  xl:w-[250px] xl1520:w-[350px]' />
+          <RightHandImage className='absolute top-1/2 -translate-y-1/2 right-0 w-[200px]  xl:w-[250px] xl1520:right-[-39px]  xl1520:w-[350px]' />
+        </div>
       </div>
 
       <div className='flex flex-col items-center text-center w-full lg:w-1/2 '>

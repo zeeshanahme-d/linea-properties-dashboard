@@ -112,8 +112,8 @@ function Disputes() {
     const { setTitle } = useHeaderProps();
     const [isDisputeDetailModalOpen, setIsDisputeDetailModalOpen] = useState(false);
     const [selectedDispute, setSelectedDispute] = useState<Dispute | null>(null);
-    const [isDoneModalOpen, _] = useState(false);
-    const [statusMessage, __] = useState('');
+    const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
+    const [statusMessage, setStatusMessage] = useState('');
 
 
 
@@ -134,6 +134,29 @@ function Disputes() {
         if (status === 'Resolved') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
         if (status === 'Open') return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6] shadow-[0px_0px_10px_#0000000A]';
         return '';
+    };
+
+    const handleReleaseToSeeker = (disputeId: string) => {
+        console.log('Release to seeker:', disputeId);
+        setStatusMessage('Funds Released');
+        setIsDoneModalOpen(true);
+        setIsDisputeDetailModalOpen(false);
+        setTimeout(() => {
+            setIsDoneModalOpen(false);
+            setStatusMessage('');
+        }, 1000);
+
+    };
+
+    const handleReleaseToLister = (disputeId: string) => {
+        console.log('Release to lister:', disputeId);
+        setStatusMessage('Funds Released');
+        setIsDoneModalOpen(true);
+        setIsDisputeDetailModalOpen(false);
+        setTimeout(() => {
+            setIsDoneModalOpen(false);
+            setStatusMessage('');
+        }, 1000);
     };
 
     return (
@@ -214,6 +237,8 @@ function Disputes() {
                 isOpen={isDisputeDetailModalOpen}
                 onClose={handleCloseDisputeDetail}
                 dispute={selectedDispute}
+                onReleaseToSeeker={handleReleaseToSeeker}
+                onReleaseToLister={handleReleaseToLister}
             />
 
             {/* Done Modal */}
