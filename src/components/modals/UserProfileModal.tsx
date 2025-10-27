@@ -55,8 +55,15 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
             width={670}
             className="user-profile-modal"
             centered
-            closeIcon={<CloseOutlined />}
-            title={<p className='font-medium text-2xl'>User Profile</p>}
+            title={
+                <div className='flex justify-between items-center'>
+                    <p className='font-medium text-2xl'>User Profile</p>
+                    <button onClick={onClose}>
+                        <CloseOutlined size={24} />
+                    </button>
+                </div>
+            }
+            closable={false}
         >
             <Divider />
             <div className="py-2 px-8">

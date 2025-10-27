@@ -73,8 +73,15 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
             width={670}
             className="dispute-detail-modal"
             centered
-            closeIcon={<CloseOutlined />}
-            title={<p className='font-medium text-2xl'>Dispute Detail</p>}
+            title={
+                <div className='flex justify-between items-center'>
+                    <p className='font-medium text-2xl'>Dispute Detail</p>
+                    <button onClick={onClose}>
+                        <CloseOutlined size={24} />
+                    </button>
+                </div>
+            }
+            closable={false}
         >
             <Divider />
             <div className='py-2 px-8'>

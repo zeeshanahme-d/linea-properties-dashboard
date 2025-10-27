@@ -28,7 +28,7 @@ const DeleteModal: React.FC<DeleteUserModalProps> = ({
             title={false}
         // closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
         >
-            <div className="text-center pb-5">
+            <div className="text-center pb-5 px-8">
                 {/* Delete Icon */}
                 <div className="flex justify-center mb-4">
                     <DeleteIcon />
@@ -39,7 +39,7 @@ const DeleteModal: React.FC<DeleteUserModalProps> = ({
                     {description}
                 </p>
             </div>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-4 px-8">
                 <Button onClick={onConfirm} className="w-64 h-[42px] bg-[#EF4444] text-white rounded-xl">Yes, Delete</Button>
                 <Button type="default" onClick={onClose} className="w-64 h-[42px] rounded-xl">Cancel</Button>
             </div>

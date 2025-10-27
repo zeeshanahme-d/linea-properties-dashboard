@@ -20,7 +20,7 @@ const DoneModal: React.FC<DoneModalProps> = ({
             footer={null}
             closeIcon={false}
         >
-            <div className="text-center py-3">
+            <div className="text-center py-3 px-8">
                 {/* Done Icon */}
                 <div className="flex justify-center mb-4">
                     <img src="/images/check-animation-icon.gif" alt="done" className='w-[200px] h-[110px]' />
