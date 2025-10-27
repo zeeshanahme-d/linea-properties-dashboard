@@ -77,7 +77,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
             title={<p className='font-medium text-2xl'>Dispute Detail</p>}
         >
             <Divider />
-            <div className='py-2'>
+            <div className='py-2 px-8'>
                 {/* Dispute Information Card */}
                 <div className="mb-6">
                     <div className="bg-[#EFF4FE] rounded-2xl p-4">

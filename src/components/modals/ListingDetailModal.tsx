@@ -84,7 +84,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
             title={<p className='font-medium text-2xl'>Listing Detail</p>}
         >
             <Divider />
-            <div className='py-2'>
+            <div className='py-2 px-8'>
                 {/* Listing Overview */}
                 <div className="mb-6">
                     <div className="flex items-start justify-between mb-2">
@@ -167,7 +167,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                             <div className="flex-1">
                                 <h4 className="font-normal text-lg text-black">{listingData.listerInfo.name}</h4>
                                 <p className="text-medium-gray text-base">{listingData.listerInfo.email}</p>
-                                <div className="flex items-center gap-2 mt-1">
+                                <div className="flex items-center gap-3 mt-1">
                                     <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <CiCalendar size={16} />
                                         <span>Joined {listingData.listerInfo.joinedDate}</span>

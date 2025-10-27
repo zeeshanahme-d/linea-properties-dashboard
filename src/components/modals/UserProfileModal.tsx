@@ -59,7 +59,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
             title={<p className='font-medium text-2xl'>User Profile</p>}
         >
             <Divider />
-            <div className="py-2">
+            <div className="py-2 px-8">
                 {/* User Information */}
                 <div className="flex items-start gap-4 mb-6 border rounded-2xl px-4 py-6">
                     {/* Profile Picture */}
@@ -80,7 +80,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                             </div>
                         </div>
                         <p className="text-medium-gray mb-1 text-base">{user.email}</p>
-                        <div className="flex items-center gap-1 text-sm text-medium-gray">
+                        <div className="flex items-center gap-3 text-sm text-medium-gray">
                             <p className="flex items-center gap-1 text-medium-gray">
                                 <CiCalendar size={18} /> <span>Joined {userDetails.joinDate}</span>
                             </p>

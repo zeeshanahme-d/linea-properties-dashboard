@@ -63,7 +63,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
             title={<p className='font-medium text-2xl'>Withdrawals Request Detail</p>}
         >
             <Divider />
-            <div className='py-2'>
+            <div className='py-2 px-8'>
                 {/* Listing Overview */}
                 <div className="mb-6">
                     <div className="flex items-start justify-between">
@@ -136,7 +136,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                             <div className="flex-1">
                                 <h4 className="font-medium text-lg text-black">{withdrawalRequestData.listerInfo.name}</h4>
                                 <p className="text-medium-gray text-base">{withdrawalRequestData.listerInfo.email}</p>
-                                <div className="flex items-center gap-2 mt-1">
+                                <div className="flex items-center gap-3 mt-1">
                                     <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <CiCalendar size={16} />
                                         <span>Joined {withdrawalRequestData.listerInfo.joinedDate}</span>
