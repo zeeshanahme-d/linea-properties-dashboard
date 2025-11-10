@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Modal, Checkbox, Divider } from 'antd';
+import React from 'react';
+import { Button, Modal, Divider } from 'antd';
+import dayjs from "dayjs"
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
@@ -17,12 +18,15 @@ import BathroomIcon from 'assets/icons/bathroom-icon.svg?react';
 import WifiIcon from 'assets/icons/wifi-icon.svg?react';
 import ParkingIcon from 'assets/icons/parking-icon.svg?react';
 import TvIcon from 'assets/icons/tv-icon.svg?react';
+import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListingData';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 
 
 interface ListingDetailModalProps {
     isOpen: boolean;
+    loading?: boolean;
     onClose: () => void;
-    listing: any;
+    listingId: string;
     onReject?: (listingId: string) => void;
     onApprove?: (listingId: string) => void;
 }
@@ -30,47 +34,23 @@ interface ListingDetailModalProps {
 const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
     isOpen,
     onClose,
-    listing,
+    loading,
+    listingId,
     onReject,
     onApprove,
 }) => {
-    const [isVerified, setIsVerified] = useState(false);
+    const { singleListingData, isLoading } = useGetSingleListingData(listingId);
 
-    if (!listing) return null;
-
-    // Static data matching the image
-    const staticListingData = {
-        title: "Modern 3-Bed Apartment",
-        status: "For Rent",
-        price: "40,000 CFA",
-        priceUnit: "/month",
-        location: "Douala",
-        bedrooms: "3",
-        bathrooms: "2",
-        area: "2200m²",
-        rating: "4.9",
-        description: "Beautiful modern apartment in the heart of Islamabad. Features spacious rooms, modern appliances, and stunning city views. Perfect for professionals and families.",
-        amenities: [
-            { name: "Wifi", icon: WifiIcon },
-            { name: "Covered Parking", icon: CoveredParkingIcon },
-            { name: "Parking", icon: ParkingIcon },
-            { name: "Cable TV", icon: TvIcon },
-            { name: "Heating", icon: HeatCoilIcon },
-            { name: "Hot Water", icon: HotWaterIcon },
-            { name: "Elevator", icon: ElevatorIcon },
-            { name: "Wardrobes", icon: WardrobesIcon }
-        ],
-        listerInfo: {
-            name: "Jacob Jones",
-            email: "john@example.com",
-            joinedDate: "2024-01-15",
-            location: "Douala",
-            profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
-        }
-    };
-
-    // Use static data if no listing provided, otherwise use listing data
-    const listingData = staticListingData;
+    const amenitiesIcon = [
+        { name: "wifi", icon: WifiIcon },
+        { name: "covered parking", icon: CoveredParkingIcon },
+        { name: "parking", icon: ParkingIcon },
+        { name: "cable TV", icon: TvIcon },
+        { name: "heating", icon: HeatCoilIcon },
+        { name: "hot Water", icon: HotWaterIcon },
+        { name: "elevator", icon: ElevatorIcon },
+        { name: "wardrobes", icon: WardrobesIcon }
+    ];
 
     return (
         <Modal
@@ -92,133 +72,125 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
         >
             <Divider />
             <div className='py-2 px-8'>
-                {/* Listing Overview */}
-                <div className="mb-6">
-                    <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1 flex items-center justify-between">
-                            <div className="flex items-center gap-3 mb-2">
-                                <h2 className="text-2xl font-medium text-gray-800">{listingData.title}</h2>
-                                <div className="px-3 h-6 bg-primary flex-centered text-white text-xs rounded-full">
-                                    {listingData.status}
-                                </div>
-                            </div>
-                            <div className="text-right">
-                                <span className="text-2xl text-primary">
-                                    {listingData.price} <span className="text-lg text-black">{listingData.priceUnit}</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                {isLoading || loading ? <FallbackLoader size='large' /> :
 
-                    {/* Key Attributes */}
-                    <div className="flex items-center gap-3 mb-3">
-                        <div className="flex items-center gap-1 text-medium-gray">
-                            <IoLocationOutline size={16} />
-                            <span>{listingData.location}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-medium-gray">
-                            <BedroomIcon />
-                            <span>{listingData.bedrooms} Bedrooms</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-medium-gray">
-                            <BathroomIcon />
-                            <span>{listingData.bathrooms} Bathrooms</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-medium-gray">
-                            <AreaIcon />
-                            <span>{listingData.area}</span>
-                        </div>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-2 mb-4">
-                        <RatingIcon />
-                        <span className="text-lg font-medium">{listingData.rating}</span>
-                    </div>
-                </div>
-
-                {/* Description */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">Description</h3>
-                    <p className="text-medium-gray text-base font-normal leading-relaxed">{listingData.description}</p>
-                </div>
-
-                {/* Amenities */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">Amenities</h3>
-                    <div className="grid grid-cols-4 gap-3">
-                        {listingData.amenities.map((amenity: any, index: number) => {
-                            const IconComponent = amenity.icon;
-                            return (
-                                <div key={index} className="flex items-center gap-2 p-3 border border-border-gray rounded-xl">
-                                    <IconComponent />
-                                    <span className="text-base font-normal">{amenity.name}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Listed By Section */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">Listed by</h3>
-                    <div className="bg-white border border-border-gray rounded-2xl py-6 px-4">
-                        <div className="flex items-center gap-4">
-                            <div className="w-[100px] h-[100px] bg-orange-200 rounded-full flex items-center justify-center">
-                                <img
-                                    src={listingData.listerInfo.profilePicture}
-                                    alt={listingData.listerInfo.name}
-                                    className="w-[100px] h-[100px] rounded-full object-cover"
-                                />
-                            </div>
-                            <div className="flex-1">
-                                <h4 className="font-normal text-lg text-black">{listingData.listerInfo.name}</h4>
-                                <p className="text-medium-gray text-base">{listingData.listerInfo.email}</p>
-                                <div className="flex items-center gap-3 mt-1">
-                                    <div className="flex items-center gap-1 text-sm text-medium-gray">
-                                        <CiCalendar size={16} />
-                                        <span>Joined {listingData.listerInfo.joinedDate}</span>
+                    <>
+                        {/* Listing Overview */}
+                        <div className="mb-6">
+                            <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1 flex items-center justify-between">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <h2 className="text-2xl font-medium text-gray-800">{singleListingData?.propertyTitle}</h2>
+                                        <div className="px-3 h-6 bg-primary flex-centered text-white text-xs rounded-full">
+                                            {singleListingData?.pricingType === "forSale" ? "For Sale" : "For Rent"}
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1 text-sm text-medium-gray">
-                                        <IoLocationOutline size={16} />
-                                        <span>{listingData.listerInfo.location}</span>
+                                    <div className="text-right">
+                                        <span className="text-2xl text-primary">
+                                            {singleListingData?.salePrice || singleListingData?.monthlyRent} CFA <span className="text-lg text-black">{singleListingData?.pricingType === "forRent" && "/monthly"}</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Key Attributes */}
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="flex items-center gap-1 text-medium-gray">
+                                    <IoLocationOutline size={16} />
+                                    <span className='capitalize'>{singleListingData?.city}</span>
+                                </div>
+                                {singleListingData?.bedrooms && <div className="flex items-center gap-1 text-medium-gray">
+                                    <BedroomIcon />
+                                    <span>{singleListingData?.bedrooms} Bedrooms</span>
+                                </div>}
+                                {singleListingData?.bathrooms && <div className="flex items-center gap-1 text-medium-gray">
+                                    <BathroomIcon />
+                                    <span>{singleListingData?.bathrooms} Bathrooms</span>
+                                </div>}
+                                <div className="flex items-center gap-1 text-medium-gray">
+                                    <AreaIcon />
+                                    <span>{singleListingData?.size}</span>
+                                </div>
+                            </div>
+
+                            {/* Rating */}
+                            <div className="flex items-center gap-2 mb-4">
+                                <RatingIcon />
+                                <span className="text-lg font-medium">{singleListingData?.averageRating || 0}</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                {/* Verification Checkbox */}
-                <div className="mb-6 flex items-center gap-2">
-                    <Checkbox
-                        checked={isVerified}
-                        onChange={(e) => setIsVerified(e.target.checked)}
-                        className="text-black text-base font-normal"
-                    >
-                        Mark as verified
-                    </Checkbox>
-                </div>
+                        {/* Description */}
+                        <div className="mb-6">
+                            <h3 className="text-lg font-medium mb-3">Description</h3>
+                            <p className="text-medium-gray text-base font-normal leading-relaxed">{singleListingData?.description}</p>
+                        </div>
 
-                {/* Action Buttons - Only show when listing status is AI flag */}
-                {listing?.ai_flag_status && (
-                    <div className="flex gap-3">
-                        <Button
-                            onClick={() => onReject?.(listing.id)}
-                            className="h-[52px] flex-1 border-red-500 text-red-500 font-normal hover:bg-red-50 rounded-2xl"
-                            type="default"
-                        >
-                            Reject
-                        </Button>
-                        <Button
-                            onClick={() => onApprove?.(listing.id)}
-                            className="h-[52px] flex-1 border-green-500 text-green-500 font-normal hover:bg-green-50 rounded-2xl"
-                            type="default"
-                        >
-                            Approve
-                        </Button>
-                    </div>
-                )}
+                        {/* Amenities */}
+                        <div className="mb-6">
+                            <h3 className="text-lg font-medium mb-3">Amenities</h3>
+                            <div className="grid grid-cols-4 gap-3">
+                                {singleListingData?.amenities.map((amenity: any, index: number) => {
+                                    const name = amenity?.toLowerCase();
+                                    const IconComponent = amenitiesIcon.find(v => v.name === name)?.icon;
+                                    return (
+                                        <div key={index} className="flex items-center gap-2 p-3 border border-border-gray rounded-xl">
+                                            {IconComponent ? <IconComponent /> : null}
+                                            <span className="text-base font-normal capitalize">{name}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Listed By Section */}
+                        <div className="mb-6">
+                            <h3 className="text-lg font-medium mb-3">Listed by</h3>
+                            <div className="bg-white border border-border-gray rounded-2xl py-6 px-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-[100px] h-[100px] border border-border-gray rounded-full flex items-center justify-center">
+                                        <img
+                                            src={singleListingData?.user?.profilePicture || "/images/dummy-profile-pic.jpg"}
+                                            alt={singleListingData?.user?.name}
+                                            className="w-[100px] h-[100px] rounded-full object-cover"
+                                        />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="font-normal text-lg text-black capitalize">{singleListingData?.user?.name}</h4>
+                                        <p className="text-medium-gray text-base">{singleListingData?.user?.email}</p>
+                                        <div className="flex items-center gap-3 mt-1">
+                                            <div className="flex items-center gap-1 text-sm text-medium-gray">
+                                                <CiCalendar size={16} />
+                                                Joined {singleListingData?.user?.createdAt ? dayjs(singleListingData.user.createdAt).format("YYYY-MM-DD") : ""}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons - Only show when listing status is AI flag */}
+                        {singleListingData?.status === "AI FLAGGED" && (
+                            <div className="flex gap-3">
+                                <Button
+                                    onClick={() => onReject?.(listingId)}
+                                    className="h-[52px] flex-1 border-red-500 text-red-500 font-normal hover:bg-red-50 rounded-2xl"
+                                    type="default"
+                                >
+                                    Reject
+                                </Button>
+                                <Button
+                                    onClick={() => onApprove?.(listingId)}
+                                    className="h-[52px] flex-1 border-green-500 text-green-500 font-normal hover:bg-green-50 rounded-2xl"
+                                    type="default"
+                                >
+                                    Approve
+                                </Button>
+                            </div>
+                        )}
+                    </>
+                }
+
             </div>
         </Modal>
     );

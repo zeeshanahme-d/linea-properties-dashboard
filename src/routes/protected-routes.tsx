@@ -7,10 +7,10 @@ interface ProtectedRouteProps {
   allowedRoles: string[];
 }
 
-function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+function ProtectedRoute({ children }: ProtectedRouteProps) {
   const currentUser = authHelper.getUser(); // Get the current user (assuming your authHelper has this method)
 
-  if (!currentUser || !allowedRoles.includes(currentUser.role)) {
+  if (!currentUser) {
     // If the user's role is not in the allowedRoles array, redirect to the home page or an unauthorized page
     return <Navigate to='/' />;
   }

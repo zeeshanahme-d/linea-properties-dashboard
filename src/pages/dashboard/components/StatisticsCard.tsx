@@ -1,3 +1,4 @@
+import { Spin } from 'antd';
 import React from 'react';
 
 interface StatisticsCardProps {
@@ -6,11 +7,13 @@ interface StatisticsCardProps {
     icon?: React.ReactNode;
     iconColor?: string;
     className?: string;
+    isLoading?: boolean;
 }
 
 const StatisticsCard: React.FC<StatisticsCardProps> = ({
     title,
     data,
+    isLoading,
     icon,
     iconColor = '#ff6b6b',
     className = ''
@@ -32,7 +35,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
 
             {/* Data */}
             <div className="text-xl xl:text-2xl font-bold text-black leading-tight">
-                {data}
+                {isLoading ? <Spin size="default" className="text-primary" /> : data}
             </div>
 
         </div>

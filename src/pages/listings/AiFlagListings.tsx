@@ -223,13 +223,13 @@ function AiFlagListings() {
             </div>
 
             {/* Listing Detail Modal */}
-            <ListingDetailModal
+            {isListingProfileModalOpen && <ListingDetailModal
                 isOpen={isListingProfileModalOpen}
                 onClose={handleCloseListingDetail}
-                listing={selectedListing}
+                listingId={selectedListing?.id || ""}
                 onApprove={handleApprove}
                 onReject={handleReject}
-            />
+            />}
 
             {/* Done Modal */}
             <DoneModal

@@ -1,27 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, InputRef } from 'antd';
 
-// import useSignIn from './core/hooks/use-sign-in';
-import { useAuth } from './core/auth-context';
-// import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
-// import useVerifyToken from './core/hooks/use-verify-token';
-// import Container from 'components/core-ui/container/container';
+import { useAuth } from '../store/auth-store';
+import useSignIn from './core/hooks/use-sign-in';
+import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 
 
 
 import LogoIcon from 'assets/icons/dashboard-logo.svg?react'
 import EyeOpenIcon from 'assets/icons/eye-open-icon.svg?react'
 import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
-import LeftHandImage from '.../../../../public/images/lefthand-image.svg?react'
-import RightHandImage from '.../../../../public/images/righthand-image.svg?react'
+import LeftHandImage from 'assets/icons/lefthand-image.svg?react'
+import RightHandImage from 'assets/icons/righthand-image.svg?react'
 
 
 
 function SignIn() {
-  // const { signInMutate, isLoading } = useSignIn();
-  // const { mutateVerifyToken, isLoading: verifyTokenLoding } = useVerifyToken();
-  const { currentUser, saveAuth, setCurrentUser } = useAuth();
+  const { signInMutate, isLoading } = useSignIn();
+  const { setCurrentUser } = useAuth();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const passwordInputRef = useRef<InputRef>(null);
@@ -29,53 +26,29 @@ function SignIn() {
 
 
   const onFinish = async (values: any) => {
-    // const payload = {
-    //   email: values.email,
-    //   password: values.password,
-    // };
-    const authData = {
-      api_token: "1234567890",
-      data: {
-        _id: "1",
-        firstName: "John",
-        lastName: "Doe",
-        email: values.email.trim(),
-        role: "admin",
-      },
+    const payload = {
+      email: values.email,
+      password: values.password,
     };
-    saveAuth(authData);
-    setCurrentUser(authData?.data);
-    // signInMutate(payload, {
-    //   onSuccess: async (res) => {
-    //     if (res) {
-    //       const apiToken = res.data.data.data.token;
-    //       if (apiToken) {
-    //         mutateVerifyToken(apiToken, {
-    //           onSuccess: (res) => {
-    //             showSuccessMessage('User login successfully');
-    //             const authData = {
-    //               api_token: apiToken,
-    //               data: res?.data?.data?.data,
-    //             };
-    //             saveAuth(authData);
-    //             setCurrentUser(authData?.data);
-    //           },
-    //         });
-    //       }
-    //     }
-    //   },
-    //   onError: (error: any) => {
-    //     showErrorMessage(error?.response?.data?.message);
-    //     console.error('Failed to sign in user:', error);
-    //   },
-    // });
+    signInMutate(payload, {
+      onSuccess: async (res) => {
+        if (res) {
+          const token = res.data.token;
+          if (token) {
+            setCurrentUser({
+              token: token,
+            });
+            showSuccessMessage(res.data.message);
+            navigate('/', { replace: true });
+          }
+        }
+      },
+      onError: (error: any) => {
+        showErrorMessage(error?.response?.data?.message);
+        console.error('Failed to sign in user:', error);
+      },
+    });
   };
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/', { replace: true });
-    }
-  }, [currentUser, navigate]);
 
   return (
     <div className={`overflow-hidden h-screen flex relative items-center 2xl:gap-x-10`}>
@@ -104,6 +77,7 @@ function SignIn() {
             >
               <Input
                 type="email"
+                disabled={isLoading}
                 placeholder="Enter your email"
                 className="h-[52px] w-[410px] focus:bg-[#ffffff] bg-light-gray"
               />
@@ -123,6 +97,7 @@ function SignIn() {
             >
               <Input
                 ref={passwordInputRef}
+                disabled={isLoading}
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
                 className="h-[52px] w-[410px] py-0 bg-light-gray password-input"
@@ -160,7 +135,7 @@ function SignIn() {
 
 
             <Button
-              // loading={isLoading
+              loading={isLoading}
               type="primary"
               htmlType="submit"
               block

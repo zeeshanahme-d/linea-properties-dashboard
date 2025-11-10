@@ -1,96 +1,40 @@
 import {
-  Dispatch,
   ReactNode,
-  SetStateAction,
-  createContext,
-  useCallback,
-  useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 
-import { IAuthModel, IUserModel } from './_models';
-// import { getUserByToken } from './_requests';
+import { useAuthStore } from '../../store/auth-store';
 import * as authHelper from './auth-helpers';
 
 type IProps = {
   children: ReactNode;
 };
 
-type AuthContextProps = {
-  auth: IAuthModel | undefined;
-  saveAuth: (auth: IAuthModel | undefined) => void;
-  currentUser: IUserModel | undefined;
-  setCurrentUser: Dispatch<SetStateAction<IUserModel | undefined>>;
-  logout: () => void;
-};
-
-const initAuthContextPropsState = {
-  auth: authHelper.getAuth(),
-  saveAuth: () => { },
-  currentUser: undefined,
-  setCurrentUser: () => { },
-  logout: () => { },
-};
-
-const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState);
-
-const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-function AuthProvider({ children }: IProps) {
-  const [auth, setAuth] = useState<IAuthModel | any>(authHelper.getAuth());
-  const [currentUser, setCurrentUser] = useState<IUserModel | undefined>(authHelper.getUser());
-
-  const saveAuth = useCallback((authData: IAuthModel | undefined) => {
-    setAuth(authData);
-    if (authData) {
-      authHelper.setAuth(authData);
-      authHelper.setUser(authData?.data);
-    }
-  }, []);
-
-  const logout = () => {
-    authHelper.removeAuth();
-    saveAuth(undefined);
-    setCurrentUser(undefined);
-  };
-
-  const values = useMemo(
-    () => ({ auth, saveAuth, currentUser, setCurrentUser, logout }),
-    [auth, currentUser, logout, saveAuth]
-  );
-
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
-}
-
 function AuthInit({ children }: IProps) {
-  const { auth, logout, setCurrentUser } = useAuth();
+  const setCurrentUser = useAuthStore((state) => state.setCurrentUser);
+  const logout = useAuthStore((state) => state.logout);
   const didRequest = useRef(false);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
   const [_, setIsVerifying] = useState(false);
 
-  // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
+  // Initialize user data on app load - check localStorage and sync with store
   useEffect(() => {
-    const requestUser = async (apiToken: string) => {
+    const initializeUser = async () => {
       try {
         if (!didRequest.current) {
           setIsVerifying(true);
-          // const { data } = await getUserByToken(apiToken);
-          const data = {
-            _id: "1",
-            firstName: "John",
-            lastName: "Doe",
-            email: "admin@gmail.com",
-            role: "admin",
-          };
-          if (true) {
-            setCurrentUser(data as IUserModel);
-            authHelper.setUser(data as IUserModel);
-            authHelper.setAuth({ api_token: apiToken, data: data });
+
+          // Check if user exists in localStorage
+          const userFromStorage = authHelper.getUser();
+
+          if (userFromStorage) {
+            // User exists in localStorage - sync it to Zustand store
+            setCurrentUser(userFromStorage);
+          } else {
+            // No user in localStorage - ensure store is clean (logout)
+            logout();
           }
         }
       } catch (error) {
@@ -105,13 +49,8 @@ function AuthInit({ children }: IProps) {
       didRequest.current = true;
     };
 
-    if (auth && auth.api_token) {
-      requestUser(auth.api_token);
-    } else {
-      // logout();
-      setShowSplashScreen(false);
-    }
-  }, [auth, logout, setCurrentUser]);
+    initializeUser();
+  }, [setCurrentUser, logout]);
 
   return showSplashScreen ? (
     <div style={{
@@ -127,4 +66,4 @@ function AuthInit({ children }: IProps) {
   ) : children;
 }
 
-export { AuthProvider, useAuth, AuthInit };
+export { AuthInit };

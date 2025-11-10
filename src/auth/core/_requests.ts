@@ -4,7 +4,7 @@ import authApi from 'services/api/authApi';
 import { ISignInForm } from './_models';
 
 const SIGNIN_URL = '/auth/login';
-const VERIFY_TOKEN_URL = '/auth/verify-token';
+const VERIFY_TOKEN_URL = '/users/current-user';
 
 export async function login(body: ISignInForm) {
   return api.post(SIGNIN_URL, body);

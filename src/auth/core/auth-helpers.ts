@@ -1,105 +1,45 @@
 import axios from 'axios';
 
-import { IAuthModel, IUserModel } from './_models';
+import { IUserModel } from './_models';
 
-const AUTH_LOCAL_STORAGE_KEY = import.meta.env.VITE_AUTH_LOCAL_STORAGE_KEY as string;
 const USER_LOCAL_STORAGE_KEY = import.meta.env.VITE_USER_LOCAL_STORAGE_KEY as string;
 
-const getAuth = (): IAuthModel | undefined => {
-  // debugger
-  if (!localStorage) {
-    return;
-  }
-
-  const lsValue: string | null = localStorage.getItem(AUTH_LOCAL_STORAGE_KEY);
-  if (!lsValue) {
-    return;
-  }
-
-  try {
-    const auth: IAuthModel = JSON.parse(lsValue) as IAuthModel;
-    if (auth) {
-      return auth;
-    }
-  } catch (error) {
-    // console.error('AUTH LOCAL STORAGE PARSE ERROR', error);
-  }
-};
-
-const setAuth = (auth: IAuthModel) => {
-  if (!localStorage) {
-    return;
-  }
-
-  try {
-    const lsValue = JSON.stringify(auth);
-    localStorage.setItem(AUTH_LOCAL_STORAGE_KEY, lsValue);
-  } catch (error) {
-    // console.error('AUTH LOCAL STORAGE SAVE ERROR', error);
-  }
-};
-
 const getUser = (): IUserModel | undefined => {
-  if (!localStorage) {
-    return;
-  }
-
   const lsValue: string | null = localStorage.getItem(USER_LOCAL_STORAGE_KEY);
-  if (!lsValue) {
-    return;
-  }
+  if (!lsValue) return;
+  return JSON.parse(lsValue) as IUserModel;
+};
 
-  try {
-    const user: IUserModel = JSON.parse(lsValue) as IUserModel;
-    if (user) {
-      // You can easily check auth_token expiration also
-      // eslint-disable-next-line consistent-return
-      return user;
-    }
-  } catch (error) {
-    // console.error('AUTH LOCAL STORAGE PARSE ERROR', error);
-  }
+const getToken = (): string | undefined => {
+  const user = getUser();
+  return user?.token;
 };
 
 const setUser = (user: IUserModel) => {
-  if (!localStorage) {
-    return;
-  }
-
-  try {
-    const lsValue = JSON.stringify(user);
-    localStorage.setItem(USER_LOCAL_STORAGE_KEY, lsValue);
-  } catch (error) {
-    // console.error('AUTH LOCAL STORAGE SAVE ERROR', error);
-  }
+  const lsValue = JSON.stringify(user);
+  localStorage.setItem(USER_LOCAL_STORAGE_KEY, lsValue);
 };
 
 const removeAuth = () => {
-  if (!localStorage) {
-    return;
-  }
-
-  try {
-    localStorage.removeItem(AUTH_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(USER_LOCAL_STORAGE_KEY);
-  } catch (error) {
-    // console.error('AUTH LOCAL STORAGE REMOVE ERROR', error);
-  }
+  localStorage.removeItem(USER_LOCAL_STORAGE_KEY);
 };
 
 export function setupAxios() {
   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
-  axios.interceptors.request.use((config) => {
-    const changedConfig = config;
-
-    const token = getAuth()?.api_token;
-    if (token && config.headers) {
-      changedConfig.headers.Authorization = `Bearer ${token}`;
+  // Add a request interceptor to attach token to headers
+  axios.interceptors.request.use(
+    (config) => {
+      const token = getToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-
-    return changedConfig;
-  });
+  );
 
   axios.interceptors.response.use(
     (response) => {
@@ -114,4 +54,4 @@ export function setupAxios() {
   );
 }
 
-export { getAuth, setUser, getUser, setAuth, removeAuth, AUTH_LOCAL_STORAGE_KEY };
+export { setUser, getUser, getToken, removeAuth, USER_LOCAL_STORAGE_KEY };

@@ -1,14 +1,6 @@
-export interface IAuthModel {
-  data: any;
-  api_token: any;
-}
-
 export interface IUserModel {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
+  token?: string;
+  data?: any;
 }
 
 export interface ISignInForm {

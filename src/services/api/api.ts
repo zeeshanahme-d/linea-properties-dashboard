@@ -1,19 +1,19 @@
 import axios from 'axios';
 import * as authHelper from './../../auth/core/auth-helpers';
+
 // Create an Axios instance
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'true'
   },
 });
 
-// Add a request interceptor if you need to attach token dynamically
+// Add a request interceptor to attach token to headers
 api.interceptors.request.use(
   (config) => {
-    const token = authHelper.getAuth()?.api_token;
-    if (token) {
+    const token = authHelper.getToken();
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -35,6 +35,8 @@ api.interceptors.response.use(
         (error.response.statusText && error.response.statusText.toLowerCase().includes("unauthorized"))
       )
     ) {
+      // Remove auth data on unauthorized error
+      authHelper.removeAuth();
       if (!window.location.pathname.includes("/auth/")) {
         window.location.href = "/logout";
       }

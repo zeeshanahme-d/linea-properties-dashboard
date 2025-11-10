@@ -2,86 +2,70 @@ import React, { useState } from 'react';
 import EyeIcon from "assets/icons/view-icon.svg?react";
 import CheckIcon from "assets/icons/check-icon.svg?react";
 import XIcon from "assets/icons/cross-icon.svg?react";
-import { Card } from 'antd';
+import { Card, Empty, Tooltip } from 'antd';
 import ListingDetailModal from 'components/modals/ListingDetailModal';
 import DoneModal from 'components/modals/DoneModal';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import useUpdateListingStatus from 'pages/listings/core/hooks/useUpdateListingStatus';
+import { showErrorMessage } from 'utils/messageUtils';
 
-interface Listing {
-    id: string;
-    title: string;
-    listerName: string;
-    location: string;
-    price: string;
+interface AiFlaggedListingsTableProps {
+    isLoading?: boolean;
+    data?: any[];
+    refetch?: () => void;
 }
-const listings: Listing[] = [
-    {
-        id: '1',
-        title: 'Studio in City Center',
-        listerName: 'Annette Black',
-        location: 'Douala',
-        price: '500,000 CFA',
-    },
-    {
-        id: '2',
-        title: 'Studio in City Center',
-        listerName: 'Annette Black',
-        location: 'Douala',
-        price: '500,000 CFA',
-    },
-    {
-        id: '3',
-        title: 'Studio in City Center',
-        listerName: 'Annette Black',
-        location: 'Douala',
-        price: '500,000 CFA',
-    },
-    {
-        id: '4',
-        title: 'Studio in City Center',
-        listerName: 'Annette Black',
-        location: 'Douala',
-        price: '500,000 CFA',
-    },
-    {
-        id: '5',
-        title: 'Studio in City Center',
-        listerName: 'Annette Black',
-        location: 'Douala',
-        price: '500,000 CFA',
-    },
-];
 
-const AiFlaggedListingsTable: React.FC = () => {
+const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoading, data, refetch }) => {
     const [isListingProfileModalOpen, setIsListingProfileModalOpen] = useState(false);
-    const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+    const [selectedListing, setSelectedListing] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
+    const { updateListingStatusMutate, isLoading: isUpdateListingStatusLoading } = useUpdateListingStatus();
 
-    const handleView = (listing: Listing) => {
+    const handleView = (listing: any) => {
         setSelectedListing(listing);
         setIsListingProfileModalOpen(true);
     };
 
     const handleApprove = (listingId: string) => {
-        console.log('Approve listing:', listingId);
-        setStatusMessage('Listing Approved');
-        setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
-        setTimeout(() => {
-            setIsDoneModalOpen(false);
-            setStatusMessage('');
-        }, 1000);
+        handleCloseListingDetail();
+
+        updateListingStatusMutate({ id: listingId, status: 'APPROVED' },
+            {
+                onSuccess: () => {
+                    setIsDoneModalOpen(true);
+                    setStatusMessage('Listing Approved');
+                    refetch?.();
+                    setTimeout(() => {
+                        setIsDoneModalOpen(false);
+                        setStatusMessage('');
+                    }, 1000);
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message)
+                },
+            },
+        );
     };
 
     const handleReject = (listingId: string) => {
-        console.log('Reject listing:', listingId);
-        setStatusMessage('Listing Rejected');
-        setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
-        setTimeout(() => {
-            setIsDoneModalOpen(false);
-            setStatusMessage('');
-        }, 1000);
+        handleCloseListingDetail();
+        updateListingStatusMutate({ id: listingId, status: 'REJECTED' },
+            {
+                onSuccess: () => {
+                    setIsDoneModalOpen(true);
+                    setStatusMessage('Listing Rejected');
+                    refetch?.();
+                    setTimeout(() => {
+                        setIsDoneModalOpen(false);
+                        setStatusMessage('');
+                    }, 1000);
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message)
+                },
+            },
+        );
     };
 
     const handleCloseListingDetail = () => {
@@ -103,77 +87,94 @@ const AiFlaggedListingsTable: React.FC = () => {
                 title=" Recent AI Flagged Listing"
                 className="w-full h-[300px]"
             >
-                <div className="hidden md:block h-[220px] overflow-x-auto">
-                    <table className="w-full">
-                        <thead>
-                            <tr className="text-nowrap border-b border-gray-200">
-                                {headers.map((header) => (
-                                    <th
-                                        key={header.label}
-                                        className={`px-4 py-3 ${header.className} text-base font-medium `}
-                                    >
-                                        {header.label}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {listings.map((listing) => (
-                                <tr
-                                    key={listing.id}
-                                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                                >
-                                    <td className="px-4 py-4 text-sm ">
-                                        {listing.title}
-                                    </td>
-                                    <td className="px-4 py-4 text-sm">
-                                        {listing.listerName}
-                                    </td>
-                                    <td className="px-4 py-4 text-sm">
-                                        {listing.location}
-                                    </td>
-                                    <td className="px-4 py-4 text-sm font-medium">
-                                        {listing.price}
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <div className="flex items-center justify-center gap-1">
-                                            <button
-                                                onClick={() => handleView(listing)}
-                                                className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
-                                                title="View"
-                                            >
-                                                <EyeIcon />
-                                            </button>
-                                            <button
-                                                onClick={() => handleApprove(listing.id)}
-                                                className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
-                                                title="Approve"
-                                            >
-                                                <CheckIcon />
-                                            </button>
-                                            <button
-                                                onClick={() => handleReject(listing.id)}
-                                                className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                title="Reject"
-                                            >
-                                                <XIcon />
-                                            </button>
-                                        </div>
-                                    </td>
+
+                {isLoading || isUpdateListingStatusLoading ? <FallbackLoader size="large" className="h-[220px]" />
+                    :
+                    <div className="hidden md:block h-[220px] overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="text-nowrap border-b border-gray-200">
+                                    {headers.map((header) => (
+                                        <th
+                                            key={header.label}
+                                            className={`px-4 py-3 ${header.className} text-base font-medium `}
+                                        >
+                                            {header.label}
+                                        </th>
+                                    ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {data && data.length > 0 ?
+                                    <>
+                                        {data?.map((listing: any) => (
+                                            <tr
+                                                key={listing._id}
+                                                className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                                            >
+                                                <Tooltip title={listing?.propertyTitle}>
+                                                    <td className="px-4 py-4 text-sm truncate max-w-[200px] capitalize">
+                                                        {listing?.propertyTitle || "-"}
+                                                    </td>
+                                                </Tooltip>
+                                                <td className="px-4 py-4 text-sm capitalize">
+                                                    {listing?.user?.name || "-"}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm capitalize">
+                                                    {listing?.city || "-"}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium">
+                                                    {`${listing?.salePrice || listing?.monthlyRent} CFA` || "-"}
+                                                </td>
+                                                <td className="px-4 py-4">
+                                                    <div className="flex items-center justify-center gap-1">
+                                                        <button
+                                                            onClick={() => handleView(listing)}
+                                                            className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
+                                                            title="View"
+                                                        >
+                                                            <EyeIcon />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleApprove(listing._id)}
+                                                            className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
+                                                            title="Approve"
+                                                        >
+                                                            <CheckIcon />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleReject(listing._id)}
+                                                            className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                            title="Reject"
+                                                        >
+                                                            <XIcon />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </>
+                                    :
+                                    <tr >
+                                        <td colSpan={5}>
+                                            <Empty />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
             </Card>
             {/* Listing Detail Modal */}
-            <ListingDetailModal
+            {isListingProfileModalOpen && <ListingDetailModal
                 isOpen={isListingProfileModalOpen}
                 onClose={handleCloseListingDetail}
-                listing={selectedListing}
+                listingId={selectedListing?._id}
                 onApprove={handleApprove}
                 onReject={handleReject}
-            />
+                loading={isUpdateListingStatusLoading}
+            />}
 
             {/* Done Modal */}
             <DoneModal

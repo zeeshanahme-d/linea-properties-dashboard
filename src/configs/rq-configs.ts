@@ -1,4 +1,4 @@
-const cacheTime = 0; // disable cache
+const cacheTime = 1; // disable cache
 const staleTime = 0; // always stale
 
 export default {
