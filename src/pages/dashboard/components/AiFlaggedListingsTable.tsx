@@ -27,14 +27,16 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
         setIsListingProfileModalOpen(true);
     };
 
-    const handleApprove = (listingId: string) => {
+    const handleApprove = (listing: any) => {
         handleCloseListingDetail();
+        setSelectedListing(listing);
 
-        updateListingStatusMutate({ id: listingId, status: 'APPROVED' },
+        updateListingStatusMutate({ id: listing._id, status: 'APPROVED' },
             {
                 onSuccess: () => {
                     setIsDoneModalOpen(true);
                     setStatusMessage('Listing Approved');
+                    setSelectedListing(null);
                     refetch?.();
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -48,13 +50,16 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
         );
     };
 
-    const handleReject = (listingId: string) => {
+    const handleReject = (listing: any) => {
         handleCloseListingDetail();
-        updateListingStatusMutate({ id: listingId, status: 'REJECTED' },
+        setSelectedListing(listing);
+
+        updateListingStatusMutate({ id: listing._id, status: 'REJECTED' },
             {
                 onSuccess: () => {
                     setIsDoneModalOpen(true);
                     setStatusMessage('Listing Rejected');
+                    setSelectedListing(null);
                     refetch?.();
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -88,7 +93,7 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
                 className="w-full h-[300px]"
             >
 
-                {isLoading || isUpdateListingStatusLoading ? <FallbackLoader size="large" className="h-[220px]" />
+                {isLoading ? <FallbackLoader size="large" className="h-[220px]" />
                     :
                     <div className="hidden md:block h-[220px] overflow-x-auto">
                         <table className="w-full">
@@ -135,20 +140,26 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
                                                         >
                                                             <EyeIcon />
                                                         </button>
-                                                        <button
-                                                            onClick={() => handleApprove(listing._id)}
-                                                            className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
-                                                            title="Approve"
-                                                        >
-                                                            <CheckIcon />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleReject(listing._id)}
-                                                            className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                            title="Reject"
-                                                        >
-                                                            <XIcon />
-                                                        </button>
+                                                        {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
+                                                            <FallbackLoader className='!h-fit' />
+                                                            :
+                                                            <>
+                                                                <button
+                                                                    onClick={() => handleApprove(listing)}
+                                                                    className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
+                                                                    title="Approve"
+                                                                >
+                                                                    <CheckIcon />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleReject(listing)}
+                                                                    className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                                    title="Reject"
+                                                                >
+                                                                    <XIcon />
+                                                                </button>
+                                                            </>
+                                                        }
                                                     </div>
                                                 </td>
                                             </tr>

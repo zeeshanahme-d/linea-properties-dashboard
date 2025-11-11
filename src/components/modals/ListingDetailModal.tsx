@@ -78,10 +78,10 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Listing Overview */}
                         <div className="mb-6">
                             <div className="flex items-start justify-between mb-2">
-                                <div className="flex-1 flex items-center justify-between">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <h2 className="text-2xl font-medium text-gray-800">{singleListingData?.propertyTitle}</h2>
-                                        <div className="px-3 h-6 bg-primary flex-centered text-white text-xs rounded-full">
+                                <div className="w-full flex items-center justify-between">
+                                    <div className="flex items-center gap-3 max-w-[80%]">
+                                        <h2 className="text-2xl font-medium text-gray-800 truncate w-full">{singleListingData?.propertyTitle}</h2>
+                                        <div className="px-2 h-6 bg-primary flex-centered text-white text-xs rounded-full w-20">
                                             {singleListingData?.pricingType === "forSale" ? "For Sale" : "For Rent"}
                                         </div>
                                     </div>
@@ -173,14 +173,14 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {singleListingData?.status === "AI FLAGGED" && (
                             <div className="flex gap-3">
                                 <Button
-                                    onClick={() => onReject?.(listingId)}
+                                    onClick={() => onReject?.(singleListingData)}
                                     className="h-[52px] flex-1 border-red-500 text-red-500 font-normal hover:bg-red-50 rounded-2xl"
                                     type="default"
                                 >
                                     Reject
                                 </Button>
                                 <Button
-                                    onClick={() => onApprove?.(listingId)}
+                                    onClick={() => onApprove?.(singleListingData)}
                                     className="h-[52px] flex-1 border-green-500 text-green-500 font-normal hover:bg-green-50 rounded-2xl"
                                     type="default"
                                 >

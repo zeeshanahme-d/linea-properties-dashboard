@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Input, Select } from 'antd';
+import { useCallback, useState } from 'react'
+import { Empty, Input, Pagination, Select } from 'antd';
 import DoneModal from 'components/modals/DoneModal';
 import ListingDetailModal from 'components/modals/ListingDetailModal';
 //icons
@@ -8,79 +8,17 @@ import EyeIcon from "assets/icons/view-icon.svg?react";
 import CheckIcon from "assets/icons/check-icon.svg?react";
 import XIcon from "assets/icons/cross-icon.svg?react";
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
+import { debounce } from 'helpers/CustomHelpers';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import useGetListingData from './core/hooks/useGetListingData';
+import { showErrorMessage } from 'utils/messageUtils';
+import useUpdateListingStatus from './core/hooks/useUpdateListingStatus';
 
 const saleStatusOptions = [
-    { label: 'For Sale', value: 'for_sale' },
-    { label: 'For Rent', value: 'for_rent' },
+    { label: 'For Sale', value: 'forSale' },
+    { label: 'For Rent', value: 'forRent' },
 ];
 
-interface Listing {
-    id: string;
-    title: string;
-    listerName: string;
-    location: string;
-    price: string;
-    status: 'Approved' | 'AI Flagged' | 'Rejected';
-    ai_flag_status?: boolean;
-    listerInfo?: {
-        name: string;
-        email: string;
-        joinedDate: string;
-        location: string;
-        profilePicture: string;
-    };
-}
-
-const aiFlaggedListings: Listing[] = [
-    {
-        id: '7',
-        title: 'Suspicious Property Listing',
-        listerName: 'Olivia Martinez',
-        location: 'Douala',
-        price: '500,000 CFA',
-        status: 'AI Flagged',
-        ai_flag_status: true,
-        listerInfo: {
-            name: 'Olivia Martinez',
-            email: 'olivia@example.com',
-            joinedDate: '2024-03-01',
-            location: 'Douala',
-            profilePicture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '8',
-        title: 'Potentially Fraudulent Listing',
-        listerName: 'James Lee',
-        location: 'Douala',
-        price: '1,000,000 CFA',
-        status: 'AI Flagged',
-        ai_flag_status: true,
-        listerInfo: {
-            name: 'James Lee',
-            email: 'james@example.com',
-            joinedDate: '2024-02-28',
-            location: 'Douala',
-            profilePicture: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face'
-        }
-    },
-    {
-        id: '9',
-        title: 'Questionable Property',
-        listerName: 'Sophia Harris',
-        location: 'Douala',
-        price: '750,000 CFA',
-        status: 'AI Flagged',
-        ai_flag_status: true,
-        listerInfo: {
-            name: 'Sophia Harris',
-            email: 'sophia@example.com',
-            joinedDate: '2024-03-10',
-            location: 'Douala',
-            profilePicture: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop&crop=face'
-        }
-    },
-];
 
 const headers = [
     { label: "Title", className: "text-left" },
@@ -93,36 +31,77 @@ const headers = [
 
 function AiFlagListings() {
     const [isListingProfileModalOpen, setIsListingProfileModalOpen] = useState(false);
-    const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+    const [selectedListing, setSelectedListing] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
+    const [search, setSearch] = useState('');
+    const [params, setParams] = useState({
+        page: 1,
+        limit: 10,
+        status: "AI FLAGGED",
+        pricingType: "forSale"
+    })
+    const { listingsData, isLoading, refetch } = useGetListingData(params);
+    const { updateListingStatusMutate, isLoading: isUpdateListingStatusLoading } = useUpdateListingStatus();
 
-    const handleView = (listing: Listing) => {
+
+    const handleView = (listing: any) => {
         setSelectedListing(listing);
         setIsListingProfileModalOpen(true);
     };
 
-    const handleApprove = (listingId: string) => {
-        console.log(listingId)
-        setStatusMessage('Listing Approved');
-        setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
-        setTimeout(() => {
-            setIsDoneModalOpen(false);
-            setStatusMessage('');
-        }, 1000);
+    const handleApprove = (listing: any) => {
+        handleCloseListingDetail();
+        setSelectedListing(listing);
+
+        updateListingStatusMutate({ id: listing._id, status: 'APPROVED' },
+            {
+                onSuccess: () => {
+                    setIsDoneModalOpen(true);
+                    setStatusMessage('Listing Approved');
+                    setSelectedListing(null);
+                    if (listingsData?.data.length >= 1) {
+                        refetch();
+                    } else {
+                        setParams(prev => ({ ...prev, page: 1 }));
+                    }
+                    setTimeout(() => {
+                        setIsDoneModalOpen(false);
+                        setStatusMessage('');
+                    }, 1000);
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message)
+                },
+            },
+        );
     };
 
-    const handleReject = (listingId: string) => {
-        console.log(listingId)
+    const handleReject = (listing: any) => {
+        handleCloseListingDetail();
+        setSelectedListing(listing);
 
-        setStatusMessage('Listing Rejected');
-        setIsDoneModalOpen(true);
-        setIsListingProfileModalOpen(false);
-        setTimeout(() => {
-            setIsDoneModalOpen(false);
-            setStatusMessage('');
-        }, 1000);
+        updateListingStatusMutate({ id: listing._id, status: 'REJECTED' },
+            {
+                onSuccess: () => {
+                    setIsDoneModalOpen(true);
+                    setStatusMessage('Listing Rejected');
+                    setSelectedListing(null);
+                    if (listingsData?.data.length >= 1) {
+                        refetch();
+                    } else {
+                        setParams(prev => ({ ...prev, page: 1 }));
+                    }
+                    setTimeout(() => {
+                        setIsDoneModalOpen(false);
+                        setStatusMessage('');
+                    }, 1000);
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message)
+                },
+            },
+        );
     };
 
     const handleCloseListingDetail = () => {
@@ -131,14 +110,33 @@ function AiFlagListings() {
     };
 
     const getStatusClass = (status: string) => {
-        if (status === 'AI Flagged') return 'bg-[#F59E0B1A] text-[#F59E0B] border border-[#F59E0B1A] shadow-[0px_0px_10px_#0000000A]';
+        if (status === 'AI FLAGGED') return 'bg-[#F59E0B1A] text-[#F59E0B] border border-[#F59E0B1A] shadow-[0px_0px_10px_#0000000A]';
         return '';
+    };
+
+
+    const debouncedSetParams = useCallback(
+        debounce((value: string) => {
+            setParams(prev => ({ ...prev, propertyTitle: value }))
+        }, 600),
+        []
+    );
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+        debouncedSetParams(e.target.value.trim());
+    };
+
+    const handlePageChange = (page: number) => {
+        setParams(prev => ({ ...prev, page }));
     };
 
     return (
         <section className='mt-5'>
             <div className='flex items-center gap-4'>
                 <Input
+                    value={search}
+                    onChange={handleSearch}
                     placeholder="Search Listing"
                     prefix={<SearchIcon className='mr-2' />}
                     className='w-full min-w-[300px] h-12'
@@ -149,85 +147,115 @@ function AiFlagListings() {
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
                     defaultValue="For Sale"
+                    onChange={value => setParams(prev => ({ ...prev, pricingType: value }))}
+
                 />
             </div>
 
             <div className='mt-5 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
-                <div className="max-h-[800px] min-w-[900px] w-full">
-                    <table className="border-separate border-spacing-y-2 w-full">
-                        <thead>
-                            <tr>
-                                {headers.map((header) => (
-                                    <th
-                                        key={header.label}
-                                        className={`xl:px-4 px-2 py-3 ${header.className} text-sm font-medium`}
-                                    >
-                                        {header.label}
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {aiFlaggedListings.map((listing) => (
-                                <tr
-                                    onDoubleClick={() => handleView(listing)}
-                                    key={listing.id}
-                                    className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF]transition-colors duration-300 cursor-pointer text-sm"
-                                >
-                                    <td className="xl:px-4 px-2 py-3 ">
-                                        {listing.title}
-                                    </td>
-                                    <td className="xl:px-4 px-2 py-3 ">
-                                        {listing.listerName}
-                                    </td>
-                                    <td className="xl:px-4 px-2 py-3 ">
-                                        {listing.location}
-                                    </td>
-                                    <td className="xl:px-4 px-2 py-3">
-                                        <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(listing.status)}`}>
-                                            {listing.status}
-                                        </div>
-                                    </td>
-                                    <td className="xl:px-4 px-2 py-3 ">
-                                        {listing.price}
-                                    </td>
-                                    <td className="xl:px-4 px-2  py-3">
-                                        <div className="flex items-center justify-center gap-1">
-                                            <button
-                                                onClick={() => handleView(listing)}
-                                                className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
-                                                title="View"
-                                            >
-                                                <EyeIcon />
-                                            </button>
-                                            <button
-                                                onClick={() => handleApprove(listing.id)}
-                                                className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
-                                                title="Approve"
-                                            >
-                                                <CheckIcon />
-                                            </button>
-                                            <button
-                                                onClick={() => handleReject(listing.id)}
-                                                className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                title="Reject"
-                                            >
-                                                <XIcon />
-                                            </button>
-                                        </div>
-                                    </td>
+                {isLoading ?
+                    <FallbackLoader size='large' />
+                    :
+                    <div className="max-h-[800px] min-w-[900px] w-full">
+                        <table className="border-separate border-spacing-y-2 w-full">
+                            <thead>
+                                <tr>
+                                    {headers.map((header) => (
+                                        <th
+                                            key={header.label}
+                                            className={`xl:px-4 px-2 py-3 ${header.className} font-medium text-sm`}
+                                        >
+                                            {header.label}
+                                        </th>
+                                    ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {listingsData?.data && listingsData?.data.length > 0 ?
+                                    <>
+                                        {listingsData?.data.map((listing: any) => (
+                                            <tr
+                                                onDoubleClick={() => handleView(listing)}
+                                                key={listing?._id}
+                                                className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm"
+                                            >
+                                                <td className="xl:px-4 px-2 py-3 capitalize">
+                                                    {listing?.propertyTitle || "-"}
+                                                </td>
+                                                <td className="xl:px-4 px-2 py-3 capitalize">
+                                                    {listing?.user?.name || "-"}
+                                                </td>
+                                                <td className="xl:px-4 px-2 py-3 capitalize">
+                                                    {listing?.city || "-"}
+                                                </td>
+                                                <td className="xl:px-4 px-2 py-3">
+                                                    <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(listing?.status)}`}>
+                                                        {listing?.status === "AI FLAGGED" ? "AI flagged" : listing?.status}
+                                                    </div>
+                                                </td>
+                                                <td className="xl:px-4 px-2 py-3 ">
+                                                    {`${listing?.monthlyRent || listing?.salePrice} CFA` || "-"}
+                                                </td>
+                                                <td className="xl:px-4 px-2  py-3">
+                                                    <div className="flex items-center justify-center gap-1">
+                                                        <button
+                                                            onClick={() => handleView(listing)}
+                                                            className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
+                                                            title="View"
+                                                        >
+                                                            <EyeIcon />
+                                                        </button>
+                                                        {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
+                                                            <FallbackLoader className='!h-fit' />
+                                                            :
+                                                            <>
+                                                                <button
+                                                                    onClick={() => handleApprove(listing)}
+                                                                    className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
+                                                                    title="Approve"
+                                                                >
+                                                                    <CheckIcon />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleReject(listing)}
+                                                                    className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                                    title="Reject"
+                                                                >
+                                                                    <XIcon />
+                                                                </button>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </>
+                                    :
+                                    <tr >
+                                        <td colSpan={6}>
+                                            <Empty />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
             </div>
+            {listingsData?.totalItems > params?.limit && <Pagination
+                className="mt-5 justify-center"
+                current={params?.page}
+                pageSize={params?.limit}
+                total={listingsData?.totalItems}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+            />}
 
             {/* Listing Detail Modal */}
             {isListingProfileModalOpen && <ListingDetailModal
                 isOpen={isListingProfileModalOpen}
                 onClose={handleCloseListingDetail}
-                listingId={selectedListing?.id || ""}
+                listingId={selectedListing?._id || selectedListing?.id}
                 onApprove={handleApprove}
                 onReject={handleReject}
             />}

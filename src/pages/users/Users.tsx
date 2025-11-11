@@ -58,7 +58,7 @@ function Users() {
                 onSuccess: (res: any) => {
                     setIsDeleteModalOpen(false);
                     setSelectedUser(null);
-                    if (userData?.data.length > 1) {
+                    if (userData?.data.length >= 1) {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
@@ -122,14 +122,14 @@ function Users() {
             <div className='flex items-center gap-4'>
                 <Input
                     value={searchUser}
-                    placeholder="Search User"
+                    placeholder="Search by name"
                     onChange={handleUserSearch}
                     prefix={<SearchIcon className='mr-2' />}
                     className='w-full min-w-[300px] h-12'
                 />
                 <Select
                     options={statusOptions}
-                    onChange={(value) => handleStatus(value)}
+                    onChange={handleStatus}
                     placeholder="Select Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
