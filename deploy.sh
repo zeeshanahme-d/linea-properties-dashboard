@@ -19,6 +19,6 @@ fi
 cp envs/.env.prod .env
 npm install
 npm run build
-aws s3 sync  --profile mojo-app ./dist s3://mojo-admin-dashboard
-aws cloudfront create-invalidation --profile mojo-app --distribution-id E36EJJPEZKZYME --paths "/*"
+aws s3 sync  --profile lineaproperties-admin ./dist s3://linea-properties-admin-panel-bucket 
+aws cloudfront create-invalidation --profile lineaproperties-admin --distribution-id E13NQBGGSDCQG5 --paths "/*"
 # cp envs/.env.local .env
