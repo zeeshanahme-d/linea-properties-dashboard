@@ -12,6 +12,7 @@ import HeatCoilIcon from 'assets/icons/heatingcoil-icon.svg?react';
 import HotWaterIcon from 'assets/icons/hotwater-icon.svg?react';
 import ElevatorIcon from 'assets/icons/elevator-icon.svg?react';
 import WardrobesIcon from 'assets/icons/wardrobes-icon.svg?react';
+import GeneratorIcon from 'assets/icons/generator-icon.svg?react';
 import AreaIcon from 'assets/icons/area-icon.svg?react';
 import BedroomIcon from 'assets/icons/bedroom-icon.svg?react';
 import BathroomIcon from 'assets/icons/bathroom-icon.svg?react';
@@ -47,9 +48,10 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
         { name: "parking", icon: ParkingIcon },
         { name: "cable TV", icon: TvIcon },
         { name: "heating", icon: HeatCoilIcon },
-        { name: "hot Water", icon: HotWaterIcon },
+        { name: "hot water", icon: HotWaterIcon },
         { name: "elevator", icon: ElevatorIcon },
-        { name: "wardrobes", icon: WardrobesIcon }
+        { name: "wardrobes", icon: WardrobesIcon },
+        { name: "standby generator", icon: GeneratorIcon }
     ];
 
     return (
