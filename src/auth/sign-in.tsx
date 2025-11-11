@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, InputRef } from 'antd';
 
-import { useAuth } from '../store/auth-store';
 import useSignIn from './core/hooks/use-sign-in';
 import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 
@@ -13,12 +12,13 @@ import EyeOpenIcon from 'assets/icons/eye-open-icon.svg?react'
 import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
 import LeftHandImage from 'assets/icons/lefthand-image.svg?react'
 import RightHandImage from 'assets/icons/righthand-image.svg?react'
+import { useAuth } from './core/auth-context';
 
 
 
 function SignIn() {
   const { signInMutate, isLoading } = useSignIn();
-  const { setCurrentUser } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const passwordInputRef = useRef<InputRef>(null);
@@ -35,7 +35,7 @@ function SignIn() {
         if (res) {
           const token = res.data.token;
           if (token) {
-            setCurrentUser({
+            login({
               token: token,
             });
             showSuccessMessage(res.data.message);

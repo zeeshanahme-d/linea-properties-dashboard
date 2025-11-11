@@ -22,8 +22,6 @@ function Dashboard() {
 
     useEffect(() => setTitle("Dashboard"), [setTitle]);
 
-    console.log(dashboardData);
-
     return (
         <section className=''>
             <div className="grid grid-cols-1 md:grid-cols-2 lg1180:grid-cols-4 gap-3 xl:gap-4">

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, Modal } from 'antd';
 import DeleteIcon from 'assets/icons/delete-modal-icon.svg?react';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 
 interface DeleteUserModalProps {
     isOpen: boolean;
+    isLoading: boolean;
     onClose: () => void;
     onConfirm: () => void;
     description?: string;
@@ -12,6 +14,7 @@ interface DeleteUserModalProps {
 const DeleteModal: React.FC<DeleteUserModalProps> = ({
     isOpen,
     onClose,
+    isLoading,
     onConfirm,
     description = 'Are you sure you want Delete this User?',
 }) => {
@@ -26,8 +29,8 @@ const DeleteModal: React.FC<DeleteUserModalProps> = ({
             footer={null}
             closeIcon={false}
             title={false}
-        // closeIcon={<CloseOutlined className="text-gray-400 hover:text-gray-600" />}
         >
+            {isLoading ? <FallbackLoader isModal={true} size='large' /> : null}
             <div className="text-center pb-5 px-8">
                 {/* Delete Icon */}
                 <div className="flex justify-center mb-4">

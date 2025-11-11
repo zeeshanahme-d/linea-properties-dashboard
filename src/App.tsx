@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -13,15 +12,6 @@ setupAxios();
 const queryClient = new QueryClient(rqConfigs);
 
 function App() {
-
-  useEffect(() => {
-    const lang = localStorage.getItem('i18nextLng') || 'en';
-    if (lang === 'ar' || lang?.startsWith('ar')) {
-      document.body.className = 'font-arabic';
-    } else {
-      document.body.className = 'font-primary';
-    }
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

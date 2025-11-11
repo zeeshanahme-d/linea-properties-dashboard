@@ -103,7 +103,7 @@ function AiFlagListings() {
     };
 
     const handleApprove = (listingId: string) => {
-        console.log('Approve listing:', listingId);
+        console.log(listingId)
         setStatusMessage('Listing Approved');
         setIsDoneModalOpen(true);
         setIsListingProfileModalOpen(false);
@@ -114,7 +114,8 @@ function AiFlagListings() {
     };
 
     const handleReject = (listingId: string) => {
-        console.log('Reject listing:', listingId);
+        console.log(listingId)
+
         setStatusMessage('Listing Rejected');
         setIsDoneModalOpen(true);
         setIsListingProfileModalOpen(false);

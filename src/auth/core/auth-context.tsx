@@ -3,67 +3,103 @@ import {
   useEffect,
   useRef,
   useState,
+  createContext,
+  useContext,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 
-import { useAuthStore } from '../../store/auth-store';
 import * as authHelper from './auth-helpers';
+import { IUserModel } from './_models';
+
+type User = IUserModel; // You can replace this 'any' with your User type/interface
+
+type AuthContextType = {
+  currentUser: User | null;
+  setCurrentUser: Dispatch<SetStateAction<User | null>>;
+  login: (user: User) => void;
+  logout: () => void;
+};
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 type IProps = {
   children: ReactNode;
 };
 
 function AuthInit({ children }: IProps) {
-  const setCurrentUser = useAuthStore((state) => state.setCurrentUser);
-  const logout = useAuthStore((state) => state.logout);
   const didRequest = useRef(false);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const [_, setIsVerifying] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   // Initialize user data on app load - check localStorage and sync with store
   useEffect(() => {
     const initializeUser = async () => {
       try {
         if (!didRequest.current) {
-          setIsVerifying(true);
-
-          // Check if user exists in localStorage
           const userFromStorage = authHelper.getUser();
 
           if (userFromStorage) {
-            // User exists in localStorage - sync it to Zustand store
             setCurrentUser(userFromStorage);
           } else {
-            // No user in localStorage - ensure store is clean (logout)
-            logout();
+            setCurrentUser(null);
+            authHelper.removeAuth();
           }
         }
       } catch (error) {
-        if (!didRequest.current) {
-          logout();
-        }
+        console.log(error);
+        setCurrentUser(null);
+        authHelper.removeAuth();
       } finally {
-        setIsVerifying(false);
         setShowSplashScreen(false);
+        didRequest.current = true;
       }
-
-      didRequest.current = true;
     };
 
     initializeUser();
-  }, [setCurrentUser, logout]);
+  }, []);
 
-  return showSplashScreen ? (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      flexDirection: 'column',
-      gap: '10px'
-    }}>
-      <div className='text-xl'>Loading...</div>
-    </div>
-  ) : children;
+  // Login function
+  const login = (user: User) => {
+    setCurrentUser(user);
+    authHelper.setUser(user);
+  };
+
+  // Logout function
+  const logout = () => {
+    setCurrentUser(null);
+    authHelper.removeAuth();
+  };
+
+  if (showSplashScreen) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column',
+        gap: '10px'
+      }}>
+        <div className='text-xl'>Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
-export { AuthInit };
+// Create a custom hook for easier access to AuthContext
+function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthInit provider");
+  }
+  return context;
+}
+
+export { AuthInit, AuthContext, useAuth };

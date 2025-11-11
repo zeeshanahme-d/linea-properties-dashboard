@@ -87,8 +87,8 @@ function SidebarRoutes() {
   };
 
   return (
-    <section className='flex flex-col h-full w-64 py-5 bg-white'>
-      <div className='flex flex-col h-full relative'>
+    <section className='h-full w-64 py-5 bg-white'>
+      <div className='flex flex-col h-full w-full relative'>
         <button className='flex items-center justify-start px-4' onClick={navigateToDashboard}>
           <LogoIcon />
         </button>
@@ -101,7 +101,7 @@ function SidebarRoutes() {
                 to={path}
                 onClick={() => setActiveRoute(key)}
               >
-                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} h-[48px] px-4 rounded-xl relative w-[100%] flex items-center my-2 justify-start gap-4 text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
+                <div className={`${activeRoute === key ? 'bg-primary text-white' : 'text-medium-gray'} h-[48px] px-4 rounded-xl relative w-[100%] flex items-center my-1.5 justify-start gap-4 text-lg ${activeRoute === key ? 'bg-primary text-white' : ''}`} >
                   {icon}
                   <span>{label}</span>
                 </div>
@@ -110,9 +110,9 @@ function SidebarRoutes() {
           </div>
         </div>
         <button
-          className={`flex items-center gap-5 px-4 absolute bottom-0`}
+          className={`flex items-center gap-5 px-4 mt-auto`}
           onClick={() => setLogoutModalOpen(true)}              >
-          <div className={`h-[48px] px-4 rounded-xl relative w-full gap-4 flex items-center my-2`} >
+          <div className={`h-[48px] px-4 rounded-xl relative w-full gap-4 flex items-center`} >
             <LogoutIcon />
             <span className='text-[#EF4444]'>Logout</span>
           </div>

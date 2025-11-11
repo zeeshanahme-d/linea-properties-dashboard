@@ -5,13 +5,13 @@ import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 
 // src/data/locationData.ts
-export const trafficData = [
-    { name: 'Douala', value: 35, color: '#FF8056' },
-    { name: 'Yaoundé', value: 25, color: '#255D8D' },
-    { name: 'Buea', value: 20, color: '#BFBFFF' },
-    { name: 'Limbe', value: 12, color: '#F59E0B' },
-    { name: 'Others', value: 8, color: '#4D4D4D' },
-];
+// export const trafficData = [
+//     { name: 'Douala', value: 35, color: '#FF8056' },
+//     { name: 'Yaoundé', value: 25, color: '#255D8D' },
+//     { name: 'Buea', value: 20, color: '#BFBFFF' },
+//     { name: 'Limbe', value: 12, color: '#F59E0B' },
+//     { name: 'Others', value: 8, color: '#4D4D4D' },
+// ];
 
 interface TrafficByLocationItem {
     city: string;
@@ -54,7 +54,7 @@ const TrafficByLocationChart: React.FC<TrafficByLocationChartProps> = ({ isLoadi
         >
             {isLoading ? <FallbackLoader size="large" className="h-[200px]" />
                 :
-                <div className="flex flex-row items-center h-[220px]">
+                <div className="flex flex-row items-center h-[220px] relative">
                     <PieChart width={400} height={400}>
                         <Pie
                             data={formattedData}
