@@ -15,6 +15,7 @@ import { showErrorMessage } from 'utils/messageUtils';
 import useUpdateListingStatus from './core/hooks/useUpdateListingStatus';
 
 const saleStatusOptions = [
+    { label: 'All Pricing Type', value: 'all' },
     { label: 'For Sale', value: 'forSale' },
     { label: 'For Rent', value: 'forRent' },
 ];
@@ -39,7 +40,6 @@ function AiFlagListings() {
         page: 1,
         limit: 10,
         status: "AI FLAGGED",
-        pricingType: "forSale"
     })
     const { listingsData, isLoading, refetch } = useGetListingData(params);
     const { updateListingStatusMutate, isLoading: isUpdateListingStatusLoading } = useUpdateListingStatus();
@@ -146,8 +146,8 @@ function AiFlagListings() {
                     placeholder="Select Sale Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
-                    defaultValue="For Sale"
-                    onChange={value => setParams(prev => ({ ...prev, pricingType: value }))}
+                    defaultValue="all"
+                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value }))}
 
                 />
             </div>

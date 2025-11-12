@@ -1,12 +1,19 @@
 import { useHeaderProps } from 'components/core/use-header-props';
 import { useEffect, useState } from 'react';
 import { Card, Slider, Input, Button } from 'antd';
+import { useGetConfigurationDataFromStore } from 'store/configurationData';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import useChangeConfiguration from './core/hooks/useChangeConfiguration';
+import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 
 function Configurations() {
     const { setTitle } = useHeaderProps();
-    const [serviceFeePercentage, setServiceFeePercentage] = useState(4);
+    const { configurationData, isLoading, setConfigurationData } = useGetConfigurationDataFromStore();
+    const { changeConfigurationMutate, isLoading: changeLoading } = useChangeConfiguration();
+    const [serviceFeePercentage, setServiceFeePercentage] = useState<number>(configurationData?.value || 0);
 
     useEffect(() => setTitle("Configurations"), [setTitle]);
+    useEffect(() => setServiceFeePercentage(configurationData?.value || 0), [configurationData]);
 
     const handleSliderChange = (value: number) => {
         setServiceFeePercentage(value);
@@ -19,9 +26,25 @@ function Configurations() {
         }
     };
 
+
     const handleSaveChanges = () => {
-        // Handle save logic here
-        console.log('Saving service fee percentage:', serviceFeePercentage);
+        const body = {
+            value: serviceFeePercentage || 0,
+            valueType: "PERCENTAGE",
+        }
+
+        changeConfigurationMutate(body,
+            {
+                onSuccess: (res) => {
+                    setServiceFeePercentage(res.value);
+                    setConfigurationData(res)
+                    showSuccessMessage("Service fee updated successfully!");
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message);
+                },
+            },
+        );
     };
 
     return (
@@ -29,6 +52,7 @@ function Configurations() {
             <Card
                 title="Financial Settings"
                 className="w-[400px] h-[380px]">
+                {isLoading || changeLoading ? <FallbackLoader isModal={true} size='large' /> : null}
                 <div>
                     {/* Service Fee Percentage Slider */}
                     <div className="mb-1">
@@ -77,6 +101,7 @@ function Configurations() {
             </Card>
             <div className=" mt-5 ml-[13.5rem]">
                 <Button
+                    disabled={isLoading || changeLoading || serviceFeePercentage === configurationData?.value}
                     type="primary"
                     onClick={handleSaveChanges}
                     className="font-normal px-8 py-3 h-12"

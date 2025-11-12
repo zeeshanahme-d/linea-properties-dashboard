@@ -2,12 +2,25 @@
 import { useHeaderProps } from 'components/core/use-header-props';
 
 import LogoutModal from 'auth/logout-modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useGetConfigurationData from 'pages/configurations/core/hooks/useGetConfiguration';
+import { useGetConfigurationDataFromStore } from 'store/configurationData';
 
 
 function Header() {
   const { title } = useHeaderProps();
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false)
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const { configurationData, isLoading } = useGetConfigurationData();
+  const { setConfigurationData, setLoading } = useGetConfigurationDataFromStore();
+
+  useEffect(() => {
+    setLoading(isLoading);
+    if (Object.keys(configurationData || {}).length > 0) {
+      setConfigurationData(configurationData)
+    } else {
+      setConfigurationData(null)
+    }
+  }, [configurationData, isLoading])
 
   return (
     <section className="flex justify-between items-center w-full">

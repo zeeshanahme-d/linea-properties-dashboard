@@ -11,6 +11,7 @@ import EyeIcon from "assets/icons/view-icon.svg?react";
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
 
 const saleStatusOptions = [
+    { label: 'All Pricing Type', value: 'all' },
     { label: 'For Sale', value: 'forSale' },
     { label: 'For Rent', value: 'forRent' },
 ];
@@ -34,7 +35,6 @@ function ApprovedListings() {
         page: 1,
         limit: 10,
         status: "APPROVED",
-        pricingType: "forSale"
     })
 
     const { listingsData, isLoading } = useGetListingData(params);
@@ -108,8 +108,8 @@ function ApprovedListings() {
                     placeholder="Select Sale Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
-                    defaultValue="For Sale"
-                    onChange={value => setParams(prev => ({ ...prev, pricingType: value }))}
+                    defaultValue="all"
+                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value }))}
                 />
             </div>
 
@@ -183,6 +183,7 @@ function ApprovedListings() {
                     </div>
                 }
             </div>
+
             {listingsData?.totalItems > params?.limit && <Pagination
                 className="mt-5 justify-center"
                 current={params?.page}

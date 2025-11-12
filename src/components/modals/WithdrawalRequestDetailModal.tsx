@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Modal, Divider } from 'antd';
+import dayjs from 'dayjs';
 
 //icons
-import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { CloseOutlined } from '@ant-design/icons';
 import GoArrowIcon from 'assets/icons/go-arrow-icon.svg?react';
@@ -24,32 +24,6 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
     onReject,
     onApprove,
 }) => {
-
-    if (!withdrawalRequest) return null;
-
-    // Static data matching the image
-    const staticWithdrawalRequestData = {
-        title: "Request WD001",
-        price: "40,000 CFA",
-        requestDate: "2024-01-15",
-        method: "MTN Mobile Money",
-        contactInfo: "+237 6 50 12 34 56",
-        balance: {
-            availableBalance: "100,000 CFA",
-            requestedAmount: "100,000 CFA",
-            totalBalance: "100,000 CFA",
-        },
-        listerInfo: {
-            name: "Jacob Jones",
-            email: "john@example.com",
-            joinedDate: "2024-01-15",
-            location: "Douala",
-            profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
-        }
-    };
-
-    // Use static data if no listing provided, otherwise use listing data
-    const withdrawalRequestData = staticWithdrawalRequestData;
 
     return (
         <Modal
@@ -76,11 +50,11 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <div className="flex items-start justify-between">
                         <div className="flex-1 flex items-center justify-between">
                             <div className="flex items-center gap-3 mb-2">
-                                <h2 className="text-2xl font-medium text-gray-800">{withdrawalRequestData.title}</h2>
+                                <h2 className="text-2xl font-medium text-gray-800">Request {withdrawalRequest?._id}</h2>
                             </div>
                             <div className="text-right">
                                 <span className="text-2xl text-primary">
-                                    {withdrawalRequestData.price}
+                                    {withdrawalRequest?.amount} {withdrawalRequest?.currency}
                                 </span>
                             </div>
                         </div>
@@ -90,15 +64,15 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <div className="flex items-center gap-1 mb-3 font-normal">
                         <div className="flex items-center gap-1 text-medium-gray">
                             <CiCalendar size={16} />
-                            <span>{withdrawalRequestData.requestDate}</span>
+                            <span>{withdrawalRequest?.createdAt ? dayjs(withdrawalRequest?.createdAt).format("YYYY-MM-DD") : ""}</span>
                         </div>
                         <div className="flex items-center text-medium-gray">
                             <GoArrowIcon />
-                            <span>{withdrawalRequestData.method}</span>
+                            <span>{withdrawalRequest?.method}</span>
                         </div>
                         <div className="flex items-center text-medium-gray">
                             <GoArrowIcon />
-                            <span>{withdrawalRequestData.contactInfo}</span>
+                            <span>{withdrawalRequest?.phoneNumber}</span>
                         </div>
                         <div className="flex items-center text-medium-gray ml-auto">
                             <span>Requested Amount</span>
@@ -112,16 +86,16 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
                                 <span className="text-medium-gray font-normal text-sm">Available:</span>
-                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequestData.balance.availableBalance}</span>
+                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.availableBalance}</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-medium-gray font-normal text-sm">Requested:</span>
-                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequestData.balance.requestedAmount}</span>
+                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.amount}</span>
                             </div>
                             <div className="border-t border-[#C3C3C3] pt-3">
                                 <div className="flex justify-between items-center">
                                     <span className="text-black font-normal text-sm">Total:</span>
-                                    <span className="text-black font-normal text-sm">{withdrawalRequestData.balance.totalBalance}</span>
+                                    <span className="text-black font-normal text-sm">{withdrawalRequest?.totalBalance}</span>
                                 </div>
                             </div>
                         </div>
@@ -133,25 +107,25 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <h3 className="text-lg font-medium mb-3">User Information</h3>
                     <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-[100px] h-[100px] bg-orange-200 rounded-full flex items-center justify-center">
+                            <div className="w-[100px] h-[100px] rounded-full border flex items-center justify-center">
                                 <img
-                                    src={withdrawalRequestData.listerInfo.profilePicture}
-                                    alt={withdrawalRequestData.listerInfo.name}
+                                    src={withdrawalRequest?.user.profilePicture || "/images/dummy-profile-pic.jpg"}
+                                    alt={withdrawalRequest?.user.name}
                                     className="w-[100px] h-[100px] rounded-full object-cover"
                                 />
                             </div>
                             <div className="flex-1">
-                                <h4 className="font-medium text-lg text-black">{withdrawalRequestData.listerInfo.name}</h4>
-                                <p className="text-medium-gray text-base">{withdrawalRequestData.listerInfo.email}</p>
+                                <h4 className="font-medium text-lg text-black">{withdrawalRequest?.user.name}</h4>
+                                <p className="text-medium-gray text-base">{withdrawalRequest?.user.email}</p>
                                 <div className="flex items-center gap-3 mt-1">
                                     <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <CiCalendar size={16} />
-                                        <span>Joined {withdrawalRequestData.listerInfo.joinedDate}</span>
+                                        Joined {withdrawalRequest?.user?.createdAt ? dayjs(withdrawalRequest.user.createdAt).format("YYYY-MM-DD") : ""}
                                     </div>
-                                    <div className="flex items-center gap-1 text-sm text-medium-gray">
+                                    {/* <div className="flex items-center gap-1 text-sm text-medium-gray">
                                         <IoLocationOutline size={16} />
-                                        <span>{withdrawalRequestData.listerInfo.location}</span>
-                                    </div>
+                                        <span>{withdrawalRequest?.user.location}</span>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -159,17 +133,17 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                 </div>
 
                 {/* Action Buttons - Only show when listing status is AI flag */}
-                {withdrawalRequest?.status === 'Panding' && (
+                {withdrawalRequest?.status === 'PENDING' && (
                     <div className="flex gap-3">
                         <Button
-                            onClick={() => onReject?.(withdrawalRequest.id)}
+                            onClick={() => onReject?.(withdrawalRequest)}
                             className="h-[52px] rounded-2xl flex-1 border-red-500 text-red-500 hover:bg-red-50"
                             type="default"
                         >
                             Reject
                         </Button>
                         <Button
-                            onClick={() => onApprove?.(withdrawalRequest.id)}
+                            onClick={() => onApprove?.(withdrawalRequest)}
                             className="h-[52px] rounded-2xl flex-1 border-green-500 text-green-500 hover:bg-green-50"
                             type="default"
                         >
