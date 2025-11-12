@@ -16,9 +16,9 @@ import useChangeWithdrawalsStatus from './core/hooks/useChangeWithdrawalsStatus'
 
 const statusOptions = [
     { label: 'All Status', value: 'all' },
-    { label: 'Pending', value: 'panding' },
-    { label: 'Approved', value: 'approved' },
-    { label: 'Rejected', value: 'rejected' },
+    { label: 'Pending', value: 'PENDING' },
+    { label: 'Approved', value: 'APPROVED' },
+    { label: 'Rejected', value: 'REJECTED' },
 ];
 
 const WITHDRAWAL_STATUS = {
@@ -138,6 +138,7 @@ function Withdrawals() {
                     placeholder="Select Withdrawal Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
+                    onChange={value => setParams(prev => ({ ...prev, status: value === "all" ? undefined : value }))}
                     defaultValue="All Status"
                 />
             </div>
