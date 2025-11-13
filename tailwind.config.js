@@ -64,7 +64,8 @@ export default {
         md: '768px',
         lg: '1092px',
         "lg1180": "1180px",
-        xl: '1280px',
+        xl: '1300px',
+        "xl1380": '1380px',
         '2xl': '1440px',
         xl1520: '1520px', // 👈 Custom screen at 1520px: '1520px', // 👈 Custom screen at 1520px
         '3xl': '1700px',

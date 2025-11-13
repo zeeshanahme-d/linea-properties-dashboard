@@ -65,7 +65,7 @@ html {
 
 .ant-card .ant-card-body {
   padding: 0px !important;
-  padding-inline: 20px !important;
+  padding-inline: 10px !important;
   padding-block: 14px !important;
   height: calc(100% - 56px) !important;
 }
@@ -175,10 +175,10 @@ circle:focus {
   outline: none !important;
 }
 
-/* .recharts-wrapper {
+.recharts-wrapper {
   width: 100% !important;
   height: 100% !important;
-} */
+}
 
 .ant-select-selector {
   font-size: var(--base-font-size) !important;
@@ -243,3 +243,8 @@ circle:focus {
 .trafficbyLocation .recharts-tooltip-wrapper {
   transform: translate(35px, 80px) !important;
 }
+
+/* .trafficbyLocation .recharts-wrapper {
+  width: 100% !important;
+  min-width: 200px !important;
+} */

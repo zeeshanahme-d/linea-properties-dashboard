@@ -118,7 +118,7 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
                                                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                                             >
                                                 <Tooltip title={listing?.propertyTitle}>
-                                                    <td className="px-4 py-4 text-sm truncate max-w-[200px] capitalize">
+                                                    <td className="px-4 py-4 text-sm truncate max-w-[150px] xl1380:max-w-[200px] capitalize">
                                                         {listing?.propertyTitle || "-"}
                                                     </td>
                                                 </Tooltip>
