@@ -177,7 +177,7 @@ function Withdrawals() {
                                                     {withdrawal?.user.name || "-"}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
-                                                    {withdrawal?.amount || "-"}
+                                                    {`${withdrawal?.amount} CFA` || "-"}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3">
                                                     <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(withdrawal?.status)}`}>

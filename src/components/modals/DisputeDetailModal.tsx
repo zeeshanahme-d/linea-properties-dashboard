@@ -1,5 +1,10 @@
 import React from 'react';
 import { Button, Modal, Divider, Tooltip } from 'antd';
+import useGetSingleDisputeData from 'pages/disputes/core/hooks/useGetSingleDisputeData';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import dayjs from 'dayjs';
+import useReleaseDisputeFunds from 'pages/disputes/core/hooks/useReleaseDisputeFunds';
+import { showErrorMessage } from 'utils/messageUtils';
 
 //icons
 import { CloseOutlined } from '@ant-design/icons';
@@ -7,11 +12,6 @@ import ImageIcon from 'assets/icons/image-icon.svg?react';
 import FileViewIcon from 'assets/icons/file-view-icon.svg?react';
 import FileDownloadIcon from 'assets/icons/download-icon.svg?react';
 import VsIcon from 'assets/icons/vs-icon.svg?react';
-import useGetSingleDisputeData from 'pages/disputes/core/hooks/useGetSingleDisputeData';
-import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
-import dayjs from 'dayjs';
-import useReleaseDisputeFunds from 'pages/disputes/core/hooks/useReleaseDisputeFunds';
-import { showErrorMessage } from 'utils/messageUtils';
 
 
 interface DisputeDetailModalProps {
@@ -57,6 +57,36 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
         );
     };
 
+    const handleDownloadFile = async (doc: string) => {
+        try {
+            // Extract the file name from the URL
+            const urlParts = doc.split('/');
+            const fileName = urlParts[urlParts.length - 1]; // e.g., "animal-planet.png"
+
+            // Fetch the file
+            const response = await fetch(doc);
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const blob = await response.blob();
+            const downloadUrl = window.URL.createObjectURL(blob);
+
+            // Create a temporary link and trigger download
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = fileName; // use extracted file name
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            // Clean up
+            window.URL.revokeObjectURL(downloadUrl);
+        } catch (error) {
+            console.error(error);
+            alert('Error downloading the file.');
+        }
+    };
+
+
     return (
         <Modal
             open={isOpen}
@@ -90,7 +120,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                     </div>
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Amount in Dispute:</span>
-                                        <p>{singleDisputeData?.amountInDispute}</p>
+                                        <p>{singleDisputeData?.amountInDispute} CFA</p>
                                     </div>
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Created:</span>
@@ -154,7 +184,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                 {singleDisputeData?.evidenceDocuments.map((doc: string, index: number) => (
                                     <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
                                         <div className="flex items-center w-[50%]">
-                                            <span className='w-10' > <ImageIcon /></span>
+                                            <span className='w-6' > <ImageIcon /></span>
                                             <div className='w-full'>
                                                 <Tooltip title={decodeURIComponent(doc).split("/").pop()}>
                                                     <p className="text-sm truncate max-w-full ml-3">{decodeURIComponent(doc).split("/").pop()}</p>
@@ -163,6 +193,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                         </div>
                                         <div className="flex gap-2">
                                             <Button
+                                                onClick={() => window.open(doc, '_blank')}
                                                 icon={<FileViewIcon className='mt-1' />}
                                                 className="text-medium-gray px-2 py-[14px] text-sm rounded-lg"
                                                 size="small"
@@ -170,6 +201,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                                 View
                                             </Button>
                                             <Button
+                                                onClick={() => handleDownloadFile(doc)}
                                                 icon={<FileDownloadIcon className='mt-1' />}
                                                 className="text-medium-gray px-2 py-[14px] text-sm rounded-lg flex-centered"
                                                 size="small"
@@ -183,7 +215,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex gap-4">
+                        {singleDisputeData?.status === "OPEN" && <div className="flex gap-4">
                             <Button
                                 variant='text'
                                 onClick={() => handleReleaseFund("Property Seeker")}
@@ -201,7 +233,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                             >
                                 Release Funds to Lister
                             </Button>
-                        </div>
+                        </div>}
                     </>
                 }
             </div>

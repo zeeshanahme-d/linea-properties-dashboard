@@ -124,11 +124,9 @@ function Disputes() {
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
                                                     {dispute?.creator?.name || "-"}
                                                 </td>
-                                                <Tooltip title={dispute.listing}>
-                                                    <td className="xl:px-4 px-2 py-3 truncate max-w-40 capitalize">
-                                                        {dispute?.listing?.propertyTitle || "-"}
-                                                    </td>
-                                                </Tooltip>
+                                                <td className="xl:px-4 px-2 py-3 truncate max-w-40 capitalize">
+                                                    {dispute?.listing?.propertyTitle || "-"}
+                                                </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
                                                     {dispute?.disputeReason || "-"}
                                                 </td>

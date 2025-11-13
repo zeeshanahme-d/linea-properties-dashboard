@@ -54,7 +54,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                             </div>
                             <div className="text-right">
                                 <span className="text-2xl text-primary">
-                                    {withdrawalRequest?.amount} {withdrawalRequest?.currency}
+                                    {withdrawalRequest?.amount} CFA
                                 </span>
                             </div>
                         </div>
@@ -86,16 +86,16 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
                                 <span className="text-medium-gray font-normal text-sm">Available:</span>
-                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.availableBalance}</span>
+                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.availableBalance} CFA</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-medium-gray font-normal text-sm">Requested:</span>
-                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.amount}</span>
+                                <span className="text-medium-gray font-normal text-sm">{withdrawalRequest?.amount} CFA</span>
                             </div>
                             <div className="border-t border-[#C3C3C3] pt-3">
                                 <div className="flex justify-between items-center">
                                     <span className="text-black font-normal text-sm">Total:</span>
-                                    <span className="text-black font-normal text-sm">{withdrawalRequest?.totalBalance}</span>
+                                    <span className="text-black font-normal text-sm">{withdrawalRequest?.totalBalance} CFA</span>
                                 </div>
                             </div>
                         </div>
