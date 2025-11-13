@@ -13,14 +13,16 @@ import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
 import LeftHandImage from 'assets/icons/lefthand-image.svg?react'
 import RightHandImage from 'assets/icons/righthand-image.svg?react'
 import { useAuth } from './core/auth-context';
+import { getUserByToken } from './core/_requests';
 
 
 
 function SignIn() {
-  const { signInMutate, isLoading } = useSignIn();
+  const { signInMutate } = useSignIn();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const passwordInputRef = useRef<InputRef>(null);
   const passwordSpanRef = useRef<HTMLSpanElement>(null);
 
@@ -30,22 +32,37 @@ function SignIn() {
       email: values.email,
       password: values.password,
     };
+    setIsLoading(true)
     signInMutate(payload, {
       onSuccess: async (res) => {
         if (res) {
           const token = res.data.token;
           if (token) {
-            login({
-              token: token,
-            });
-            showSuccessMessage(res.data.message);
-            navigate('/', { replace: true });
+
+            try {
+              const { data } = await getUserByToken(token || "");
+              if (data) {
+                const authData = {
+                  token: token,
+                  data: data,
+                };
+                login(authData);
+                showSuccessMessage(res.data.message);
+                navigate('/', { replace: true });
+              }
+            } catch (error: any) {
+              showErrorMessage(error?.response?.data?.message);
+              console.error('Failed to sign in user:', error);
+            } finally {
+              setIsLoading(false)
+            }
           }
         }
       },
       onError: (error: any) => {
         showErrorMessage(error?.response?.data?.message);
         console.error('Failed to sign in user:', error);
+        setIsLoading(false)
       },
     });
   };

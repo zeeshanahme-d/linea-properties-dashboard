@@ -11,6 +11,7 @@ import {
 
 import * as authHelper from './auth-helpers';
 import { IUserModel } from './_models';
+import { getUserByToken } from './_requests';
 
 type User = IUserModel; // You can replace this 'any' with your User type/interface
 
@@ -37,10 +38,16 @@ function AuthInit({ children }: IProps) {
     const initializeUser = async () => {
       try {
         if (!didRequest.current) {
-          const userFromStorage = authHelper.getUser();
+          const userTokenFromStorage = authHelper.getToken();
 
-          if (userFromStorage) {
-            setCurrentUser(userFromStorage);
+          const { data } = await getUserByToken(userTokenFromStorage || "");
+          if (data) {
+            const authData = {
+              token: userTokenFromStorage,
+              data: data,
+            };
+            setCurrentUser(authData);
+            authHelper.setUser(authData);
           } else {
             setCurrentUser(null);
             authHelper.removeAuth();

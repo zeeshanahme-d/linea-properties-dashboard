@@ -50,7 +50,7 @@ const TrafficByLocationChart: React.FC<TrafficByLocationChartProps> = ({ isLoadi
     return (
         <Card
             title="Traffic by Location"
-            className="w-full xl:max-w-sm 3xl:max-w-md h-[300px]"
+            className="w-full xl:max-w-sm 3xl:max-w-md h-[300px] trafficbyLocation"
         >
             {isLoading ? <FallbackLoader size="large" className="h-[200px]" />
                 :
