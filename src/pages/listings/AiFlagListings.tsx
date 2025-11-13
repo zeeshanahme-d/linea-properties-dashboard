@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Empty, Input, Pagination, Select } from 'antd';
+import { Empty, Input, Pagination, Select, Tooltip } from 'antd';
 import DoneModal from 'components/modals/DoneModal';
 import ListingDetailModal from 'components/modals/ListingDetailModal';
 //icons
@@ -163,7 +163,7 @@ function AiFlagListings() {
                                     {headers.map((header) => (
                                         <th
                                             key={header.label}
-                                            className={`xl:px-4 px-2 py-3 ${header.className} font-medium text-sm`}
+                                            className={`xl:px-4 px-2 py-3 text-nowrap ${header.className} font-medium text-sm`}
                                         >
                                             {header.label}
                                         </th>
@@ -179,9 +179,11 @@ function AiFlagListings() {
                                                 key={listing?._id}
                                                 className="bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm"
                                             >
-                                                <td className="xl:px-4 px-2 py-3 capitalize">
-                                                    {listing?.propertyTitle || "-"}
-                                                </td>
+                                                <Tooltip title={listing?.propertyTitle || "-"}>
+                                                    <td className="xl:px-4 px-2 py-3 capitalize truncate max-w-[300px]">
+                                                        {listing?.propertyTitle || "-"}
+                                                    </td>
+                                                </Tooltip>
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
                                                     {listing?.user?.name || "-"}
                                                 </td>
