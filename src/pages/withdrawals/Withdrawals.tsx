@@ -138,7 +138,7 @@ function Withdrawals() {
                     placeholder="Select Withdrawal Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
-                    onChange={value => setParams(prev => ({ ...prev, status: value === "all" ? undefined : value }))}
+                    onChange={value => setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }))}
                     defaultValue="All Status"
                 />
             </div>
@@ -185,7 +185,7 @@ function Withdrawals() {
                                                     </div>
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
-                                                    {withdrawal?.createdAt ? dayjs(withdrawal?.createdAt).format("YYYY-MM-DD") : ""}
+                                                    {withdrawal?.createdAt ? dayjs(withdrawal?.createdAt).format("YYYY/MM/DD") : ""}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3">
                                                     {withdrawal?.method || "-"}

@@ -110,7 +110,7 @@ function Users() {
         debouncedSetParams(e.target.value.trim());
     };
     const handleStatus = (value: string) => {
-        setParams(prev => ({ ...prev, status: value === "all" ? undefined : value }));
+        setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }));
     };
 
     const handlePageChange = (page: number) => {

@@ -147,7 +147,7 @@ function AiFlagListings() {
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
                     defaultValue="all"
-                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value }))}
+                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value, page: 1 }))}
 
                 />
             </div>
@@ -206,7 +206,7 @@ function AiFlagListings() {
                                                             <EyeIcon />
                                                         </button>
                                                         {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
-                                                            <FallbackLoader className='!h-fit' />
+                                                            <FallbackLoader className='!h-10' />
                                                             :
                                                             <>
                                                                 <button
