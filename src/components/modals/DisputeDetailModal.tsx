@@ -116,7 +116,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                 <div className="flex flex-col text-sm text-medium-gray gap-3">
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Dispute ID:</span>
-                                        <p>{singleDisputeData?._id}</p>
+                                        <p>{singleDisputeData?.customDisputeId || singleDisputeData?.dispute?._id || "-"}</p>
                                     </div>
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Amount in Dispute:</span>

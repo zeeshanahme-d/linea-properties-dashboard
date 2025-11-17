@@ -118,7 +118,7 @@ function Disputes() {
                                             >
                                                 <Tooltip title={dispute?._id}>
                                                     <td className="xl:px-4 px-2 py-3 truncate max-w-40">
-                                                        {dispute?._id || "-"}
+                                                        {dispute?.customDisputeId || dispute?._id || "-"}
                                                     </td>
                                                 </Tooltip>
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
