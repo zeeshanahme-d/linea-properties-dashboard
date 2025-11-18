@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, InputRef } from 'antd';
 
 import useSignIn from './core/hooks/use-sign-in';
 import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
+import * as authHelper from '../auth/core/auth-helpers';
 
 
 
@@ -19,12 +20,18 @@ import { getUserByToken } from './core/_requests';
 
 function SignIn() {
   const { signInMutate } = useSignIn();
-  const { login } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const passwordInputRef = useRef<InputRef>(null);
   const passwordSpanRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/', { replace: true });
+    }
+  }, [currentUser, navigate]);
 
 
   const onFinish = async (values: any) => {
@@ -46,7 +53,8 @@ function SignIn() {
                   token: token,
                   data: data,
                 };
-                login(authData);
+                setCurrentUser(authData);
+                authHelper.setUser(authData);
                 showSuccessMessage(res.data.message);
                 navigate('/', { replace: true });
               }

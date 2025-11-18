@@ -1,78 +1,84 @@
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
   useEffect,
   useRef,
   useState,
-  createContext,
-  useContext,
-  Dispatch,
-  SetStateAction,
 } from 'react';
 
-import * as authHelper from './auth-helpers';
 import { IUserModel } from './_models';
 import { getUserByToken } from './_requests';
-
-type User = IUserModel; // You can replace this 'any' with your User type/interface
-
-type AuthContextType = {
-  currentUser: User | null;
-  setCurrentUser: Dispatch<SetStateAction<User | null>>;
-  login: (user: User) => void;
-  logout: () => void;
-};
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import * as authHelper from './auth-helpers';
 
 type IProps = {
   children: ReactNode;
 };
 
+type AuthContextProps = {
+  currentUser: IUserModel | null;
+  setCurrentUser: Dispatch<SetStateAction<IUserModel | null>>;
+  logout: () => void;
+};
+
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+
+function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthInit provider');
+  }
+  return context;
+}
+
 function AuthInit({ children }: IProps) {
-  const didRequest = useRef(false);
+  const [currentUser, setCurrentUser] = useState<IUserModel | null>(authHelper.getUser() ?? null);
   const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const didRequest = useRef(false);
 
-  // Initialize user data on app load - check localStorage and sync with store
+  // Verify token once on app load / page reload
   useEffect(() => {
-    const initializeUser = async () => {
-      try {
-        if (!didRequest.current) {
-          const userTokenFromStorage = authHelper.getToken();
 
-          const { data } = await getUserByToken(userTokenFromStorage || "");
-          if (data) {
-            const authData = {
-              token: userTokenFromStorage,
-              data: data,
-            };
-            setCurrentUser(authData);
-            authHelper.setUser(authData);
-          } else {
-            setCurrentUser(null);
-            authHelper.removeAuth();
-          }
+    const initializeUser = async () => {
+      if (didRequest.current) return;
+      didRequest.current = true;
+
+      const token = authHelper.getToken();
+      if (!token) {
+        authHelper.removeAuth();
+        setCurrentUser(null);
+        setShowSplashScreen(false);
+        return;
+      }
+
+      try {
+        const { data } = await getUserByToken(token);
+
+        if (data) {
+          const authData = {
+            token: token,
+            data: data,
+          };
+          setCurrentUser(authData);
+          authHelper.setUser(authData);
+        } else {
+          setCurrentUser(null);
+          authHelper.removeAuth();
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setCurrentUser(null);
         authHelper.removeAuth();
       } finally {
         setShowSplashScreen(false);
-        didRequest.current = true;
       }
     };
 
     initializeUser();
   }, []);
 
-  // Login function
-  const login = (user: User) => {
-    setCurrentUser(user);
-    authHelper.setUser(user);
-  };
-
-  // Logout function
   const logout = () => {
     setCurrentUser(null);
     authHelper.removeAuth();
@@ -80,33 +86,26 @@ function AuthInit({ children }: IProps) {
 
   if (showSplashScreen) {
     return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        flexDirection: 'column',
-        gap: '10px'
-      }}>
-        <div className='text-xl'>Loading...</div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          flexDirection: 'column',
+          gap: '10px',
+        }}
+      >
+        <div className="text-xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Create a custom hook for easier access to AuthContext
-function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthInit provider");
-  }
-  return context;
-}
-
-export { AuthInit, AuthContext, useAuth };
+export { AuthInit, useAuth };
