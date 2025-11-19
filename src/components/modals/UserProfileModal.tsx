@@ -126,7 +126,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                             </div>
                             <div className="text-center py-5 px-2 rounded-2xl border">
                                 <div className="flex-centered gap-3 text-2xl h-3/4  mb-1">
-                                    <RatingIcon /> {singleUserData?.averageRating}
+                                    <RatingIcon /> {singleUserData?.user?.averageRating}
                                 </div>
                                 <div className="text-sm text-medium-gray">Rating</div>
                             </div>

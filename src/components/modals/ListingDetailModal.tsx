@@ -129,7 +129,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         </div>
 
                         {/* Amenities */}
-                        <div className="mb-6">
+                        {singleListingData.propertyType !== "land" && <div className="mb-6">
                             <h3 className="text-lg font-medium mb-3">Amenities</h3>
                             <div className="grid grid-cols-4 gap-3">
                                 {singleListingData?.amenities.map((amenity: any, index: number) => {
@@ -143,7 +143,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                     );
                                 })}
                             </div>
-                        </div>
+                        </div>}
 
                         {/* Listed By Section */}
                         <div className="mb-6">
