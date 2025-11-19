@@ -50,7 +50,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <div className="flex items-start justify-between">
                         <div className="flex-1 flex items-center justify-between">
                             <div className="flex items-center gap-3 mb-2">
-                                <h2 className="text-2xl font-medium text-gray-800">Request {withdrawalRequest?._id}</h2>
+                                <h2 className="text-2xl font-medium text-gray-800">Request {withdrawalRequest?.customWithdrawRequestId || withdrawalRequest?._id}</h2>
                             </div>
                             <div className="text-right">
                                 <span className="text-2xl text-primary">

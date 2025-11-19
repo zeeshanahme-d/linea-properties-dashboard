@@ -171,7 +171,7 @@ function Withdrawals() {
                                                 className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
                                             >
                                                 <td className="xl:px-4 px-2 py-3 ">
-                                                    {withdrawal?._id}
+                                                    {withdrawal?.customWithdrawRequestId || withdrawal?._id}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
                                                     {withdrawal?.user.name || "-"}
