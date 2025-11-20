@@ -76,6 +76,8 @@ function SidebarRoutes() {
 
     if (matchingRoute) {
       setActiveRoute(matchingRoute.key);
+    } else {
+      setActiveRoute("");
     }
   }, [location.pathname]);
 

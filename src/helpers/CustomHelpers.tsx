@@ -30,3 +30,13 @@ export const getShortMonthName = (month: string) => {
     return months[month] || month;
 };
 
+export const handleErrorMineImg: React.EventHandler<React.SyntheticEvent<HTMLImageElement, Event>> = (e) => {
+    const target = e.target as HTMLImageElement;
+    target.src = 'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png'
+};
+
+export const formatFileSize = (bytes: number | undefined): number => {
+    if (!bytes) return 0;
+    const mb = bytes / (1024 * 1024);
+    return parseFloat(mb.toFixed(2));
+};

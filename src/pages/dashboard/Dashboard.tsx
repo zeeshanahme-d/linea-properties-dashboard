@@ -23,7 +23,7 @@ function Dashboard() {
     useEffect(() => setTitle("Dashboard"), [setTitle]);
 
     return (
-        <section className='mb-32'>
+        <section>
             <div className="grid grid-cols-1 md:grid-cols-2 lg1180:grid-cols-4 gap-3 xl:gap-4">
                 <StatisticsCard
                     title="Total Users"

@@ -12,6 +12,7 @@ import {
 import { IUserModel } from './_models';
 import { getUserByToken } from './_requests';
 import * as authHelper from './auth-helpers';
+import { useUserProfile } from 'store/userProfile';
 
 type IProps = {
   children: ReactNode;
@@ -35,6 +36,7 @@ function useAuth() {
 
 function AuthInit({ children }: IProps) {
   const [currentUser, setCurrentUser] = useState<IUserModel | null>(authHelper.getUser() ?? null);
+  const { setUserProfile } = useUserProfile()
   const [showSplashScreen, setShowSplashScreen] = useState(true);
   const didRequest = useRef(false);
 
@@ -49,6 +51,7 @@ function AuthInit({ children }: IProps) {
       if (!token) {
         authHelper.removeAuth();
         setCurrentUser(null);
+        setUserProfile(null);
         setShowSplashScreen(false);
         return;
       }
@@ -62,14 +65,17 @@ function AuthInit({ children }: IProps) {
             data: data,
           };
           setCurrentUser(authData);
+          setUserProfile(authData.data);
           authHelper.setUser(authData);
         } else {
           setCurrentUser(null);
+          setUserProfile(null);
           authHelper.removeAuth();
         }
       } catch (error) {
         console.error(error);
         setCurrentUser(null);
+        setUserProfile(null);
         authHelper.removeAuth();
       } finally {
         setShowSplashScreen(false);
@@ -81,6 +87,7 @@ function AuthInit({ children }: IProps) {
 
   const logout = () => {
     setCurrentUser(null);
+    setUserProfile(null);
     authHelper.removeAuth();
   };
 

@@ -5,10 +5,12 @@ import LogoutModal from 'auth/logout-modal';
 import { useEffect, useState } from 'react';
 import useGetConfigurationData from 'pages/configurations/core/hooks/useGetConfiguration';
 import { useGetConfigurationDataFromStore } from 'store/configurationData';
+import { useUserProfile } from 'store/userProfile';
 
 
 function Header() {
   const { title } = useHeaderProps();
+  const { userProfile } = useUserProfile();
   const navigate = useNavigate();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const { configurationData, isLoading } = useGetConfigurationData();
@@ -31,8 +33,8 @@ function Header() {
     <section className="flex justify-between items-center w-full">
       <h2 className="text-2xl font-medium">{title}</h2>
       <button onClick={handleGoToProfile} className="flex items-center gap-2">
-        <img src="/images/user-default.png" alt="user" className="w-10 h-10 rounded-full" />
-        <span>Admin</span>
+        <img src={userProfile?.profilePicture} alt="user" className="w-10 h-10 rounded-full border object-contain bg-cover" />
+        <span className='capitalize'>{userProfile?.name}</span>
       </button>
       <LogoutModal open={logoutModalOpen} onClose={() => setLogoutModalOpen(false)} />
     </section>

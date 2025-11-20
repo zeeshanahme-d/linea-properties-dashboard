@@ -5,6 +5,9 @@ import { Button, Form, Input, InputRef } from 'antd';
 import useSignIn from './core/hooks/use-sign-in';
 import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
 import * as authHelper from '../auth/core/auth-helpers';
+import { useAuth } from './core/auth-context';
+import { getUserByToken } from './core/_requests';
+import { useUserProfile } from 'store/userProfile';
 
 
 
@@ -13,8 +16,6 @@ import EyeOpenIcon from 'assets/icons/eye-open-icon.svg?react'
 import EyeClosedIcon from 'assets/icons/eye-close-icon.svg?react'
 import LeftHandImage from 'assets/icons/lefthand-image.svg?react'
 import RightHandImage from 'assets/icons/righthand-image.svg?react'
-import { useAuth } from './core/auth-context';
-import { getUserByToken } from './core/_requests';
 
 
 
@@ -26,6 +27,7 @@ function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const passwordInputRef = useRef<InputRef>(null);
   const passwordSpanRef = useRef<HTMLSpanElement>(null);
+  const { setUserProfile } = useUserProfile();
 
   useEffect(() => {
     if (currentUser) {
@@ -53,6 +55,7 @@ function SignIn() {
                   token: token,
                   data: data,
                 };
+                setUserProfile(authData.data);
                 setCurrentUser(authData);
                 authHelper.setUser(authData);
                 showSuccessMessage(res.data.message);
