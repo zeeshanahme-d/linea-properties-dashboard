@@ -100,7 +100,7 @@ function Users() {
 
     const debouncedSetParams = useCallback(
         debounce((value: string) => {
-            setParams(prev => ({ ...prev, name: value }))
+            setParams(prev => ({ ...prev, search: value }))
         }, 600),
         []
     );
@@ -122,7 +122,7 @@ function Users() {
             <div className='flex items-center gap-4'>
                 <Input
                     value={searchUser}
-                    placeholder="Search by name"
+                    placeholder="Search by name & email"
                     onChange={handleUserSearch}
                     prefix={<SearchIcon className='mr-2' />}
                     className='w-full min-w-[300px] h-12'

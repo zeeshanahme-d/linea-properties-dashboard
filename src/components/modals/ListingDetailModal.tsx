@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Divider, Checkbox } from 'antd';
 import dayjs from "dayjs"
+import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListingData';
+import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import useMarkAsVerified from 'pages/listings/core/hooks/useMarkAsVerified';
+import { showErrorMessage } from 'utils/messageUtils';
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { CloseOutlined } from '@ant-design/icons';
+
 // import RatingIcon from 'assets/icons/rating-icon.svg?react';
 import CoveredParkingIcon from 'assets/icons/covered-parking-icon.svg?react';
 import HeatCoilIcon from 'assets/icons/heatingcoil-icon.svg?react';
@@ -19,10 +24,8 @@ import BathroomIcon from 'assets/icons/bathroom-icon.svg?react';
 import WifiIcon from 'assets/icons/wifi-icon.svg?react';
 import ParkingIcon from 'assets/icons/parking-icon.svg?react';
 import TvIcon from 'assets/icons/tv-icon.svg?react';
-import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListingData';
-import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
-import useMarkAsVerified from 'pages/listings/core/hooks/useMarkAsVerified';
-import { showErrorMessage } from 'utils/messageUtils';
+import { MdBalcony } from "react-icons/md";
+
 
 
 interface ListingDetailModalProps {
@@ -59,7 +62,8 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
         { name: "hot water", icon: HotWaterIcon },
         { name: "elevator", icon: ElevatorIcon },
         { name: "wardrobes", icon: WardrobesIcon },
-        { name: "standby generator", icon: GeneratorIcon }
+        { name: "standby generator", icon: GeneratorIcon },
+        { name: "balcony", icon: MdBalcony }
     ];
 
     const handleMarkAsVerified = (e: any) => {
@@ -152,13 +156,13 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Amenities */}
                         {singleListingData.propertyType !== "land" && <div className="mb-6">
                             <h3 className="text-lg font-medium mb-3">Amenities</h3>
-                            <div className="grid grid-cols-4 gap-3">
+                            <div className="flex flex-wrap gap-3">
                                 {singleListingData?.amenities.map((amenity: any, index: number) => {
                                     const name = amenity?.toLowerCase() === "cable tv" ? "cable TV" : amenity?.toLowerCase();
                                     const IconComponent = amenitiesIcon.find(v => v.name === name)?.icon;
                                     return (
-                                        <div key={index} className="flex items-center gap-2 p-3 border border-border-gray rounded-xl">
-                                            {IconComponent ? <IconComponent /> : null}
+                                        <div key={index} className="flex min-w-[150px] items-center gap-2 p-3 border border-border-gray rounded-xl">
+                                            {IconComponent ? <IconComponent className='text-xl w-5 h-5' /> : null}
                                             <span className="text-base font-normal capitalize">{name}</span>
                                         </div>
                                     );
