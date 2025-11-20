@@ -142,7 +142,7 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
                                                                 <EyeIcon />
                                                             </button>
                                                             {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
-                                                                <FallbackLoader className='!h-fit' />
+                                                                <FallbackLoader removeHeight={true} />
                                                                 :
                                                                 <>
                                                                     <button

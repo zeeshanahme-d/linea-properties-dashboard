@@ -203,7 +203,7 @@ function Withdrawals() {
                                                             {withdrawal.status === 'PENDING' &&
                                                                 <>
                                                                     {selectedWithdrawalRequest?._id === withdrawal?._id && statusChangeLoading ?
-                                                                        <FallbackLoader className='!h-10' />
+                                                                        <FallbackLoader removeHeight={true} />
                                                                         :
                                                                         <>
                                                                             <button

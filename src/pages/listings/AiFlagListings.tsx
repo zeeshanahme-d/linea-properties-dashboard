@@ -208,7 +208,7 @@ function AiFlagListings() {
                                                             <EyeIcon />
                                                         </button>
                                                         {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
-                                                            <FallbackLoader className='!h-10' />
+                                                            <FallbackLoader removeHeight={true} />
                                                             :
                                                             <>
                                                                 <button
