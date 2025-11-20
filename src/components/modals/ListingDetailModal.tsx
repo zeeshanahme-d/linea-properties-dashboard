@@ -195,7 +195,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Verification Checkbox */}
                         {singleListingData?.status !== "AI FLAGGED" &&
                             <div className="mb-6 flex items-center gap-2">
-                                {true ? <FallbackLoader className='!h-auto' /> :
+                                {verifiedLoading ? <FallbackLoader className='!h-auto' /> :
                                     <Checkbox
                                         checked={isVerified}
                                         onChange={handleMarkAsVerified}
