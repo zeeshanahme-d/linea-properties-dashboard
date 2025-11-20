@@ -1,12 +1,12 @@
-import React from 'react';
-import { Button, Modal, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Divider, Checkbox } from 'antd';
 import dayjs from "dayjs"
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { CloseOutlined } from '@ant-design/icons';
-import RatingIcon from 'assets/icons/rating-icon.svg?react';
+// import RatingIcon from 'assets/icons/rating-icon.svg?react';
 import CoveredParkingIcon from 'assets/icons/covered-parking-icon.svg?react';
 import HeatCoilIcon from 'assets/icons/heatingcoil-icon.svg?react';
 import HotWaterIcon from 'assets/icons/hotwater-icon.svg?react';
@@ -21,6 +21,8 @@ import ParkingIcon from 'assets/icons/parking-icon.svg?react';
 import TvIcon from 'assets/icons/tv-icon.svg?react';
 import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListingData';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
+import useMarkAsVerified from 'pages/listings/core/hooks/useMarkAsVerified';
+import { showErrorMessage } from 'utils/messageUtils';
 
 
 interface ListingDetailModalProps {
@@ -41,6 +43,12 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
     onApprove,
 }) => {
     const { singleListingData, isLoading } = useGetSingleListingData(listingId);
+    const { markAsVerifiedMutate, isLoading: verifiedLoading } = useMarkAsVerified();
+    const [isVerified, setIsVerified] = useState(false);
+
+    useEffect(() => {
+        setIsVerified(singleListingData?.verifiedByAdmin || false)
+    }, [singleListingData])
 
     const amenitiesIcon = [
         { name: "wifi", icon: WifiIcon },
@@ -53,6 +61,19 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
         { name: "wardrobes", icon: WardrobesIcon },
         { name: "standby generator", icon: GeneratorIcon }
     ];
+
+    const handleMarkAsVerified = (e: any) => {
+        setIsVerified(e.target?.checked)
+        markAsVerifiedMutate({ id: singleListingData?._id, verifiedByAdmin: e.target?.checked },
+            {
+                onSuccess: () => {
+                },
+                onError: (error: any) => {
+                    showErrorMessage(error?.response?.data?.message)
+                },
+            },
+        );
+    };
 
     return (
         <Modal
@@ -83,7 +104,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                 <div className="w-full flex items-center justify-between">
                                     <div className="flex items-center gap-3 max-w-[80%]">
                                         <h2 className="text-2xl font-medium text-gray-800 truncate w-full">{singleListingData?.propertyTitle}</h2>
-                                        <div className="px-2 h-6 bg-primary flex-centered text-white text-xs rounded-full w-20">
+                                        <div className="px-2 h-6 bg-primary flex-centered text-white text-xs rounded-full w-fit text-nowrap">
                                             {singleListingData?.pricingType === "forSale" ? "For Sale" : "For Rent"}
                                         </div>
                                     </div>
@@ -116,10 +137,10 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                             </div>
 
                             {/* Rating */}
-                            <div className="flex items-center gap-2 mb-4">
+                            {/* <div className="flex items-center gap-2 mb-4">
                                 <RatingIcon />
                                 <span className="text-lg font-medium">{singleListingData?.averageRating || 0}</span>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Description */}
@@ -133,7 +154,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                             <h3 className="text-lg font-medium mb-3">Amenities</h3>
                             <div className="grid grid-cols-4 gap-3">
                                 {singleListingData?.amenities.map((amenity: any, index: number) => {
-                                    const name = amenity?.toLowerCase();
+                                    const name = amenity?.toLowerCase() === "cable tv" ? "cable TV" : amenity?.toLowerCase();
                                     const IconComponent = amenitiesIcon.find(v => v.name === name)?.icon;
                                     return (
                                         <div key={index} className="flex items-center gap-2 p-3 border border-border-gray rounded-xl">
@@ -171,6 +192,20 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                             </div>
                         </div>
 
+                        {/* Verification Checkbox */}
+                        {singleListingData?.status !== "AI FLAGGED" &&
+                            <div className="mb-6 flex items-center gap-2">
+                                {verifiedLoading ? <FallbackLoader className='!h-5' /> :
+                                    <Checkbox
+                                        checked={isVerified}
+                                        onChange={handleMarkAsVerified}
+                                        className="text-black text-base font-normal"
+                                    >
+                                        Mark as verified
+                                    </Checkbox>
+                                }
+                            </div>}
+
                         {/* Action Buttons - Only show when listing status is AI flag */}
                         {singleListingData?.status === "AI FLAGGED" && (
                             <div className="flex gap-3">
@@ -190,6 +225,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                 </Button>
                             </div>
                         )}
+                        <div></div>
                     </>
                 }
 

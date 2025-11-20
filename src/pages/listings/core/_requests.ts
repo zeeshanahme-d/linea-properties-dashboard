@@ -13,3 +13,6 @@ export function getSingleListing(id: string) {
 export function updateListingStatus(id: string, status: string) {
     return api.patch<any>(`${LISTINGS_URL}/update-listing-status/${id}`, { status }).then((response) => response.data);
 }
+export function markAsVerified(id: string, verifiedByAdmin: boolean) {
+    return api.patch<any>(`${LISTINGS_URL}/update-verification-status/${id}`, { verifiedByAdmin }).then((response) => response.data);
+}

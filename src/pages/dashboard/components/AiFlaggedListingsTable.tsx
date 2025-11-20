@@ -90,92 +90,94 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
         <>
             <Card
                 title=" Recent AI Flagged Listing"
-                className="w-full h-[300px]"
+                className="xl:h-[300px] h-[480px] w-full"
             >
 
-                {isLoading ? <FallbackLoader size="large" className="h-[220px]" />
-                    :
-                    <div className="hidden md:block h-[220px] overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="text-nowrap border-b border-gray-200">
-                                    {headers.map((header) => (
-                                        <th
-                                            key={header.label}
-                                            className={`px-4 py-3 ${header.className} text-base font-medium `}
-                                        >
-                                            {header.label}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data && data.length > 0 ?
-                                    <>
-                                        {data?.map((listing: any) => (
-                                            <tr
-                                                key={listing._id}
-                                                className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                <div className='w-full overflow-x-auto xl:h-[200px] h-[400px]'>
+                    {isLoading ? <FallbackLoader size="large" className="h-[220px]" />
+                        :
+                        <div className="min-w-[300px] h-full">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        {headers.map((header) => (
+                                            <th
+                                                key={header.label}
+                                                className={`px-4 py-3 ${header.className} text-base font-medium `}
                                             >
-                                                <Tooltip title={listing?.propertyTitle}>
-                                                    <td className="px-4 py-4 text-sm truncate max-w-[150px] xl1380:max-w-[200px] capitalize">
-                                                        {listing?.propertyTitle || "-"}
-                                                    </td>
-                                                </Tooltip>
-                                                <td className="px-4 py-4 text-sm capitalize">
-                                                    {listing?.user?.name || "-"}
-                                                </td>
-                                                <td className="px-4 py-4 text-sm capitalize">
-                                                    {listing?.city || "-"}
-                                                </td>
-                                                <td className="px-4 py-4 text-sm font-medium">
-                                                    {`${listing?.salePrice || listing?.monthlyRent} CFA` || "-"}
-                                                </td>
-                                                <td className="px-4 py-4">
-                                                    <div className="flex items-center justify-center gap-1">
-                                                        <button
-                                                            onClick={() => handleView(listing)}
-                                                            className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
-                                                            title="View"
-                                                        >
-                                                            <EyeIcon />
-                                                        </button>
-                                                        {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
-                                                            <FallbackLoader className='!h-fit' />
-                                                            :
-                                                            <>
-                                                                <button
-                                                                    onClick={() => handleApprove(listing)}
-                                                                    className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
-                                                                    title="Approve"
-                                                                >
-                                                                    <CheckIcon />
-                                                                </button>
-                                                                <button
-                                                                    onClick={() => handleReject(listing)}
-                                                                    className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
-                                                                    title="Reject"
-                                                                >
-                                                                    <XIcon />
-                                                                </button>
-                                                            </>
-                                                        }
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                {header.label}
+                                            </th>
                                         ))}
-                                    </>
-                                    :
-                                    <tr >
-                                        <td colSpan={5}>
-                                            <Empty />
-                                        </td>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
+                                </thead>
+                                <tbody>
+                                    {data && data.length > 0 ?
+                                        <>
+                                            {data?.map((listing: any) => (
+                                                <tr
+                                                    key={listing._id}
+                                                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <Tooltip title={listing?.propertyTitle}>
+                                                        <td className="px-4 py-4 text-sm truncate max-w-[150px] xl1380:max-w-[200px] capitalize">
+                                                            {listing?.propertyTitle || "-"}
+                                                        </td>
+                                                    </Tooltip>
+                                                    <td className="px-4 py-4 text-sm capitalize">
+                                                        {listing?.user?.name || "-"}
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm capitalize">
+                                                        {listing?.city || "-"}
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium">
+                                                        {`${listing?.salePrice || listing?.monthlyRent} CFA` || "-"}
+                                                    </td>
+                                                    <td className="px-4 py-4">
+                                                        <div className="flex items-center justify-center gap-1">
+                                                            <button
+                                                                onClick={() => handleView(listing)}
+                                                                className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
+                                                                title="View"
+                                                            >
+                                                                <EyeIcon />
+                                                            </button>
+                                                            {isUpdateListingStatusLoading && selectedListing?._id === listing?._id ?
+                                                                <FallbackLoader className='!h-fit' />
+                                                                :
+                                                                <>
+                                                                    <button
+                                                                        onClick={() => handleApprove(listing)}
+                                                                        className="p-2 rounded-md hover:bg-green-50 transition-colors text-green-600 hover:text-green-700"
+                                                                        title="Approve"
+                                                                    >
+                                                                        <CheckIcon />
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => handleReject(listing)}
+                                                                        className="p-2 rounded-md hover:bg-red-50 transition-colors text-red-600 hover:text-red-700"
+                                                                        title="Reject"
+                                                                    >
+                                                                        <XIcon />
+                                                                    </button>
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                        :
+                                        <tr >
+                                            <td colSpan={5}>
+                                                <Empty />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
             </Card>
             {/* Listing Detail Modal */}
             {isListingProfileModalOpen && <ListingDetailModal

@@ -50,11 +50,11 @@ const TrafficByLocationChart: React.FC<TrafficByLocationChartProps> = ({ isLoadi
     return (
         <Card
             title="Traffic by Location"
-            className="w-full xl:max-w-sm 3xl:max-w-md h-[300px] trafficbyLocation"
+            className="max-w-xs xl:max-w-sm 3xl:max-w-md trafficbyLocation"
         >
             {isLoading ? <FallbackLoader size="large" className="h-[200px]" />
                 :
-                <div className="flex flex-row items-center h-[220px] relative">
+                <div className="flex flex-col xl:flex-row items-center relative">
                     <PieChart width={400} height={400} className='min-w-[200px]'>
                         <Pie
                             data={formattedData}

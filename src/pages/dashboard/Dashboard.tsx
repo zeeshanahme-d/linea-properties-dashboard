@@ -23,7 +23,7 @@ function Dashboard() {
     useEffect(() => setTitle("Dashboard"), [setTitle]);
 
     return (
-        <section className=''>
+        <section className='mb-32'>
             <div className="grid grid-cols-1 md:grid-cols-2 lg1180:grid-cols-4 gap-3 xl:gap-4">
                 <StatisticsCard
                     title="Total Users"
@@ -58,9 +58,19 @@ function Dashboard() {
                 <RevenueGrowthChart isLoading={isLoading} data={dashboardData?.revenueGraphData || []} />
                 <ActiveListingsChart isLoading={isLoading} data={dashboardData?.activeListingGraph || []} />
             </div>
-            <div className="flex flex-col xl:flex-row gap-3 xl:gap-4 mt-4">
-                <TrafficByLocationChart isLoading={isLoading} data={dashboardData?.listingCityPercentages || []} />
-                <AiFlaggedListingsTable isLoading={listingsLoading} data={listingsData?.data || []} refetch={refetchListings} />
+            <div className="flex lg:flex-row flex-col-reverse gap-3 xl:gap-4 mt-4">
+                <TrafficByLocationChart
+                    isLoading={isLoading}
+                    data={dashboardData?.listingCityPercentages || []}
+                />
+                <div className="w-full">
+                    <AiFlaggedListingsTable
+                        isLoading={listingsLoading}
+                        data={listingsData?.data || []}
+                        refetch={refetchListings}
+                    />
+                </div>
+
             </div>
         </section>
     )
