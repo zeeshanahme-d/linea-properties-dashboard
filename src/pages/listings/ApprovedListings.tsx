@@ -79,7 +79,7 @@ function ApprovedListings() {
 
     const debouncedSetParams = useCallback(
         debounce((value: string) => {
-            setParams(prev => ({ ...prev, propertyTitle: value }))
+            setParams(prev => ({ ...prev, search: value }))
         }, 600),
         []
     );
