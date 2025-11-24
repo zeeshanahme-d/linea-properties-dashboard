@@ -9,12 +9,13 @@ import useGetAllUserData from './core/hooks/useGetAllUserData';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import useDeleteUser from './core/hooks/useDeleteUser';
 import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
+import { debounce } from 'helpers/CustomHelpers';
+import { useSearchParams } from 'react-router-dom';
 //icons
 import SearchIcon from 'assets/icons/search-icon.svg?react';
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
 import EyeIcon from "assets/icons/view-icon.svg?react";
 import DeleteIcon from "assets/icons/delete-icon.svg?react";
-import { debounce } from 'helpers/CustomHelpers';
 
 
 const statusOptions = [
@@ -33,13 +34,14 @@ const headers = [
 
 function Users() {
     const { setTitle } = useHeaderProps();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [searchUser, setSearchUser] = useState("")
     const [params, setParams] = useState({
-        page: 1,
+        page: Number(searchParams.get('page')) || 1,
         limit: 10,
     });
     const { userData, isLoading, refetch } = useGetAllUserData(params);
@@ -52,6 +54,12 @@ function Users() {
         setIsUserProfileModalOpen(true);
     };
 
+    const updatePageQuery = useCallback((page: number) => {
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set('page', page.toString());
+        setSearchParams(nextSearchParams);
+    }, [searchParams, setSearchParams]);
+
     const handleDeleteConfirm = () => {
         if (selectedUser) {
             userDeleteMutate({ id: selectedUser?._id, status: "banned" }, {
@@ -62,6 +70,7 @@ function Users() {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
+                        updatePageQuery(1);
                     }
                     setIsDoneModalOpen(true);
                     showSuccessMessage(res.message);
@@ -111,10 +120,12 @@ function Users() {
     };
     const handleStatus = (value: string) => {
         setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }));
+        updatePageQuery(1);
     };
 
     const handlePageChange = (page: number) => {
         setParams(prev => ({ ...prev, page }));
+        updatePageQuery(page);
     };
 
     return (

@@ -13,6 +13,7 @@ import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import dayjs from 'dayjs';
 import { showErrorMessage } from 'utils/messageUtils';
 import useChangeWithdrawalsStatus from './core/hooks/useChangeWithdrawalsStatus';
+import { useSearchParams } from 'react-router-dom';
 
 const statusOptions = [
     { label: 'All Status', value: 'all' },
@@ -39,14 +40,15 @@ const headers = [
 
 function Withdrawals() {
     const { setTitle } = useHeaderProps();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isWithdrawalRequestDetailModalOpen, setIsWithdrawalRequestDetailModalOpen] = useState(false);
     const [selectedWithdrawalRequest, setSelectedWithdrawalRequest] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
-    const [params, setParams] = useState({
-        page: 1,
+    const [params, setParams] = useState(() => ({
+        page: Number(searchParams.get('page')) || 1,
         limit: 10,
-    })
+    }))
 
     const { withdrawalsData, isLoading, refetch } = useGetAllWithdrawalsData(params);
     const { updateWithdrawalsStatuMutate, isLoading: statusChangeLoading } = useChangeWithdrawalsStatus();
@@ -54,6 +56,12 @@ function Withdrawals() {
     console.log(withdrawalsData)
 
     useEffect(() => setTitle("Withdrawals"), [setTitle]);
+
+    const updatePageQuery = (page: number) => {
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set('page', page.toString());
+        setSearchParams(nextSearchParams);
+    };
 
     const handleView = (withdrawal: any) => {
         setSelectedWithdrawalRequest(withdrawal);
@@ -74,6 +82,7 @@ function Withdrawals() {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
+                        updatePageQuery(1);
                     }
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -101,6 +110,7 @@ function Withdrawals() {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
+                        updatePageQuery(1);
                     }
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -128,6 +138,7 @@ function Withdrawals() {
 
     const handlePageChange = (page: number) => {
         setParams(prev => ({ ...prev, page }));
+        updatePageQuery(page);
     };
 
     return (
@@ -138,7 +149,10 @@ function Withdrawals() {
                     placeholder="Select Withdrawal Status"
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
-                    onChange={value => setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }))}
+                    onChange={value => {
+                        setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }));
+                        updatePageQuery(1);
+                    }}
                     defaultValue="All Status"
                 />
             </div>

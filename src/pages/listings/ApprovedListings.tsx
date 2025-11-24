@@ -5,6 +5,7 @@ import ListingDetailModal from 'components/modals/ListingDetailModal';
 import useGetListingData from './core/hooks/useGetListingData';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import { debounce } from 'helpers/CustomHelpers';
+import { useSearchParams } from 'react-router-dom';
 //icons
 import SearchIcon from 'assets/icons/search-icon.svg?react';
 import EyeIcon from "assets/icons/view-icon.svg?react";
@@ -26,16 +27,23 @@ const headers = [
 ]
 
 function ApprovedListings() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isListingProfileModalOpen, setIsListingProfileModalOpen] = useState(false);
     const [selectedListing, setSelectedListing] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
     const [search, setSearch] = useState('');
-    const [params, setParams] = useState({
-        page: 1,
+    const [params, setParams] = useState(() => ({
+        page: Number(searchParams.get('page')) || 1,
         limit: 10,
         status: "APPROVED",
-    })
+    }))
+
+    const updatePageQuery = (page: number) => {
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set('page', page.toString());
+        setSearchParams(nextSearchParams);
+    };
 
     const { listingsData, isLoading } = useGetListingData(params);
 
@@ -91,6 +99,7 @@ function ApprovedListings() {
 
     const handlePageChange = (page: number) => {
         setParams(prev => ({ ...prev, page }));
+        updatePageQuery(page);
     };
 
     return (
@@ -109,7 +118,10 @@ function ApprovedListings() {
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
                     defaultValue="all"
-                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value, page: 1 }))}
+                    onChange={value => {
+                        setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value, page: 1 }));
+                        updatePageQuery(1);
+                    }}
                 />
             </div>
 

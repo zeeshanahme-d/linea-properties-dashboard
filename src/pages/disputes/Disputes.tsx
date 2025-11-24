@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Empty, Select, Tooltip } from 'antd';
+import { Empty, Pagination, Select, Tooltip } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 //icons
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
@@ -9,6 +9,7 @@ import DisputeDetailModal from 'components/modals/DisputeDetailModal';
 import useGetAllDisputesData from './core/hooks/useGetAllDisputesData';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import dayjs from 'dayjs';
+import { useSearchParams } from 'react-router-dom';
 
 const statusOptions = [
     { label: 'All Status', value: 'all' },
@@ -44,20 +45,27 @@ const DISPUTES_STATUS = {
 
 function Disputes() {
     const { setTitle } = useHeaderProps();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isDisputeDetailModalOpen, setIsDisputeDetailModalOpen] = useState(false);
     const [selectedDispute, setSelectedDispute] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
-    const [params, setParams] = useState({
-        page: 1,
+    const [params, setParams] = useState(() => ({
+        page: Number(searchParams.get('page')) || 1,
         limit: 10,
-    })
+    }))
 
     const { disputeData, isLoading, refetch } = useGetAllDisputesData(params);
 
 
 
     useEffect(() => setTitle("Disputes"), [setTitle]);
+
+    const updatePageQuery = (page: number) => {
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set('page', page.toString());
+        setSearchParams(nextSearchParams);
+    };
 
     const handleView = (dispute: Dispute) => {
         setSelectedDispute(dispute);
@@ -85,7 +93,10 @@ function Disputes() {
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
                     defaultValue="All Status"
-                    onChange={value => setParams(prev => ({ ...prev, status: value === "all" ? undefined : value }))}
+                    onChange={value => {
+                        setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }));
+                        updatePageQuery(1);
+                    }}
                 />
             </div>
 
@@ -165,6 +176,19 @@ function Disputes() {
                     </div>
                 }
             </div>
+
+            {disputeData?.totalItems > params?.limit &&
+                <Pagination
+                    className="mt-5 justify-center"
+                    current={params?.page}
+                    pageSize={params?.limit}
+                    total={disputeData?.totalItems}
+                    onChange={(page) => {
+                        setParams(prev => ({ ...prev, page }));
+                        updatePageQuery(page);
+                    }}
+                    showSizeChanger={false}
+                />}
 
             {/* Listing Detail Modal */}
             {selectedDispute && isDisputeDetailModalOpen && <DisputeDetailModal

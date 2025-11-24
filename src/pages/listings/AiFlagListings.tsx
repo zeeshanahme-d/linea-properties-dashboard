@@ -13,6 +13,7 @@ import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import useGetListingData from './core/hooks/useGetListingData';
 import { showErrorMessage } from 'utils/messageUtils';
 import useUpdateListingStatus from './core/hooks/useUpdateListingStatus';
+import { useSearchParams } from 'react-router-dom';
 
 const saleStatusOptions = [
     { label: 'All Pricing Type', value: 'all' },
@@ -31,17 +32,23 @@ const headers = [
 ]
 
 function AiFlagListings() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isListingProfileModalOpen, setIsListingProfileModalOpen] = useState(false);
     const [selectedListing, setSelectedListing] = useState<any | null>(null);
     const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
     const [search, setSearch] = useState('');
-    const [params, setParams] = useState({
-        page: 1,
+    const [params, setParams] = useState(() => ({
+        page: Number(searchParams.get('page')) || 1,
         limit: 10,
         status: "AI FLAGGED",
-    })
+    }))
     const { listingsData, isLoading, refetch } = useGetListingData(params);
+    const updatePageQuery = (page: number) => {
+        const nextSearchParams = new URLSearchParams(searchParams);
+        nextSearchParams.set('page', page.toString());
+        setSearchParams(nextSearchParams);
+    };
     const { updateListingStatusMutate, isLoading: isUpdateListingStatusLoading } = useUpdateListingStatus();
 
 
@@ -64,6 +71,7 @@ function AiFlagListings() {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
+                        updatePageQuery(1);
                     }
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -91,6 +99,7 @@ function AiFlagListings() {
                         refetch();
                     } else {
                         setParams(prev => ({ ...prev, page: 1 }));
+                        updatePageQuery(1);
                     }
                     setTimeout(() => {
                         setIsDoneModalOpen(false);
@@ -129,6 +138,7 @@ function AiFlagListings() {
 
     const handlePageChange = (page: number) => {
         setParams(prev => ({ ...prev, page }));
+        updatePageQuery(page);
     };
 
     return (
@@ -147,7 +157,10 @@ function AiFlagListings() {
                     className='w-72 h-12 rounded-xl'
                     suffixIcon={<ArrowDownIcon />}
                     defaultValue="all"
-                    onChange={value => setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value, page: 1 }))}
+                    onChange={value => {
+                        setParams(prev => ({ ...prev, pricingType: value === "all" ? undefined : value, page: 1 }));
+                        updatePageQuery(1);
+                    }}
 
                 />
             </div>

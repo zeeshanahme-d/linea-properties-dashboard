@@ -34,19 +34,19 @@ function SidebarRoutes() {
     {
       key: 'users',
       label: 'Users',
-      path: '/users',
+      path: '/users?page=1',
       icon: <UsersIcon />,
     },
     {
       key: 'listings',
       label: 'Listings',
-      path: '/listings',
+      path: '/listings?page=1',
       icon: <ListingsIcon />,
     },
     {
       key: 'withdrawals',
       label: 'Withdrawals',
-      path: '/withdrawals',
+      path: '/withdrawals?page=1',
       icon: <WithdrawalsIcon />,
     },
     {
@@ -58,20 +58,23 @@ function SidebarRoutes() {
     {
       key: 'disputes',
       label: 'Disputes',
-      path: '/disputes',
+      path: '/disputes?page=1',
       icon: <DisputesIcon />,
     },
   ];
+
+  const stripQuery = (routePath: string) => routePath.split('?')[0];
 
   useEffect(() => {
     const currentPath = location.pathname;
 
     // Find the matching route based on the current path
     const matchingRoute = routes.find(route => {
-      if (route.path === '/') {
+      const routeBase = stripQuery(route.path);
+      if (routeBase === '/') {
         return currentPath === '/' || currentPath === '';
       }
-      return currentPath.startsWith(route.path);
+      return currentPath.startsWith(routeBase);
     });
 
     if (matchingRoute) {
