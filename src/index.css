@@ -219,32 +219,16 @@ circle:focus {
   display: none !important;
 }
 
-
-
-@media only screen and (min-width: 1601px) {
-  .custom-style-form>.ant-form-item>.ant-row {
-    flex-direction: row !important;
-    justify-content: space-between;
-    align-items: center !important;
-  }
-
-  .custom-style-form>.ant-form-item:not(.lead-details-textArea, .convert-to-client-btn)>.ant-row>.ant-form-item-control {
-    flex: 0 0 65% !important;
-    width: 65% !important;
-  }
-
-  .custom-style-form>.lead-details-textArea>.ant-row>.ant-form-item-control {
-    flex: 0 0 calc(83% + 5px) !important;
-    width: calc(83% + 5px) !important;
-  }
-
-}
-
 .trafficbyLocation .recharts-tooltip-wrapper {
   transform: translate(35px, 80px) !important;
 }
 
-/* .trafficbyLocation .recharts-wrapper {
-  width: 100% !important;
-  min-width: 200px !important;
-} */
+.aiListingTableDashboard {
+  width: calc(100% - 384px) !important
+}
+
+@media only screen and (max-width: 1092px) {
+  .aiListingTableDashboard {
+    width: 100% !important
+  }
+}

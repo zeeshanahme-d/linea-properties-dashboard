@@ -59,11 +59,17 @@ function Dashboard() {
                 <ActiveListingsChart isLoading={isLoading} data={dashboardData?.activeListingGraph || []} />
             </div>
             <div className="flex lg:flex-row flex-col-reverse gap-3 xl:gap-4 mt-4">
-                <TrafficByLocationChart
-                    isLoading={isLoading}
-                    data={dashboardData?.listingCityPercentages || []}
-                />
-                <div className="w-full">
+
+                {/* Left Card — fixed max width */}
+                <div className="w-full lg:w-auto max-w-xs xl:max-w-sm 3xl:max-w-md">
+                    <TrafficByLocationChart
+                        isLoading={isLoading}
+                        data={dashboardData?.listingCityPercentages || []}
+                    />
+                </div>
+
+                {/* Right Card — should take full remaining width */}
+                <div className="flex-1 aiListingTableDashboard">
                     <AiFlaggedListingsTable
                         isLoading={listingsLoading}
                         data={listingsData?.data || []}
@@ -72,6 +78,7 @@ function Dashboard() {
                 </div>
 
             </div>
+
         </section>
     )
 }
