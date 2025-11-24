@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EyeIcon from "assets/icons/view-icon.svg?react";
 import CheckIcon from "assets/icons/check-icon.svg?react";
 import XIcon from "assets/icons/cross-icon.svg?react";
-import { Card, Empty, Tooltip } from 'antd';
+import { Card, Empty } from 'antd';
 import ListingDetailModal from 'components/modals/ListingDetailModal';
 import DoneModal from 'components/modals/DoneModal';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
