@@ -41,6 +41,7 @@ const headers = [
 const DISPUTES_STATUS = {
     RESOLVED: "Resolved",
     OPEN: "Open",
+    "UNDER REVIEW": "Under Review"
 }
 
 function Disputes() {
@@ -80,8 +81,8 @@ function Disputes() {
 
     const getStatusClass = (status: string) => {
         if (status === 'RESOLVED') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
-        if (status === 'OPEN') return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6] shadow-[0px_0px_10px_#0000000A]';
-        return '';
+        return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6] shadow-[0px_0px_10px_#0000000A]';
+
     };
 
     return (
