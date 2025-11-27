@@ -215,7 +215,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                         </div>
 
                         {/* Action Buttons */}
-                        {singleDisputeData?.status === "OPEN" && <div className="flex gap-4">
+                        {singleDisputeData?.status !== "RESOLVED" && <div className="flex gap-4">
                             <Button
                                 variant='text'
                                 onClick={() => handleReleaseFund("Property Seeker")}
