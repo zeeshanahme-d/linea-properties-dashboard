@@ -93,11 +93,11 @@ const AiFlaggedListingsTable: React.FC<AiFlaggedListingsTableProps> = ({ isLoadi
                 className=" w-full"
             >
 
-                <div className="w-full overflow-x-auto xl:max-h-[200px] max-h-[420px]">
+                <div className="w-full overflow-x-auto xl:h-[200px] h-[420px]">
                     {isLoading ? (
                         <FallbackLoader size="large" className="h-[220px]" />
                     ) : (
-                        <div className="min-w-[800px] h-full">
+                        <div className="min-w-[700px] h-full">
                             <table className="w-full table-auto">
                                 <thead>
                                     <tr className="border-b border-gray-200">

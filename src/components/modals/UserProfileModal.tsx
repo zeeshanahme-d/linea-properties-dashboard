@@ -83,7 +83,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                                 <img
                                     src={singleUserData?.user?.profilePicture || "/images/dummy-profile-pic.jpg"}
                                     alt="User profile"
-                                    className="w-[100px] h-[100px] rounded-full object-cover"
+                                    className="w-[100px] h-[100px] rounded-full object-contain"
                                 />
                             </div>
 

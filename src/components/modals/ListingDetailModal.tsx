@@ -24,6 +24,7 @@ import BathroomIcon from 'assets/icons/bathroom-icon.svg?react';
 import WifiIcon from 'assets/icons/wifi-icon.svg?react';
 import ParkingIcon from 'assets/icons/parking-icon.svg?react';
 import TvIcon from 'assets/icons/tv-icon.svg?react';
+import AmanitiesIcon from 'assets/icons/amenities-icon.svg?react';
 import { MdBalcony } from "react-icons/md";
 
 
@@ -53,18 +54,32 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
         setIsVerified(singleListingData?.verifiedByAdmin || false)
     }, [singleListingData])
 
-    const amenitiesIcon = [
-        { name: "wifi", icon: WifiIcon },
-        { name: "covered parking", icon: CoveredParkingIcon },
-        { name: "parking", icon: ParkingIcon },
-        { name: "cable TV", icon: TvIcon },
-        { name: "heating", icon: HeatCoilIcon },
-        { name: "hot water", icon: HotWaterIcon },
-        { name: "elevator", icon: ElevatorIcon },
-        { name: "wardrobes", icon: WardrobesIcon },
-        { name: "standby generator", icon: GeneratorIcon },
-        { name: "balcony", icon: MdBalcony }
-    ];
+    const getAmenityIcon = (name: string) => {
+        switch (name) {
+            case "wifi":
+                return WifiIcon;
+            case "covered parking":
+                return CoveredParkingIcon;
+            case "parking":
+                return ParkingIcon;
+            case "cable TV":
+                return TvIcon;
+            case "heating":
+                return HeatCoilIcon;
+            case "hot water":
+                return HotWaterIcon;
+            case "elevator":
+                return ElevatorIcon;
+            case "wardrobes":
+                return WardrobesIcon;
+            case "standby generator":
+                return GeneratorIcon;
+            case "balcony":
+                return MdBalcony;
+            default:
+                return AmanitiesIcon;
+        }
+    };
 
     const handleMarkAsVerified = (e: any) => {
         setIsVerified(e.target?.checked)
@@ -156,10 +171,10 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Amenities */}
                         {singleListingData.propertyType !== "land" && <div className="mb-6">
                             <h3 className="text-lg font-medium mb-3">Amenities</h3>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-3 overflow-y-auto max-h-40">
                                 {singleListingData?.amenities.map((amenity: any, index: number) => {
                                     const name = amenity?.toLowerCase() === "cable tv" ? "cable TV" : amenity?.toLowerCase();
-                                    const IconComponent = amenitiesIcon.find(v => v.name === name)?.icon;
+                                    const IconComponent = getAmenityIcon(name);
                                     return (
                                         <div key={index} className="flex min-w-[150px] items-center gap-2 p-3 border border-border-gray rounded-xl">
                                             {IconComponent ? <IconComponent className='text-xl w-5 h-5' /> : null}
@@ -179,7 +194,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                         <img
                                             src={singleListingData?.user?.profilePicture || "/images/dummy-profile-pic.jpg"}
                                             alt={singleListingData?.user?.name}
-                                            className="w-[100px] h-[100px] rounded-full object-cover"
+                                            className="w-[100px] h-[100px] rounded-full object-contain"
                                         />
                                     </div>
                                     <div className="flex-1">

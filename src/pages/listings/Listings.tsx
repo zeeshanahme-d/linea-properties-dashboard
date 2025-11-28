@@ -21,8 +21,14 @@ function Listings() {
     useEffect(() => {
         if (currentTab !== "approved" && currentTab !== "aiflagged") {
             updateTabQuery(0);
+            setSelectedTab(0)
+        } else if (currentTab === "approved") {
+            setSelectedTab(0)
+        } else {
+            setSelectedTab(1)
         }
     }, [currentTab]);
+
 
     const updateTabQuery = (tab: number) => {
         const nextSearchParams = new URLSearchParams(searchParams);

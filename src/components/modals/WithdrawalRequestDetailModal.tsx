@@ -111,7 +111,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                                 <img
                                     src={withdrawalRequest?.user.profilePicture || "/images/dummy-profile-pic.jpg"}
                                     alt={withdrawalRequest?.user.name}
-                                    className="w-[100px] h-[100px] rounded-full object-cover"
+                                    className="w-[100px] h-[100px] rounded-full object-contain"
                                 />
                             </div>
                             <div className="flex-1">
