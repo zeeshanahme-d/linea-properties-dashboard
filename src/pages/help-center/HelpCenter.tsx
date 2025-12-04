@@ -19,8 +19,9 @@ import useGetAllHelpCenterData from './core/hooks/useGetAllHelpCenterData';
 
 
 const headers = [
-    { label: "User Name", className: "text-left" },
-    { label: "Created Date", className: "text-left" },
+    { label: "Name", className: "text-left" },
+    { label: "Email", className: "text-left" },
+    { label: "Date", className: "text-left" },
     // { label: "Help Title", className: "text-left" },
     { label: "Description", className: "text-left" },
 ]
@@ -110,6 +111,12 @@ function HelpCenter() {
                                                         {help?.user?.name || "-"}
                                                     </td>
                                                 </Tooltip>
+                                                <td className="xl:px-4 px-2 py-3 ">
+                                                    {help?.user?.email || "-"}
+                                                </td>
+                                                <td className="xl:px-4 px-2 py-3">
+                                                    {help?.createdAt ? dayjs(help?.createdAt).format("MM-DD-YYYY") : "-"}
+                                                </td>
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
                                                     {help?.createdAt ? dayjs(help?.createdAt).format("MM-DD-YYYY") : "-"}
                                                 </td>
