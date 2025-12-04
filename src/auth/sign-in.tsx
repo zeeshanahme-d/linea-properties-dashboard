@@ -104,6 +104,7 @@ function SignIn() {
           >
             <Form.Item
               label="Email"
+              {...{ autoComplete: "new-email" }}
               name="email"
               rules={[
                 { required: true, message: 'Please input your email' }
@@ -120,6 +121,7 @@ function SignIn() {
             <Form.Item
               label="Password"
               name="password"
+              {...{ autoComplete: "new-password" }}
               rules={[{
                 required: true,
                 message: 'Please input your password',
@@ -134,32 +136,31 @@ function SignIn() {
                 disabled={isLoading}
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
-                className="h-[52px] w-[410px] py-0 bg-light-gray password-input"
+                className="h-[52px] w-[410px] py-0 bg-light-gray password-input rounded-2xl!"
                 styles={{
                   input: {
                     backgroundColor: '#EFEFEF',
-                    borderRadius: '16px 0px 0px 16px',
+                    borderRadius: '16px',
                     paddingLeft: "12px"
                   }
                 }}
                 onFocus={(e) => {
                   e.target.style.backgroundColor = 'white';
-                  if (passwordSpanRef.current) {
-                    passwordSpanRef.current.className += ' bg-[#ffffff] transition-all duration-200';
-                  }
+                  // if (passwordSpanRef.current) {
+                  //   passwordSpanRef.current.className += ' bg-[#ffffff] transition-all duration-200';
+                  // }
                 }}
                 onBlur={(e) => {
                   e.target.style.backgroundColor = '';
-                  if (passwordSpanRef.current) {
-                    passwordSpanRef.current.className = ' cursor-pointer flex-centered h-full w-10 transition-all duration-200';
-                  }
+                  // if (passwordSpanRef.current) {
+                  //   passwordSpanRef.current.className = ' cursor-pointer flex-centered h-full w-10 transition-all duration-200';
+                  // }
                 }}
                 suffix={
                   <span
                     ref={passwordSpanRef}
-                    style={{ borderRadius: '0px 16px 16px 0px' }}
                     onClick={() => setPasswordVisible(!passwordVisible)}
-                    className={`cursor-pointer flex-centered h-full w-10`}
+                    className={`cursor-pointer flex-centered h-full w-10 absolute top-[0px] right-0`}
                   >
                     {passwordVisible ? <EyeOpenIcon className='cursor-pointer -mt-1' /> : <EyeClosedIcon className='cursor-pointer' />}
                   </span>
