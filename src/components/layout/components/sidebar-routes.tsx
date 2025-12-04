@@ -14,6 +14,7 @@ import ConfigurationsIcon from 'assets/icons/configurations-icon.svg?react';
 import DisputesIcon from 'assets/icons/disputes-icon.svg?react';
 import LogoutIcon from 'assets/icons/logout-icon.svg?react'
 import LogoIcon from 'assets/icons/dashboard-logo.svg?react'
+import HelpCenter from 'assets/icons/help-center-icon.svg?react'
 
 
 
@@ -60,6 +61,12 @@ function SidebarRoutes() {
       label: 'Disputes',
       path: '/disputes?page=1',
       icon: <DisputesIcon />,
+    },
+    {
+      key: 'help-center',
+      label: 'Help Center',
+      path: '/help-center?page=1',
+      icon: <HelpCenter />,
     },
   ];
 

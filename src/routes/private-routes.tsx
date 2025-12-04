@@ -8,6 +8,7 @@ import Withdrawals from 'pages/withdrawals/Withdrawals';
 import Configurations from 'pages/configurations/Configurations';
 import Disputes from 'pages/disputes/Disputes';
 import Profile from 'pages/profile/Profile';
+import HelpCenter from 'pages/help-center/HelpCenter';
 
 
 
@@ -24,6 +25,7 @@ function PrivateRoutes() {
         <Route path='/configurations' element={<Configurations />} />
         <Route path='/disputes' element={<Disputes />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/help-center' element={<HelpCenter />} />
 
         {/* Catch all route */}
         <Route path='*' element={<Navigate to='/' />} />
