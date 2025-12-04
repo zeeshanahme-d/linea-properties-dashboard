@@ -39,7 +39,7 @@ function HelpCenter() {
 
 
 
-    useEffect(() => setTitle("Help Center"), [setTitle]);
+    useEffect(() => setTitle("Help Centre"), [setTitle]);
 
     const updatePageQuery = (page: number) => {
         const nextSearchParams = new URLSearchParams(searchParams);

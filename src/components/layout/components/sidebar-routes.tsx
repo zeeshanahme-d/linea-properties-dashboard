@@ -64,7 +64,7 @@ function SidebarRoutes() {
     },
     {
       key: 'help-center',
-      label: 'Help Center',
+      label: 'Help Centre',
       path: '/help-center?page=1',
       icon: <HelpCenter />,
     },
