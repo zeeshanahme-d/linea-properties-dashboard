@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Empty, Pagination, Tooltip } from 'antd';
+import { Empty, Pagination } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 import dayjs from 'dayjs';
 //icons
@@ -106,11 +106,9 @@ function HelpCenter() {
                                                 key={help?._id}
                                                 className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
                                             >
-                                                <Tooltip title={help?._id}>
-                                                    <td className="xl:px-4 px-2 py-3 truncate max-w-40">
-                                                        {help?.user?.name || "-"}
-                                                    </td>
-                                                </Tooltip>
+                                                <td className="xl:px-4 px-2 py-3 truncate max-w-40">
+                                                    {help?.user?.name || "-"}
+                                                </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
                                                     {help?.user?.email || "-"}
                                                 </td>
