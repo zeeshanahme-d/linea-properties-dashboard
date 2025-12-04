@@ -31,6 +31,42 @@
   --base-radius: 16px;
 }
 
+/* input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  -webkit-text-fill-color: inherit;
+}
+
+input:-moz-autofill {
+  box-shadow: 0 0 0 1000px transparent inset;
+  -moz-text-fill-color: inherit;
+}
+
+input:-internal-autofill-selected {
+  appearance: inherit !important;
+  background-image: none !important;
+  background-color: inherit !important;
+  color: inherit !important;
+} */
+
+/* Target Ant Design inputs with autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #EFEFEF inset !important;
+  /* same as your input bg */
+  -webkit-text-fill-color: #000 !important;
+  /* text color */
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0 1000px #EFEFEF inset !important;
+  -moz-text-fill-color: #000 !important;
+}
+
+
 body,
 html {
   font-family: var(--family-primary);

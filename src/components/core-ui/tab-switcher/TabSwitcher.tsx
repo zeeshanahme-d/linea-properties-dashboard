@@ -18,8 +18,8 @@ function TabSwitcher({ selectedTab, onSelectTab, tabs, }: TabSwitcherProps) {
             {tabs.map((tab, index) => (
                 <div key={index} className='flex-1 relative'>
                     <Button
-                        variant="text"
-                        type="default"
+                        variant="outlined"
+                        type="text"
                         className={`h-12 w-72 bg-transparent border-none gap-3 px-3 transition font-medium text-lg relative justify-center ${selectedTab === index ? 'text-primary' : 'text-dark-gray'}`}
                         onClick={() => onSelectTab(index)}
                     >

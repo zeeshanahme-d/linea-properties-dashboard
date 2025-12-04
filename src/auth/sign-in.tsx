@@ -95,7 +95,13 @@ function SignIn() {
           <h2 className="text-lg font-normal text-medium-gray md:max-w-md">Enter your credentials to securely access the management panel.</h2>
         </div>
         <div className="w-full max-w-sm text-start">
-          <Form name="sign-in" onFinish={onFinish} initialValues={{ email: '', password: '' }} autoComplete="off" layout="vertical">
+          <Form
+            name="sign-in"
+            onFinish={onFinish}
+            initialValues={{ email: '', password: '' }}
+            autoComplete="off"
+            layout="vertical"
+          >
             <Form.Item
               label="Email"
               name="email"
