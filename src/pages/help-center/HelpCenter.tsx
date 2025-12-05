@@ -102,7 +102,7 @@ function HelpCenter() {
                                                     {help?.listing?.propertyTitle || "-"}
                                                 </td> */}
                                                 <td className="xl:px-4 px-2 py-3 capitalize max-w-lg">
-                                                    {help.viewFullMessage ? help?.message : help?.message.slice(0, 200)}
+                                                    {help.viewFullMessage ? help?.message : `${help?.message.slice(0, 200)}`}
                                                     <button className='text-primary underline ml-2' onClick={() => handleViewFullMessage(help)}>{help.viewFullMessage ? "See Less" : help.message.length > 200 ? "See More" : <></>}</button>
                                                 </td>
                                             </tr>
