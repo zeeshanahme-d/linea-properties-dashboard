@@ -1,40 +1,28 @@
 import { useEffect, useState } from 'react'
-import { Empty, Pagination } from 'antd';
+import { Empty, Pagination, Tooltip } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 import dayjs from 'dayjs';
-//icons
-// import DoneModal from 'components/modals/DoneModal';
-// import DisputeDetailModal from 'components/modals/DisputeDetailModal';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import { useSearchParams } from 'react-router-dom';
-// import useGetAllDisputesData from 'pages/disputes/core/hooks/useGetAllDisputesData';
-// import { getHelpCenterData } from './core/_requests';
 import useGetAllHelpCenterData from './core/hooks/useGetAllHelpCenterData';
 
-// const statusOptions = [
-//     { label: 'All Status', value: 'all' },
-//     { label: 'Open', value: 'OPEN' },
-//     { label: 'Resolved', value: 'RESOLVED' },
-// ];
 
 
 const headers = [
     { label: "Name", className: "text-left" },
     { label: "Email", className: "text-left" },
     { label: "Date", className: "text-left" },
-    // { label: "Help Title", className: "text-left" },
     { label: "Description", className: "text-left" },
 ]
 
 function HelpCenter() {
     const { setTitle } = useHeaderProps();
     const [searchParams, setSearchParams] = useSearchParams();
-    // const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
-    // const [statusMessage, setStatusMessage] = useState('');
     const [params, setParams] = useState(() => ({
         page: Number(searchParams.get('page')) || 1,
         limit: 10,
-    }))
+    }));
+    const [modifyData, setModifyData] = useState<any[]>([]);
 
     const { helpCenterData, isLoading } = useGetAllHelpCenterData(params);
 
@@ -42,49 +30,42 @@ function HelpCenter() {
 
     useEffect(() => setTitle("Help Centre"), [setTitle]);
 
+    useEffect(() => {
+        if (helpCenterData) {
+            const addNewValues = helpCenterData?.data?.map((v: any) => {
+                return {
+                    ...v,
+                    viewFullMessage: false
+                }
+            });
+            setModifyData(addNewValues)
+        }
+    }, [helpCenterData]);
+
     const updatePageQuery = (page: number) => {
         const nextSearchParams = new URLSearchParams(searchParams);
         nextSearchParams.set('page', page.toString());
         setSearchParams(nextSearchParams);
     };
 
-    // const handleView = (dispute: Dispute) => {
-    //     setSelectedDispute(dispute);
-    //     setIsDisputeDetailModalOpen(true);
-    // };
+    const handleViewFullMessage = (data: any) => {
+        const modifydataToViewMessage = modifyData.map((v: any) => {
+            if (data._id === v._id) return { ...v, viewFullMessage: !v.viewFullMessage }
+            else return { ...v }
+        });
+        setModifyData(modifydataToViewMessage);
+    };
 
 
-    // const handleCloseDisputeDetail = () => {
-    //     setIsDisputeDetailModalOpen(false);
-    //     setSelectedDispute(null);
-    // };
-
-    // const getStatusClass = (status: string) => {
-    //     if (status === 'RESOLVED') return 'bg-[#EAF6ED] text-[#166C3B] border border-[#D3EFDA] shadow-[0px_0px_10px_#0000000A]';
-    //     return 'bg-[#FDF2DC] text-warning border border-[#FBE5B6] shadow-[0px_0px_10px_#0000000A]';
-    // };
 
     return (
         <section>
-            {/* <div className='flex items-center justify-end'>
-                <Select
-                    options={statusOptions}
-                    placeholder="Select Withdrawal Status"
-                    className='w-72 h-12 rounded-xl'
-                    suffixIcon={<ArrowDownIcon />}
-                    defaultValue="All Status"
-                    onChange={value => {
-                        setParams(prev => ({ ...prev, status: value === "all" ? undefined : value, page: 1 }));
-                        updatePageQuery(1);
-                    }}
-                />
-            </div> */}
 
             <div className='mt-5 border rounded-xl py-1 px-5 w-full overflow-x-auto '>
                 {isLoading ?
                     <FallbackLoader size='large' />
                     :
-                    <div className="max-h-[800px] min-w-[900px] w-full">
+                    <div className="max-h-[800px] min-w-[1024px] w-full">
                         <table className="border-separate border-spacing-y-2 w-full">
                             <thead>
                                 <tr>
@@ -101,49 +82,29 @@ function HelpCenter() {
                             <tbody>
                                 {helpCenterData?.data && helpCenterData?.data.length > 0 ?
                                     <>
-                                        {helpCenterData?.data?.map((help: any) => (
+                                        {modifyData?.map((help: any) => (
                                             <tr
                                                 key={help?._id}
-                                                className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
+                                                className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 text-sm`}
                                             >
-                                                <td className="xl:px-4 px-2 py-3 truncate max-w-40">
-                                                    {help?.user?.name || "-"}
-                                                </td>
-                                                <td className="xl:px-4 px-2 py-3 ">
+                                                <Tooltip title={help?.user?.name || "-"}>
+                                                    <td className="xl:px-4 px-2 py-3 truncate max-w-52">
+                                                        {help?.user?.name || "-"}
+                                                    </td>
+                                                </Tooltip>
+                                                <td className="xl:px-4 px-2 py-3">
                                                     {help?.user?.email || "-"}
                                                 </td>
-                                                <td className="xl:px-4 px-2 py-3">
-                                                    {help?.createdAt ? dayjs(help?.createdAt).format("MM-DD-YYYY") : "-"}
-                                                </td>
-                                                <td className="xl:px-4 px-2 py-3 capitalize">
+                                                <td className="xl:px-4 px-2 py-3  min-w-40">
                                                     {help?.createdAt ? dayjs(help?.createdAt).format("MM-DD-YYYY") : "-"}
                                                 </td>
                                                 {/* <td className="xl:px-4 px-2 py-3 truncate max-w-40 capitalize">
                                                     {help?.listing?.propertyTitle || "-"}
                                                 </td> */}
-                                                <td className="xl:px-4 px-2 py-3 w-1/2 capitalize">
-                                                    {help?.message || "-"}
+                                                <td className="xl:px-4 px-2 py-3 capitalize max-w-lg">
+                                                    {help.viewFullMessage ? help?.message : help?.message.slice(0, 200)}
+                                                    <button className='text-primary underline ml-2' onClick={() => handleViewFullMessage(help)}>{help.viewFullMessage ? "See Less" : help.message.length > 200 ? "See More" : <></>}</button>
                                                 </td>
-                                                {/* <td className="xl:px-4 px-2 py-3">
-                                                    <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(dispute.status)}`}>
-                                                        {DISPUTES_STATUS[dispute?.status as keyof typeof DISPUTES_STATUS] || "-"}
-                                                    </div>
-                                                </td>
-                                                <td className="xl:px-4 px-2 py-3 ">
-                                                    {dispute?.createdAt ? dayjs(dispute?.createdAt).format("YYYY/MM/DD") : ""}
-                                                </td>
-
-                                                <td className="xl:px-4 px-2 py-3">
-                                                    <div className='flex-centered'>
-                                                        <button
-                                                            onClick={() => handleView(dispute)}
-                                                            className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"
-                                                            title="View"
-                                                        >
-                                                            <EyeIcon />
-                                                        </button>
-                                                    </div>
-                                                </td> */}
                                             </tr>
                                         ))}
                                     </>
@@ -172,22 +133,6 @@ function HelpCenter() {
                     }}
                     showSizeChanger={false}
                 />}
-
-            {/* Listing Detail Modal */}
-            {/* {selectedDispute && isDisputeDetailModalOpen && <DisputeDetailModal
-                isOpen={isDisputeDetailModalOpen}
-                onClose={handleCloseDisputeDetail}
-                disputeId={selectedDispute?._id}
-                setIsDoneModalOpen={setIsDoneModalOpen}
-                setStatusMessage={setStatusMessage}
-                refetch={refetch}
-            />} */}
-
-            {/* Done Modal */}
-            {/* <DoneModal
-                isOpen={isDoneModalOpen}
-                description={statusMessage}
-            /> */}
 
         </section>
     )
