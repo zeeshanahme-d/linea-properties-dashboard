@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import useChangeUserStatus from 'pages/users/core/hooks/useUserStatusChange';
 import { showErrorMessage, showSuccessMessage } from 'utils/messageUtils';
+import Avatar from 'components/core-ui/avatar/Avatar';
 
 interface UserProfileModalProps {
     isOpen: boolean;
@@ -79,13 +80,12 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         {/* singleUserData Information */}
                         <div className="flex items-start gap-4 mb-6 border rounded-2xl px-4 py-6">
                             {/* Profile Picture */}
-                            <div className="w-[100px] h-[100px] rounded-full border flex items-center justify-center">
-                                <img
-                                    src={singleUserData?.user?.profilePicture || "/images/dummy-profile-pic.jpg"}
-                                    alt="User profile"
-                                    className="w-[100px] h-[100px] rounded-full object-contain"
-                                />
-                            </div>
+                            <Avatar
+                                profilePicture={singleUserData?.user?.profilePicture}
+                                name={singleUserData?.user?.name}
+                                size="xl"
+                                className="border"
+                            />
 
                             {/* singleUserData Details */}
                             <div className="flex-1">

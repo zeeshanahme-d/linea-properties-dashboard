@@ -40,3 +40,7 @@ export const formatFileSize = (bytes: number | undefined): number => {
     const mb = bytes / (1024 * 1024);
     return parseFloat(mb.toFixed(2));
 };
+
+export const getFirstCharacterOfTheName = (name: string = "") => {
+    return name.trim().charAt(0).toUpperCase();
+};

@@ -5,6 +5,7 @@ import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import dayjs from 'dayjs';
 import useReleaseDisputeFunds from 'pages/disputes/core/hooks/useReleaseDisputeFunds';
 import { showErrorMessage } from 'utils/messageUtils';
+import Avatar from 'components/core-ui/avatar/Avatar';
 
 //icons
 import { CloseOutlined } from '@ant-design/icons';
@@ -146,10 +147,11 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                             <div className="flex items-center justify-center gap-3">
                                 {/* Dispute Initiator */}
                                 <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
-                                    <img
-                                        src={singleDisputeData?.creator?.profilePicture || "/images/dummy-profile-pic.jpg"}
-                                        alt={singleDisputeData?.creator?.name}
-                                        className="w-10 h-10 rounded-full object-cover border"
+                                    <Avatar
+                                        profilePicture={singleDisputeData?.creator?.profilePicture}
+                                        name={singleDisputeData?.creator?.name}
+                                        size="md"
+                                        className="border"
                                     />
                                     <div className='text-left'>
                                         <h4 className="font-medium text-base">{singleDisputeData?.creator?.name}</h4>
@@ -164,10 +166,11 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
 
                                 {/* Property Lister */}
                                 <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
-                                    <img
-                                        src={singleDisputeData?.createdAgainst?.profilePicture || "/images/dummy-profile-pic.jpg"}
-                                        alt={singleDisputeData?.createdAgainst?.name}
-                                        className="w-10 h-10 rounded-full object-cover border"
+                                    <Avatar
+                                        profilePicture={singleDisputeData?.createdAgainst?.profilePicture}
+                                        name={singleDisputeData?.createdAgainst?.name}
+                                        size="md"
+                                        className="border"
                                     />
                                     <div className='text-left'>
                                         <h4 className="font-medium text-base">{singleDisputeData?.createdAgainst?.name}</h4>

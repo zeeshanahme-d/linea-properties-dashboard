@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { CiCalendar } from "react-icons/ci";
 import { CloseOutlined } from '@ant-design/icons';
 import GoArrowIcon from 'assets/icons/go-arrow-icon.svg?react';
+import Avatar from 'components/core-ui/avatar/Avatar';
 
 
 
@@ -107,13 +108,12 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                     <h3 className="text-lg font-medium mb-3">User Information</h3>
                     <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-[100px] h-[100px] rounded-full border flex items-center justify-center">
-                                <img
-                                    src={withdrawalRequest?.user.profilePicture || "/images/dummy-profile-pic.jpg"}
-                                    alt={withdrawalRequest?.user.name}
-                                    className="w-[100px] h-[100px] rounded-full object-contain"
-                                />
-                            </div>
+                            <Avatar
+                                profilePicture={withdrawalRequest?.user?.profilePicture}
+                                name={withdrawalRequest?.user?.name}
+                                size="xl"
+                                className="border"
+                            />
                             <div className="flex-1">
                                 <h4 className="font-medium text-lg text-black">{withdrawalRequest?.user.name}</h4>
                                 <p className="text-medium-gray text-base">{withdrawalRequest?.user.email}</p>

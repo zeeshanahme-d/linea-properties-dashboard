@@ -5,6 +5,7 @@ import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListi
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
 import useMarkAsVerified from 'pages/listings/core/hooks/useMarkAsVerified';
 import { showErrorMessage } from 'utils/messageUtils';
+import Avatar from 'components/core-ui/avatar/Avatar';
 
 //icons
 import { IoLocationOutline } from "react-icons/io5";
@@ -190,13 +191,12 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                             <h3 className="text-lg font-medium mb-3">Listed by</h3>
                             <div className="bg-white border border-border-gray rounded-2xl py-6 px-4">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-[100px] h-[100px] border border-border-gray rounded-full flex items-center justify-center">
-                                        <img
-                                            src={singleListingData?.user?.profilePicture || "/images/dummy-profile-pic.jpg"}
-                                            alt={singleListingData?.user?.name}
-                                            className="w-[100px] h-[100px] rounded-full object-contain"
-                                        />
-                                    </div>
+                                    <Avatar
+                                        profilePicture={singleListingData?.user?.profilePicture}
+                                        name={singleListingData?.user?.name}
+                                        size="xl"
+                                        className="border border-border-gray"
+                                    />
                                     <div className="flex-1">
                                         <h4 className="font-normal text-lg text-black capitalize">{singleListingData?.user?.name}</h4>
                                         <p className="text-medium-gray text-base">{singleListingData?.user?.email}</p>
