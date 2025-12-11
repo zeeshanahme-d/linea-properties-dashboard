@@ -72,7 +72,7 @@ function Configurations() {
     };
 
     return (
-        <section className='flex items-center gap-10'>
+        <section className='flex items-center flex-wrap gap-10'>
             <div>
                 <Card
                     title="Financial Settings"
