@@ -15,11 +15,11 @@ function Configurations() {
     const { changeConfigurationMutate, isLoading: changeLoading } = useChangeConfiguration();
     const { changePromotionFeeMutate, isLoading: changePromotionFeeLoading } = useChangePromotionFee();
     const [serviceFeePercentage, setServiceFeePercentage] = useState<number>(configurationData?.value || 0);
-    const [promotionFee, setPromotionFee] = useState<number>(promotionFeeData?.value || 0);
+    const [promotionFee, setPromotionFee] = useState<string>(promotionFeeData?.value.toString() || "0");
 
     useEffect(() => setTitle("Configurations"), [setTitle]);
     useEffect(() => setServiceFeePercentage(configurationData?.value || 0), [configurationData]);
-    useEffect(() => setPromotionFee(promotionFeeData?.value || 0), [promotionFeeData]);
+    useEffect(() => setPromotionFee(promotionFeeData?.value.toString() || "0"), [promotionFeeData]);
 
     const handleSliderChange = (value: number) => {
         setServiceFeePercentage(value);
@@ -29,13 +29,6 @@ function Configurations() {
         const value = parseInt(e.target.value) || 0;
         if (value >= 0 && value <= 20) {
             setServiceFeePercentage(value);
-        }
-    };
-
-    const handlePromotionFeeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value) || 0;
-        if (value >= 0) {
-            setPromotionFee(value);
         }
     };
 
@@ -159,11 +152,13 @@ function Configurations() {
                                 Promotion Fee
                             </label>
                             <Input
-                                type="number"
-                                accept='1234567890'
+                                type="text"
                                 value={promotionFee}
-                                onChange={handlePromotionFeeInputChange}
-                                className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
+                                onChange={(e) => {
+                                    // Allow only numbers
+                                    const value = e.target.value.replace(/\D/g, "");
+                                    setPromotionFee(value);
+                                }} className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
                                 min={0}
                             />
                         </div>
@@ -171,7 +166,7 @@ function Configurations() {
                 </Card>
                 <div className=" mt-5 ml-[13.5rem]">
                     <Button
-                        disabled={promotionFeeLoading || changePromotionFeeLoading || promotionFee === promotionFeeData?.value}
+                        disabled={promotionFeeLoading || changePromotionFeeLoading || promotionFee === promotionFeeData?.value.toString()}
                         type="primary"
                         onClick={handleSavePromotionFeeChanges}
                         className="font-normal px-8 py-3 h-12"
