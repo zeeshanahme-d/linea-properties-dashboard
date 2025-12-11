@@ -23,15 +23,16 @@ function Avatar({ profilePicture, name = 'Admin', size = 'md', className = '' }:
     setImageError(false);
   }, [profilePicture]);
 
+  console.log(imageError)
+
   const sizeClass = sizeClasses[size];
-  const baseClasses = 'bg-gray-200 font-semibold rounded-full flex items-center justify-center cursor-pointer';
+  const baseClasses = 'bg-gray-200 font-semibold rounded-full flex items-center justify-center';
 
   return (
     <div className={`${baseClasses} ${sizeClass} ${className}`}>
       {profilePicture && !imageError ? (
         <img
           src={profilePicture}
-          alt="Profile Picture"
           className="w-full h-full object-contain rounded-full"
           onError={() => setImageError(true)}
         />
