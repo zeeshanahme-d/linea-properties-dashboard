@@ -107,7 +107,7 @@ function Configurations() {
                                     // onChange={handleInputChange}
                                     onChange={(e) => {
                                         // Allow only numbers
-                                        if (e.target.value >= "0" && e.target.value <= "20") {
+                                        if (e.target.value <= "20") {
                                             const value = e.target.value.replace(/\D/g, "");
                                             setServiceFeePercentage(value);
                                         }
@@ -157,10 +157,8 @@ function Configurations() {
                                 value={promotionFee}
                                 onChange={(e) => {
                                     // Allow only numbers
-                                    if (e.target.value >= "0") {
-                                        const value = e.target.value.replace(/\D/g, "");
-                                        setPromotionFee(value);
-                                    }
+                                    const value = e.target.value.replace(/\D/g, "");
+                                    setPromotionFee(value);
                                 }}
                                 className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
                                 min={0}
