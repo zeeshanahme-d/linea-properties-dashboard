@@ -14,27 +14,20 @@ function Configurations() {
     const { promotionFeeData, isLoading: promotionFeeLoading, setPromotionFeeData } = useGetPromotionFeeDataFromStore();
     const { changeConfigurationMutate, isLoading: changeLoading } = useChangeConfiguration();
     const { changePromotionFeeMutate, isLoading: changePromotionFeeLoading } = useChangePromotionFee();
-    const [serviceFeePercentage, setServiceFeePercentage] = useState<number>(configurationData?.value || 0);
+    const [serviceFeePercentage, setServiceFeePercentage] = useState<string>(configurationData?.value.toString() || "0");
     const [promotionFee, setPromotionFee] = useState<string>(promotionFeeData?.value.toString() || "0");
 
     useEffect(() => setTitle("Configurations"), [setTitle]);
-    useEffect(() => setServiceFeePercentage(configurationData?.value || 0), [configurationData]);
+    useEffect(() => setServiceFeePercentage(configurationData?.value.toString() || "0"), [configurationData]);
     useEffect(() => setPromotionFee(promotionFeeData?.value.toString() || "0"), [promotionFeeData]);
 
     const handleSliderChange = (value: number) => {
-        setServiceFeePercentage(value);
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value) || 0;
-        if (value >= 0 && value <= 20) {
-            setServiceFeePercentage(value);
-        }
+        setServiceFeePercentage(value.toString());
     };
 
     const handleSaveChanges = () => {
         const body = {
-            value: serviceFeePercentage || 0,
+            value: Number(serviceFeePercentage) || 0,
             valueType: "PERCENTAGE",
         }
 
@@ -54,7 +47,7 @@ function Configurations() {
 
     const handleSavePromotionFeeChanges = () => {
         const body = {
-            value: promotionFee || 0,
+            value: Number(promotionFee) || 0,
         }
 
         changePromotionFeeMutate(body,
@@ -88,7 +81,7 @@ function Configurations() {
                                 <Slider
                                     min={0}
                                     max={20}
-                                    value={serviceFeePercentage}
+                                    value={Number(serviceFeePercentage)}
                                     onChange={handleSliderChange}
                                 />
                                 <div className="flex justify-between text-xs text-medium-gray mt-2">
@@ -107,10 +100,18 @@ function Configurations() {
                                 Service Fee Percentage
                             </label>
                             <div className="relative">
+
                                 <Input
                                     type="number"
                                     value={serviceFeePercentage}
-                                    onChange={handleInputChange}
+                                    // onChange={handleInputChange}
+                                    onChange={(e) => {
+                                        // Allow only numbers
+                                        if (e.target.value >= "0" && e.target.value <= "20") {
+                                            const value = e.target.value.replace(/\D/g, "");
+                                            setServiceFeePercentage(value);
+                                        }
+                                    }}
                                     className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
                                     min={0}
                                     max={20}
@@ -126,7 +127,7 @@ function Configurations() {
                 </Card>
                 <div className=" mt-5 ml-[13.5rem]">
                     <Button
-                        disabled={isLoading || changeLoading || serviceFeePercentage === configurationData?.value}
+                        disabled={isLoading || changeLoading || serviceFeePercentage === configurationData?.value.toString()}
                         type="primary"
                         onClick={handleSaveChanges}
                         className="font-normal px-8 py-3 h-12"
@@ -156,9 +157,12 @@ function Configurations() {
                                 value={promotionFee}
                                 onChange={(e) => {
                                     // Allow only numbers
-                                    const value = e.target.value.replace(/\D/g, "");
-                                    setPromotionFee(value);
-                                }} className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
+                                    if (e.target.value >= "0") {
+                                        const value = e.target.value.replace(/\D/g, "");
+                                        setPromotionFee(value);
+                                    }
+                                }}
+                                className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
                                 min={0}
                             />
                         </div>
