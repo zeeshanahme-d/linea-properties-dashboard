@@ -44,3 +44,32 @@ export const formatFileSize = (bytes: number | undefined): number => {
 export const getFirstCharacterOfTheName = (name: string = "") => {
     return name.trim().charAt(0).toUpperCase();
 };
+
+export const handleDownloadFile = async (doc: string) => {
+    try {
+        // Extract the file name from the URL
+        const urlParts = doc.split('/');
+        const fileName = urlParts[urlParts.length - 1]; // e.g., "animal-planet.png"
+
+        // Fetch the file
+        const response = await fetch(doc);
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+
+        // Create a temporary link and trigger download
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = fileName; // use extracted file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        // Clean up
+        window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+        console.error(error);
+        alert('Error downloading the file.');
+    }
+};

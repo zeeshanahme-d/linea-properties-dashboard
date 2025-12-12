@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Divider, Checkbox } from 'antd';
+import { Button, Modal, Divider, Checkbox, Tooltip } from 'antd';
 import dayjs from "dayjs"
 import useGetSingleListingData from 'pages/listings/core/hooks/useGetSingleListingData';
 import FallbackLoader from 'components/core-ui/fallback-loader/FallbackLoader';
@@ -27,6 +27,10 @@ import ParkingIcon from 'assets/icons/parking-icon.svg?react';
 import TvIcon from 'assets/icons/tv-icon.svg?react';
 import AmanitiesIcon from 'assets/icons/amenities-icon.svg?react';
 import { MdBalcony } from "react-icons/md";
+import ImageIcon from 'assets/icons/image-icon.svg?react';
+import FileViewIcon from 'assets/icons/file-view-icon.svg?react';
+import FileDownloadIcon from 'assets/icons/download-icon.svg?react';
+import { handleDownloadFile } from 'helpers/CustomHelpers';
 
 
 
@@ -185,6 +189,48 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                 })}
                             </div>
                         </div>}
+
+                        {singleListingData?.photos && singleListingData?.photos.length > 0 ?
+                            <div className="mb-6">
+                                <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
+                                <div className="space-y-[6px] overflow-y-auto max-h-40 border border-border-gray rounded-2xl px-5 py-6">
+                                    <>
+                                        {singleListingData?.photos.map((doc: string, index: number) => (
+                                            <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
+                                                <div className="flex items-center w-[50%]">
+                                                    <span className='w-6' > <ImageIcon /></span>
+                                                    <div className='w-full'>
+                                                        <Tooltip title={decodeURIComponent(doc).split("/").pop()}>
+                                                            <p className="text-sm truncate max-w-full ml-3">{decodeURIComponent(doc).split("/").pop()}</p>
+                                                        </Tooltip>                                                {/* <p className="text-xs text-medium-gray">{doc.fileSize}</p> */}
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        onClick={() => window.open(doc, '_blank')}
+                                                        icon={<FileViewIcon className='mt-1' />}
+                                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg"
+                                                        size="small"
+                                                    >
+                                                        View
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => handleDownloadFile(doc)}
+                                                        icon={<FileDownloadIcon className='mt-1' />}
+                                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg flex-centered"
+                                                        size="small"
+                                                    >
+                                                        Download
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </>
+                                </div>
+                            </div>
+                            :
+                            null
+                        }
 
                         {/* Listed By Section */}
                         <div className="mb-6">

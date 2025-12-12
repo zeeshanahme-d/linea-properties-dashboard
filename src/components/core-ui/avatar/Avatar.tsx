@@ -23,8 +23,6 @@ function Avatar({ profilePicture, name = 'Admin', size = 'md', className = '' }:
     setImageError(false);
   }, [profilePicture]);
 
-  console.log(imageError)
-
   const sizeClass = sizeClasses[size];
   const baseClasses = 'bg-gray-200 font-semibold rounded-full flex items-center justify-center';
 
@@ -37,7 +35,7 @@ function Avatar({ profilePicture, name = 'Admin', size = 'md', className = '' }:
           onError={() => setImageError(true)}
         />
       ) : (
-        <span className="font-medium capitalize">
+        <span className="font-medium uppercase">
           {getFirstCharacterOfTheName(name)}
         </span>
       )}

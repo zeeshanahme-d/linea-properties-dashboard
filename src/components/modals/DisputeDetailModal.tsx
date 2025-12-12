@@ -13,6 +13,7 @@ import ImageIcon from 'assets/icons/image-icon.svg?react';
 import FileViewIcon from 'assets/icons/file-view-icon.svg?react';
 import FileDownloadIcon from 'assets/icons/download-icon.svg?react';
 import VsIcon from 'assets/icons/vs-icon.svg?react';
+import { handleDownloadFile } from 'helpers/CustomHelpers';
 
 
 interface DisputeDetailModalProps {
@@ -56,35 +57,6 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                 },
             },
         );
-    };
-
-    const handleDownloadFile = async (doc: string) => {
-        try {
-            // Extract the file name from the URL
-            const urlParts = doc.split('/');
-            const fileName = urlParts[urlParts.length - 1]; // e.g., "animal-planet.png"
-
-            // Fetch the file
-            const response = await fetch(doc);
-            if (!response.ok) throw new Error('Network response was not ok');
-
-            const blob = await response.blob();
-            const downloadUrl = window.URL.createObjectURL(blob);
-
-            // Create a temporary link and trigger download
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = fileName; // use extracted file name
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-
-            // Clean up
-            window.URL.revokeObjectURL(downloadUrl);
-        } catch (error) {
-            console.error(error);
-            alert('Error downloading the file.');
-        }
     };
 
 
@@ -181,41 +153,47 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                         </div>
 
                         {/* Evidence & Documents Section */}
-                        <div className="mb-6">
-                            <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
-                            <div className="space-y-[6px] border border-border-gray rounded-2xl px-5 py-6">
-                                {singleDisputeData?.evidenceDocuments.map((doc: string, index: number) => (
-                                    <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
-                                        <div className="flex items-center w-[50%]">
-                                            <span className='w-6' > <ImageIcon /></span>
-                                            <div className='w-full'>
-                                                <Tooltip title={decodeURIComponent(doc).split("/").pop()}>
-                                                    <p className="text-sm truncate max-w-full ml-3">{decodeURIComponent(doc).split("/").pop()}</p>
-                                                </Tooltip>                                                {/* <p className="text-xs text-medium-gray">{doc.fileSize}</p> */}
+                        {singleDisputeData?.evidenceDocuments && singleDisputeData?.evidenceDocuments.length > 0 ?
+                            <div className="mb-6">
+                                <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
+                                <div className="space-y-[6px] border overflow-y-auto max-h-40 border-border-gray rounded-2xl px-5 py-6">
+                                    <>
+                                        {singleDisputeData?.evidenceDocuments.map((doc: string, index: number) => (
+                                            <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
+                                                <div className="flex items-center w-[50%]">
+                                                    <span className='w-6' > <ImageIcon /></span>
+                                                    <div className='w-full'>
+                                                        <Tooltip title={decodeURIComponent(doc).split("/").pop()}>
+                                                            <p className="text-sm truncate max-w-full ml-3">{decodeURIComponent(doc).split("/").pop()}</p>
+                                                        </Tooltip>                                                {/* <p className="text-xs text-medium-gray">{doc.fileSize}</p> */}
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        onClick={() => window.open(doc, '_blank')}
+                                                        icon={<FileViewIcon className='mt-1' />}
+                                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg"
+                                                        size="small"
+                                                    >
+                                                        View
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => handleDownloadFile(doc)}
+                                                        icon={<FileDownloadIcon className='mt-1' />}
+                                                        className="text-medium-gray px-2 py-[14px] text-sm rounded-lg flex-centered"
+                                                        size="small"
+                                                    >
+                                                        Download
+                                                    </Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Button
-                                                onClick={() => window.open(doc, '_blank')}
-                                                icon={<FileViewIcon className='mt-1' />}
-                                                className="text-medium-gray px-2 py-[14px] text-sm rounded-lg"
-                                                size="small"
-                                            >
-                                                View
-                                            </Button>
-                                            <Button
-                                                onClick={() => handleDownloadFile(doc)}
-                                                icon={<FileDownloadIcon className='mt-1' />}
-                                                className="text-medium-gray px-2 py-[14px] text-sm rounded-lg flex-centered"
-                                                size="small"
-                                            >
-                                                Download
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
+                                        ))}
+                                    </>
+                                </div>
                             </div>
-                        </div>
+                            :
+                            null
+                        }
 
                         {/* Action Buttons */}
                         {singleDisputeData?.status !== "RESOLVED" && <div className="flex gap-4">
