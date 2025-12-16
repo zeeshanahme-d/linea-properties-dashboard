@@ -192,7 +192,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
 
                         {singleListingData?.photos && singleListingData?.photos.length > 0 ?
                             <div className="mb-6">
-                                <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
+                                <h3 className="text-base font-medium mb-2">Listing Media</h3>
                                 <div className="space-y-[6px] overflow-y-auto max-h-40 border border-border-gray rounded-2xl px-5 py-6">
                                     <>
                                         {singleListingData?.photos.map((doc: string, index: number) => (

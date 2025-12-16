@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Button, Form, Input } from "antd";
 //Hooks & Utils & Helpers
 import { IMAGE_FILE_TYPES } from "utils/Interfaces";
-import { showErrorMessage } from "utils/messageUtils";
+import { showErrorMessage, showSuccessMessage } from "utils/messageUtils";
 import { formatFileSize, handleErrorMineImg } from "helpers/CustomHelpers";
 import { useUserProfile } from "store/userProfile";
 import useUploadFile from "../core/hooks/useUploadFile";
@@ -171,6 +171,7 @@ function ProfileInformation() {
                 setUserProfile(userData.data);
                 handleRemoveProfilePic();
                 setIsLoading(false);
+                showSuccessMessage("Name update successfully.")
             },
             onError: (error: any) => {
                 showErrorMessage(error?.response?.data?.message || "File upload failed");

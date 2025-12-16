@@ -206,7 +206,7 @@ function Withdrawals() {
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3">
                                                     <div className='flex-centered'>
-                                                        <div className="w-[130px] flex items-center justify-start gap-1">
+                                                        <div className="w-[130px] flex items-center justify-center gap-1">
                                                             <button
                                                                 onClick={() => handleView(withdrawal)}
                                                                 className="p-2 rounded-md hover:bg-blue-50 transition-colors text-blue-600 hover:text-blue-700"

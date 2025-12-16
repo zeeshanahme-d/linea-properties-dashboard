@@ -148,7 +148,7 @@ function Configurations() {
                             </p>
                         </div>
                         {/* Promotion Fee Input */}
-                        <div className="mb-1">
+                        <div className="mb-1 relative">
                             <label className="block text-sm text-black mb-2">
                                 Promotion Fee
                             </label>
@@ -160,9 +160,12 @@ function Configurations() {
                                     const value = e.target.value.replace(/\D/g, "");
                                     setPromotionFee(value);
                                 }}
-                                className="w-full h-12 px-4 text-medium-gray focus:!bg-[#ffffff]"
+                                className="w-full h-12 px-4 !pr-16 text-medium-gray focus:!bg-[#ffffff]"
                                 min={0}
                             />
+                            <span className="absolute right-3 top-[53px] font-medium text-lg transform -translate-y-1/2 text-medium-gray">
+                                CFA
+                            </span>
                         </div>
                     </div>
                 </Card>
