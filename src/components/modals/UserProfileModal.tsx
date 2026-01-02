@@ -78,7 +78,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     <>
                         {statusChangeLoading ? <FallbackLoader size='large' isModal={true} /> : null}
                         {/* singleUserData Information */}
-                        <div className="flex items-start gap-4 mb-6 border rounded-2xl px-4 py-6">
+                        <div className="flex items-start gap-4 mb-6 border rounded-2xl p-4">
                             {/* Profile Picture */}
                             <Avatar
                                 profilePicture={singleUserData?.user?.profilePicture}

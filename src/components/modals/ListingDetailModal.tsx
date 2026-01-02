@@ -169,9 +169,30 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
 
                         {/* Description */}
                         <div className="mb-6">
-                            <h3 className="text-lg font-medium mb-3">Description</h3>
+                            <h3 className="text-lg font-medium mb-1">Description</h3>
                             <p className="text-medium-gray text-base font-normal leading-relaxed">{singleListingData?.description}</p>
                         </div>
+
+                        {/* Resean Section */}
+                        {singleListingData?.reason && <div className="mb-6">
+                            <>
+                                <h3 className="text-base font-medium mb-1">Reason</h3>
+                                <>
+                                    {singleListingData?.reason && typeof singleListingData?.reason === "string" ?
+                                        <p className="text-medium-gray text-base font-normal leading-relaxed">{singleListingData?.reason}</p>
+                                        :
+                                        <>
+                                            {singleListingData?.reason?.map((reason: string, index: number) => (
+                                                <div key={index} className="flex items-center gap-2">
+                                                    <span className="text-medium-gray text-base font-normal leading-relaxed">• {reason}</span>
+                                                </div>
+                                            ))}
+                                        </>
+                                    }
+                                </>
+                            </>
+
+                        </div>}
 
                         {/* Amenities */}
                         {singleListingData.propertyType !== "land" && <div className="mb-6">
@@ -193,7 +214,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {singleListingData?.photos && singleListingData?.photos.length > 0 ?
                             <div className="mb-6">
                                 <h3 className="text-base font-medium mb-2">Listing Media</h3>
-                                <div className="space-y-[6px] overflow-y-auto max-h-40 border border-border-gray rounded-2xl px-5 py-6">
+                                <div className="space-y-[6px] overflow-y-auto max-h-40 border border-border-gray rounded-2xl p-4">
                                     <>
                                         {singleListingData?.photos.map((doc: string, index: number) => (
                                             <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
@@ -235,7 +256,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Listed By Section */}
                         <div className="mb-6">
                             <h3 className="text-lg font-medium mb-3">Listed by</h3>
-                            <div className="bg-white border border-border-gray rounded-2xl py-6 px-4">
+                            <div className="bg-white border border-border-gray rounded-2xl p-4">
                                 <div className="flex items-center gap-4">
                                     <Avatar
                                         profilePicture={singleListingData?.user?.profilePicture}

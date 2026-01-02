@@ -106,7 +106,7 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                 {/* Listed By Section */}
                 <div className="mb-6">
                     <h3 className="text-lg font-medium mb-3">User Information</h3>
-                    <div className="bg-white border border-border-gray rounded-2xl py-5 px-4">
+                    <div className="bg-white border border-border-gray rounded-2xl p-4">
                         <div className="flex items-center gap-4">
                             <Avatar
                                 profilePicture={withdrawalRequest?.user?.profilePicture}

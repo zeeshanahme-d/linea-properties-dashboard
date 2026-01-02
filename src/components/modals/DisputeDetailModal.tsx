@@ -118,7 +118,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                             <h3 className="text-base font-medium mb-2">Parties Involved</h3>
                             <div className="flex items-center justify-center gap-3">
                                 {/* Dispute Initiator */}
-                                <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
+                                <div className="bg-white border gap-4 border-border-gray rounded-2xl p-4 text-center w-full items-center flex">
                                     <Avatar
                                         profilePicture={singleDisputeData?.creator?.profilePicture}
                                         name={singleDisputeData?.creator?.name}
@@ -137,7 +137,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                 </div>
 
                                 {/* Property Lister */}
-                                <div className="bg-white border gap-4 border-border-gray rounded-2xl px-4 py-3 text-center w-full items-center flex">
+                                <div className="bg-white border gap-4 border-border-gray rounded-2xl p-4 text-center w-full items-center flex">
                                     <Avatar
                                         profilePicture={singleDisputeData?.createdAgainst?.profilePicture}
                                         name={singleDisputeData?.createdAgainst?.name}
@@ -156,7 +156,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                         {singleDisputeData?.evidenceDocuments && singleDisputeData?.evidenceDocuments.length > 0 ?
                             <div className="mb-6">
                                 <h3 className="text-base font-medium mb-2">Evidence & Documents</h3>
-                                <div className="space-y-[6px] border overflow-y-auto max-h-40 border-border-gray rounded-2xl px-5 py-6">
+                                <div className="space-y-[6px] border overflow-y-auto max-h-40 border-border-gray rounded-2xl p-4">
                                     <>
                                         {singleDisputeData?.evidenceDocuments.map((doc: string, index: number) => (
                                             <div key={index} className="bg-[#EEEEEE] rounded-xl p-3 h-[52px] flex items-center justify-between">
