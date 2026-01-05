@@ -125,18 +125,18 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Listing Overview */}
                         <div className="mb-6">
                             <div className="flex items-start justify-between mb-2">
-                                <div className="w-full flex items-center justify-between">
-                                    <div className="flex items-center gap-3 max-w-[80%]">
-                                        <h2 className="text-2xl font-medium text-gray-800 truncate w-full">{singleListingData?.propertyTitle}</h2>
+                                <div className="w-full flex justify-between flex-col ">
+                                    <div className="flex items-center gap-3 max-w-[100%] mb-2">
+                                        <Tooltip title={singleListingData?.propertyTitle}>
+                                            <h2 className="text-2xl font-medium text-gray-800 truncate w-full">{singleListingData?.propertyTitle}</h2>
+                                        </Tooltip>
                                         <div className="px-2 h-6 bg-primary flex-centered text-white text-xs rounded-full w-fit text-nowrap">
                                             {singleListingData?.pricingType === "forSale" ? "For Sale" : "For Rent"}
                                         </div>
                                     </div>
                                     <div className="text-right">
                                         <span className="text-2xl text-primary flex items-center gap-1">
-                                            <Tooltip title={Number(singleListingData?.salePrice || singleListingData?.monthlyRent)?.toLocaleString()}>
-                                                <span className='truncate max-w-[150px] inline-block'>{Number(singleListingData?.salePrice || singleListingData?.monthlyRent)?.toLocaleString()} <br />  CFA</span>
-                                            </Tooltip>
+                                            <span>{Number(singleListingData?.salePrice || singleListingData?.monthlyRent)?.toLocaleString()} CFA</span>
                                             <span className="text-lg text-black">{singleListingData?.pricingType === "forRent" && "/monthly"}</span>
                                         </span>
                                     </div>
@@ -200,7 +200,7 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         {/* Amenities */}
                         {singleListingData.propertyType !== "land" && <div className="mb-6">
                             <h3 className="text-lg font-medium mb-3">Amenities</h3>
-                            <div className="flex flex-wrap gap-3 overflow-y-auto max-h-40">
+                            <div className="flex flex-wrap gap-3 overflow-y-auto max-h-44">
                                 {singleListingData?.amenities.map((amenity: any, index: number) => {
                                     const name = amenity?.toLowerCase() === "cable tv" ? "cable TV" : amenity?.toLowerCase();
                                     const IconComponent = getAmenityIcon(name);
