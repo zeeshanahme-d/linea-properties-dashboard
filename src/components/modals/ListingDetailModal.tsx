@@ -133,8 +133,11 @@ const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-2xl text-primary">
-                                            {singleListingData?.salePrice || singleListingData?.monthlyRent} CFA <span className="text-lg text-black">{singleListingData?.pricingType === "forRent" && "/monthly"}</span>
+                                        <span className="text-2xl text-primary flex items-center gap-1">
+                                            <Tooltip title={Number(singleListingData?.salePrice || singleListingData?.monthlyRent)?.toLocaleString()}>
+                                                <span className='truncate max-w-[150px] inline-block'>{Number(singleListingData?.salePrice || singleListingData?.monthlyRent)?.toLocaleString()} <br />  CFA</span>
+                                            </Tooltip>
+                                            <span className="text-lg text-black">{singleListingData?.pricingType === "forRent" && "/monthly"}</span>
                                         </span>
                                     </div>
                                 </div>
