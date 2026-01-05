@@ -152,7 +152,7 @@ function Users() {
                 {isLoading ?
                     <FallbackLoader size='large' />
                     :
-                    <div className="max-h-[800px] min-w-[900px] w-full">
+                    <div className="max-h-[800px] min-w-[1200px] w-full">
                         <table className="border-separate border-spacing-y-2 w-full">
                             <thead>
                                 <tr>

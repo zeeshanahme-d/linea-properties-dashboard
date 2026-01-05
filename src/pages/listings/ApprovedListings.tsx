@@ -129,7 +129,7 @@ function ApprovedListings() {
                 {isLoading ?
                     <FallbackLoader size='large' />
                     :
-                    <div className="max-h-[800px] min-w-[900px] w-full">
+                    <div className="max-h-[800px] min-w-[1200px] w-full">
                         <table className="border-separate border-spacing-y-2 w-full">
                             <thead>
                                 <tr>
@@ -169,7 +169,7 @@ function ApprovedListings() {
                                                     </div>
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
-                                                    {`${listing?.monthlyRent || listing?.salePrice} CFA` || "-"}
+                                                    {`${Number(listing?.monthlyRent || listing?.salePrice)?.toLocaleString()} CFA` || "-"}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3">
                                                     <div className="flex items-center justify-center gap-3">

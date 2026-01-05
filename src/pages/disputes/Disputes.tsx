@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Empty, Pagination, Select, Tooltip } from 'antd';
+import { Empty, Pagination, Select } from 'antd';
 import { useHeaderProps } from 'components/core/use-header-props';
 //icons
 import ArrowDownIcon from 'assets/icons/arrow-down-icon.svg?react';
@@ -105,7 +105,7 @@ function Disputes() {
                 {isLoading ?
                     <FallbackLoader size='large' />
                     :
-                    <div className="max-h-[800px] min-w-[900px] w-full">
+                    <div className="max-h-[800px] min-w-[1200px] w-full">
                         <table className="border-separate border-spacing-y-2 w-full">
                             <thead>
                                 <tr>
@@ -128,11 +128,9 @@ function Disputes() {
                                                 key={dispute?._id}
                                                 className={`bg-[#FFFFFF9C] hover:bg-[#FFFFFF] transition-colors duration-300 cursor-pointer text-sm`}
                                             >
-                                                <Tooltip title={dispute?._id}>
-                                                    <td className="xl:px-4 px-2 py-3 truncate max-w-40">
-                                                        {dispute?.customDisputeId || dispute?._id || "-"}
-                                                    </td>
-                                                </Tooltip>
+                                                <td className="xl:px-4 px-2 py-3">
+                                                    {dispute?.customDisputeId || dispute?._id || "-"}
+                                                </td>
                                                 <td className="xl:px-4 px-2 py-3 capitalize">
                                                     {dispute?.creator?.name || "-"}
                                                 </td>

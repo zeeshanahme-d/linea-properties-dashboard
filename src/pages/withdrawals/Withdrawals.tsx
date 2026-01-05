@@ -161,7 +161,7 @@ function Withdrawals() {
                 {isLoading ?
                     <FallbackLoader size='large' />
                     :
-                    <div className="max-h-[800px] min-w-[900px] w-full">
+                    <div className="max-h-[800px] min-w-[1200px] w-full">
                         <table className="border-separate border-spacing-y-2 w-full">
                             <thead>
                                 <tr>
@@ -191,7 +191,7 @@ function Withdrawals() {
                                                     {withdrawal?.user.name || "-"}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3 ">
-                                                    {`${withdrawal?.amount} CFA` || "-"}
+                                                    {`${Number(withdrawal?.amount)?.toLocaleString()} CFA` || "-"}
                                                 </td>
                                                 <td className="xl:px-4 px-2 py-3">
                                                     <div className={`px-2 py-2 capitalize w-30 text-center rounded-md ${getStatusClass(withdrawal?.status)}`}>

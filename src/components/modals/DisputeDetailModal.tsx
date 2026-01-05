@@ -93,7 +93,7 @@ const DisputeDetailModal: React.FC<DisputeDetailModalProps> = ({
                                     </div>
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Amount in Dispute:</span>
-                                        <p>{singleDisputeData?.amountInDispute} CFA</p>
+                                        <p>{Number(singleDisputeData?.amountInDispute)?.toLocaleString()} CFA</p>
                                     </div>
                                     <div className='flex items-center justify-between gap-2'>
                                         <span>Created:</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Divider } from 'antd';
+import { Button, Modal, Divider, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 
 //icons
@@ -54,9 +54,11 @@ const WithdrawalRequestDetailModal: React.FC<WithdrawalRequestDetailModalProps> 
                                 <h2 className="text-2xl font-medium text-gray-800">Request {withdrawalRequest?.customWithdrawRequestId || withdrawalRequest?._id}</h2>
                             </div>
                             <div className="text-right">
-                                <span className="text-2xl text-primary">
-                                    {withdrawalRequest?.amount} CFA
-                                </span>
+                                <Tooltip title={Number(withdrawalRequest?.amount)?.toLocaleString()}>
+                                    <span className="text-2xl text-primary">
+                                        {Number(withdrawalRequest?.amount)?.toLocaleString()} <br /> CFA
+                                    </span>
+                                </Tooltip>
                             </div>
                         </div>
                     </div>
